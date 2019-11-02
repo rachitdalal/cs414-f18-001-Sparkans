@@ -66,6 +66,8 @@ public class MicroServer {
 		get("/acceptInvite", this::acceptInvite);
 		get("/waitingInvite", this::waitingInvite);
 		get("/getGame", this::getGame);
+		get("/checkValidMove", this::checkValidMove);
+		get("/flip", this::flip);
 
 		options("/*", (request,response)->{
 			String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -274,6 +276,43 @@ public class MicroServer {
 
 	    return gson.toJson(b);
     }
+
+    private String checkValidMove(Request request, Response response){
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user = request.params("user");
+		String from = request.params("from");
+		String to = request.params("to");
+
+		boolean valid = gameManager.updateBoard(user,from,to);
+
+		if(valid){
+			return "[{\"validMove\":\"true\"}]";
+		}
+		else{
+			return "[{\"validMove\":\"false\"}]";
+		}
+
+	}
+
+	private String flip(Request request, Response response){
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user = request.params("user");
+		String pos = request.params("position");
+
+		boolean flipped = gameManager.updateBoard(user,pos);
+
+		if(flipped){
+			return "[{\"flipped\":\"true\"}]";
+		}
+		else{
+			return "[{\"flipped\":\"false\"}]";
+		}
+
+	}
 
 	private String team(Request request, Response response) {
 
