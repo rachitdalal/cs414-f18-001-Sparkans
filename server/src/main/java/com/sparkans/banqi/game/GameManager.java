@@ -33,8 +33,36 @@ public class GameManager {
         return false;
     }
 
-    public boolean updateBoard(UserBean user1, UserBean user2, String src, String dest){
+    public boolean updateBoard(String user, String src, String dest){
 
+        for(BanqiBoard b : boards) {
+            if ((b.getUser1().toString().equals(user) || b.getUser2().toString().equals(user))) {
+                try {
+                    b.move(src, dest);
+                    return true;
+                } catch (IllegalMoveException e) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean updateBoard(String user, String position){
+
+        for(BanqiBoard b : boards) {
+            if ((b.getUser1().toString().equals(user) || b.getUser2().toString().equals(user))) {
+                try {
+                    if(b.getPiece(position).isFaceDown = true){
+                        b.getPiece(position).isFaceDown = false;
+                        return true;
+
+                    }
+                } catch (IllegalPositionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return false;
     }
 }

@@ -45,7 +45,7 @@ public class BanqiBoard {
 	}
 	
 	// initialize the board to standard Banqi opening state
-		public void initialize() {
+		private void initialize() {
 			BanqiPiece[] pieces = new BanqiPiece[32];
 			Random r = new Random();
 
