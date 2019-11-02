@@ -62,14 +62,21 @@ export class RegisterUserComponent implements OnInit {
       .subscribe(( results ) => {
         if( results.registered ){
           /* TODO: emit subject from here to app component to display name on the header*/
+          this._snackBar.open("User has been registered !", "", {
+            duration: 5000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+
+          });
           // this.userName = userDetails['nickName'];
          this.router.navigate(['/signin']);
         }
       // this.result = results;
     }, (error) => {
         console.log("Register API Error", error.toString());
-          this._snackBar.open("Register User has ", "", {
-            duration: 10000,
+          this._snackBar.open("Registration has not been successful. Please try again later. ", "", {
+            duration: 5000,
             horizontalPosition: "right",
             verticalPosition: "top",
             panelClass: ["customSnackBar"]

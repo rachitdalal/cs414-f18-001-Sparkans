@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {UserDetailsService} from "../Service/user-details.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-game-play',
@@ -9,25 +12,166 @@ export class GamePlayComponent implements OnInit {
   private readonly chessboard: any[][];
   dummyTest: boolean = false;
   isLoaded: boolean = false;
+  boardPosition;
+  GET_GAME = "http://localhost:31406/getGame";
+  GAME_NOT_LOADED = "There is no game to load";
+  FLIP_PIECE = "http://localhost:31406/flip";
 
-  constructor() {
+  constructor( private http: HttpClient,
+               private userDetails: UserDetailsService,
+               private _snackBar: MatSnackBar ) {
 
       this.chessboard = [];
   }
 
   ngOnInit() {
+    this.boardPosition = [
+      [{"piece": "Advisor", "row": 0, "column": 0, "color": "RED", "isFaceDown": true},
+        {
+        "piece": "Horse",
+        "row": 0,
+        "column": 1,
+        "color": "RED",
+        "isFaceDown": true
+      },
+        {"piece": "Advisor", "row": 0, "column": 2, "color": "WHITE", "isFaceDown": true},
+        {
+        "piece": "Advisor",
+        "row": 0,
+        "column": 3,
+        "color": "WHITE",
+        "isFaceDown": true
+      },
+        {"piece": "Advisor", "row": 0, "column": 4, "color": "RED", "isFaceDown": true},
+        {
+        "piece": "Chariot",
+        "row": 0,
+        "column": 5,
+        "color": "RED",
+        "isFaceDown": true
+      },
+        {"piece": "Soldier", "row": 0, "column": 6, "color": "WHITE", "isFaceDown": true},
+        {
+        "piece": "Minister",
+        "row": 0,
+        "column": 7,
+        "color": "WHITE",
+        "isFaceDown": true
+      }],
+      [{"piece": "Cannon", "row": 1, "column": 0, "color": "WHITE", "isFaceDown": true}, {
+        "piece": "Minister",
+        "row": 1,
+        "column": 1,
+        "color": "RED",
+        "isFaceDown": true
+      }, {"piece": "Chariot", "row": 1, "column": 2, "color": "WHITE", "isFaceDown": true}, {
+        "piece": "Cannon",
+        "row": 1,
+        "column": 3,
+        "color": "RED",
+        "isFaceDown": true
+      }, {"piece": "Horse", "row": 1, "column": 4, "color": "WHITE", "isFaceDown": true}, {
+        "piece": "Soldier",
+        "row": 1,
+        "column": 5,
+        "color": "RED",
+        "isFaceDown": true
+      }, {"piece": "General", "row": 1, "column": 6, "color": "RED", "isFaceDown": true}, {
+        "piece": "Soldier",
+        "row": 1,
+        "column": 7,
+        "color": "RED",
+        "isFaceDown": true
+      }],
+
+      [{"piece": "Horse", "row": 2, "column": 0, "color": "RED", "isFaceDown": true}, {
+        "piece": "Horse",
+        "row": 2,
+        "column": 1,
+        "color": "WHITE",
+        "isFaceDown": true
+      }, {"piece": "Cannon", "row": 2, "column": 2, "color": "RED", "isFaceDown": true}, {
+        "piece": "Chariot",
+        "row": 2,
+        "column": 3,
+        "color": "WHITE",
+        "isFaceDown": true
+      }, {"piece": "Minister", "row": 2, "column": 4, "color": "WHITE", "isFaceDown": true}, {
+        "piece": "Chariot",
+        "row": 2,
+        "column": 5,
+        "color": "RED",
+        "isFaceDown": true
+      }, {"piece": "Soldier", "row": 2, "column": 6, "color": "WHITE", "isFaceDown": true}, {
+        "piece": "General",
+        "row": 2,
+        "column": 7,
+        "color": "WHITE",
+        "isFaceDown": true
+      }],
+
+      [{"piece": "Soldier", "row": 3, "column": 0, "color": "RED", "isFaceDown": true}, {
+        "piece": "Soldier",
+        "row": 3,
+        "column": 1,
+        "color": "RED",
+        "isFaceDown": true
+      }, {"piece": "Soldier", "row": 3, "column": 2, "color": "WHITE", "isFaceDown": true}, {
+        "piece": "Soldier",
+        "row": 3,
+        "column": 3,
+        "color": "RED",
+        "isFaceDown": true
+      }, {"piece": "Soldier", "row": 3, "column": 4, "color": "WHITE", "isFaceDown": true}, {
+        "piece": "Minister",
+        "row": 3,
+        "column": 5,
+        "color": "RED",
+        "isFaceDown": true
+      }, {"piece": "Cannon", "row": 3, "column": 6, "color": "WHITE", "isFaceDown": true}, {
+        "piece": "Soldier",
+        "row": 3,
+        "column": 7,
+        "color": "WHITE",
+        "isFaceDown": true
+      }]]
   }
 
   loadGame() {
-    for( let  raw: number = 0; raw < 4; raw += 1 ) {
-      this.chessboard[raw] = [];
-      for( let column: number = 0; column< 8; column += 1 ) {
-        this.chessboard[raw][column] = 'a';
-      }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    const userNickName = this.userDetails.userName;
+    let params = new HttpParams().set('user1', userNickName).set('user2',  "tester11");
 
-    }
-    this.isLoaded = true;
+    return this.http.get<any>( this.GET_GAME, {headers: httpOptions.headers, params: params})
+      .subscribe(( result ) => {
+        if( result.board ) {
+          for( let  raw: number = 0; raw < this.boardPosition.length; raw += 1 ) {
+            this.chessboard[raw] = this.boardPosition[raw];
+            for( let column: number = 0; column< this.boardPosition[0].length; column += 1 ) {
+              this.chessboard[raw][column] == result.board[raw][column];
+              /*this.chessboard[raw][column] = Object.assign({}, this.boardPosition[raw][column]);*/
+            }
+
+          }
+          this.isLoaded = true;
+        } else {
+          this._snackBar.open(this.GAME_NOT_LOADED, "", {
+            duration: 5000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+
+          });
+        }
+      }, ( error ) => {
+
+      });
   }
+
 
   getRaw(i: number) {
     switch (i) {
@@ -95,20 +239,34 @@ export class GamePlayComponent implements OnInit {
 
   }
 
+  toggleFaceDownPiece( event, raw, column ) {
+    const position: string = this.getRaw(raw) + column ;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    const userNickName = this.userDetails.userName;
+    let params = new HttpParams().set('user', userNickName).set('position', position );
 
-  /*onDragBegin( event, raw: number, column: number ) {
-    console.log("test",event,"raw ", raw, "Column ",  column )
+    if( this.chessboard[raw][column].isFaceDown ) {
+      return this.http.get<any>( this.FLIP_PIECE, {headers: httpOptions.headers, params: params})
+        .subscribe(( result ) => {
+          if( result[0].flipped ) {
+            /*setTimeout( ( ) => {*/
+            this.chessboard[raw][column].isFaceDown = false;
+            /*}, 0);*/
+          }
+        }, ( error ) => {
+          this._snackBar.open("Something went wrong!!! ", "", {
+            duration: 5000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+
+          });
+        });
+    }
+
   }
-
-  onDragEnd( event, raw: number, column: number ) {
-    console.log("test",event,"raw ", raw, "Column ",  column )
-  }
-
-  onMoving( event, raw: number, column: number ) {
-    console.log("test",event,"raw ", raw, "Column ",  column )
-  }
-
-  onMoveEnd( event, raw: number, column: number ) {
-    console.log("test",event,"raw ", raw, "Column ",  column )
-  }*/
 }
