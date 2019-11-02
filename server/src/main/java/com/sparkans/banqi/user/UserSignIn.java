@@ -9,36 +9,36 @@ import com.sparkans.banqi.db.*;
 public class UserSignIn {
 
 	private UserBean userBean;
-	//private Connection conn = null;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
 	public UserSignIn() {
 		this.userBean = new UserBean();
-		//conn = MySqlCon.getConnection();
 	}
 
-	//validating if nickname present in Database 
+	// validating if nickname present in Database
 	public boolean validUser(String nickName, ResultSet resultSet) throws SQLException {
 
-		if(resultSet.next())
+		if (resultSet.next())
 			return true;
-		
+
 		return false;
 	}
 
 	public boolean signInUser(UserBean userBean) throws SQLException {
 
-		try
-		{
-			Connection conn = MySqlCon.getConnection();
-			statement = conn.prepareStatement("SELECT nickname, password, isActive_flag  FROM sparkans.Banqi_Users WHERE nickname =?");
+		boolean signedIn = false;
+		Connection conn = null;
+		try {
+			conn = MySqlCon.getConnection();
+			statement = conn.prepareStatement(
+					"SELECT nickname, password, isActive_flag  FROM sparkans.Banqi_Users WHERE nickname =?");
 			statement.setString(1, userBean.getNickname());
 			resultSet = statement.executeQuery();
 
-			if (validUser(userBean.getNickname(), resultSet)) 
-			{
-				if(resultSet.getString("password").equals(userBean.getPassword()) && resultSet.getString("isActive_flag").equals("Y")) {
+			if (validUser(userBean.getNickname(), resultSet)) {
+				if (resultSet.getString("password").equals(userBean.getPassword())
+						&& resultSet.getString("isActive_flag").equals("Y")) {
 
 					PreparedStatement update = conn.prepareStatement("UPDATE sparkans.Banqi_Users "
 							+ "SET isLoggedIn_flag = ?, lastLoggedIn_TS = ? WHERE nickname = ?");
@@ -51,37 +51,32 @@ public class UserSignIn {
 					if (conn != null) {
 						conn.close();
 					}
-					return true;
-				} 
-				else if (!resultSet.getString("isActive_flag").equals("Y"))
-				{
-					System.out.println("User has unregistered from the Game. Please register again to play.");
-					return false;
-				}
-				else
-				{
-					System.out.println("Wrong Credentials entered.");
-					return false;
+					signedIn = true;
+					;
+				} else if (!resultSet.getString("isActive_flag").equals("Y")) {
+					throw new RuntimeException("User has unregistered from the Game. Please register again to play.");
+
+				} else {
+					throw new RuntimeException("Wrong Credentials entered.");
 				}
 
-			}
-			else
-			{
-				System.out.println("Please register to play the Game!!");
-				return false;
+			} else {
+				throw new RuntimeException("Please register to play the Game!!");
 			}
 
-		}catch (SQLException e) {
-			System.out.println("Something went wrong in User SignIn!!" + e.getMessage());
-		}
-		finally {
+		} catch (SQLException e) {
+			throw new RuntimeException("Something went wrong in User SignIn!!" + e.getMessage());
+		} finally {
 			if (resultSet != null) {
 				resultSet.close();
 			}
 			if (statement != null) {
 				statement.close();
 			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
-		return false;
+		return signedIn;
 	}
 }
