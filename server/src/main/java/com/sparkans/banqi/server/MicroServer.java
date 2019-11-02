@@ -281,9 +281,9 @@ public class MicroServer {
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");
 
-		String user = request.params("user");
-		String from = request.params("from");
-		String to = request.params("to");
+		String user = request.queryParams("user");
+		String from = request.queryParams("from");
+		String to = request.queryParams("to");
 
 		boolean valid = gameManager.updateBoard(user,from,to);
 
@@ -300,8 +300,8 @@ public class MicroServer {
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");
 
-		String user = request.params("user");
-		String pos = request.params("position");
+		String user = request.queryParams("user");
+		String pos = request.queryParams("position");
 
 		boolean flipped = gameManager.updateBoard(user,pos);
 

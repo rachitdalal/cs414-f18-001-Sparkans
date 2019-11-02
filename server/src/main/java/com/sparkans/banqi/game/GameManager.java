@@ -36,7 +36,7 @@ public class GameManager {
     public boolean updateBoard(String user, String src, String dest){
 
         for(BanqiBoard b : boards) {
-            if ((b.getUser1().toString().equals(user) || b.getUser2().toString().equals(user))) {
+            if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
                 try {
                     b.move(src, dest);
                     return true;
@@ -51,7 +51,7 @@ public class GameManager {
     public boolean updateBoard(String user, String position){
 
         for(BanqiBoard b : boards) {
-            if ((b.getUser1().toString().equals(user) || b.getUser2().toString().equals(user))) {
+            if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
                 try {
                     if(b.getPiece(position).isFaceDown = true){
                         b.getPiece(position).isFaceDown = false;
