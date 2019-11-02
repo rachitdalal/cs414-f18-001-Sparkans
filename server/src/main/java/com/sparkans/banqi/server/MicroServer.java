@@ -159,10 +159,10 @@ public class MicroServer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "{\"signedin\": \"false\"}";
+			return "{\"signedin\": \"" +e.getMessage() + "\"}";
 		}
 		catch (Exception e){
-		    return "{\"signedin\": \"false\"}";
+		    return "{\"signedin\":: \"" +e.getMessage() + "\"}";
         }
 		return "{\"signedin\": \"true\"}";
 
