@@ -57,7 +57,7 @@ public class Soldier extends BanqiPiece {
 					: parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-			// Can capture only a General
+			// can capture only a General
 			if (!destinationPiece.toString().equals("WG") || !destinationPiece.toString().equals("RG"))
 				return inValid;
 			// Soldier cannot move diagonally.
