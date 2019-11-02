@@ -3,6 +3,8 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/Banqi-UI/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/Banqi-UI/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/Client/BanqiUI/dist" />
       <excludeFolder url="file://$MODULE_DIR$/Client/BanqiUI/tmp" />
     </content>
