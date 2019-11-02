@@ -8,9 +8,9 @@ public class UserBean{
 	protected String email;
 	protected String nickName;
 	protected String password;
-	protected Character isActive_flag;
+	protected String isActive_flag;
 	protected Timestamp createdTS;
-	protected Character isLoggedIn_flag; 
+	protected String isLoggedIn_flag;
 	protected Timestamp lastLoggedInTS;
 
 	public UserBean() {
@@ -44,11 +44,11 @@ public class UserBean{
 	}
 
 	//getter and setter methods for isActive_flag.
-	public Character isActive(){
+	public String isActive(){
 		return isActive_flag;
 	}
 
-	public void setActive(Character isActive_flag){
+	public void setActive(String isActive_flag){
 		this.isActive_flag = isActive_flag;
 	}
 
@@ -65,11 +65,11 @@ public class UserBean{
 	}
 
 	//getter and setter methods for isLoggedIn_flag.
-	public Character isLoggedIn(){
+	public String isLoggedIn(){
 		return isLoggedIn_flag;
 	}
 
-	public void setLoggedIn(Character isLoggedIn_flag) {
+	public void setLoggedIn(String isLoggedIn_flag) {
 		this.isLoggedIn_flag = isLoggedIn_flag;
 	}
 

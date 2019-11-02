@@ -1,5 +1,6 @@
 package com.sparkans.banqi.game;
 
+import com.google.gson.annotations.Expose;
 import com.sparkans.banqi.user.UserBean;
 
 import java.util.HashMap;
@@ -15,7 +16,9 @@ import java.util.regex.Pattern;
 
 public class BanqiBoard {
 
+	@Expose
 	private BanqiPiece[][] board;
+
 	private UserBean user1;
 	private UserBean user2;
 

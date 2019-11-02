@@ -9,7 +9,7 @@ public class General extends BanqiPiece {
 	ArrayList<String> legalMoves;
 
 	@Expose
-	private static final String name = "General";
+	private final String piece  = "General";
 
 	public General(BanqiBoard board, Color color) {
 		super(board, color);

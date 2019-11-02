@@ -65,6 +65,7 @@ public class MicroServer {
 		get("/sendInvite", this::sendInvite);
 		get("/acceptInvite", this::acceptInvite);
 		get("/waitingInvite", this::waitingInvite);
+		get("/getGame", this::getGame);
 
 		options("/*", (request,response)->{
 			String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -233,27 +234,46 @@ public class MicroServer {
     }
 
 
-	private String acceptInvite(Request request, Response response){
+	private String acceptInvite(Request request, Response response) {
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");
 
 		//for now we create UserBean users from the name given but eventually we will pull users from DB
 		String user = request.queryParams("user");
+        UserObject userObj = new UserObject();
+
 		for(Invitation i : invites){
 		    if(i.to.equals(user)){
 		        i.accepted = true;
-				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 UserBean user1 = new UserBean();
-                user1.setNickName(i.to);
                 UserBean user2 = new UserBean();
+
+                user1.setNickName(i.to);
                 user2.setNickName(i.from);
-                /*return gson.toJson(gameManager.addGame(user1,user2), BanqiPiece[][].class);*/
+
+                gameManager.addGame(user1,user2);
                 return "[{\"inviteStatus\":\"accepted\"}]";
             }
         }
 
 		return "[{\"inviteStatus\":\"no invites\"}]";
 	}
+
+	private String getGame(Request request, Response response){
+        response.type("application/json");
+        response.header("Access-Control-Allow-Headers", "*");
+
+        String user1 = request.queryParams("user1");
+        String user2 = request.queryParams("user2");
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+        BanqiBoard b = gameManager.getGame(user1,user2);
+        if(b == null){
+        	b = gameManager.getGame(user2,user1);
+		}
+
+	    return gson.toJson(b);
+    }
 
 	private String team(Request request, Response response) {
 

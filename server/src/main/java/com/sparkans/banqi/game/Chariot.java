@@ -9,7 +9,7 @@ public class Chariot extends BanqiPiece {
 	ArrayList<String> legalMoves;
 
 	@Expose
-	private static final String name = "Chariot";
+	private final String piece  = "Chariot";
 
 	public Chariot(BanqiBoard board, Color color) {
 		super(board, color);

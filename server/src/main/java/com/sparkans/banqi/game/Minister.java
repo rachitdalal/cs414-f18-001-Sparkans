@@ -9,7 +9,7 @@ public class Minister extends BanqiPiece {
 	ArrayList<String> legalMoves;
 
 	@Expose
-	private static final String name = "Minister";
+	private final String piece  = "Minister";
 
 	public Minister(BanqiBoard board, Color color) {
 		super(board, color);
