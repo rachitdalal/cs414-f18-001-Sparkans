@@ -1,26 +1,33 @@
-  <button (click)="loadGame()">Load Game</button>
-  <div *ngIf="isLoaded">
-    <div>
-      <tbody>
-      <tr *ngFor="let raw of chessboard; let i = index">
-        <td *ngFor="let column of raw; let j=index" class="pieceSetup"
-            (drop)="drop($event)"
-            (dragover)="allowDrop($event)">
-          <!--<button ngDraggable class="border" id="{{i}}{{j}}"
-              (click)="testButton(i, j)"
-              (started)="onDragBegin($event, i, j)"
-           dragStart  (stopped)="onDragEnd($event, i, j)"
-              (movingOffset)="onMoving($event, i, j)"
-              (endOffset)="onMoveEnd($event, i, j)"> R: {{ getRaw(i) }} C: {{ j }}</button>-->
+    <button (click)="loadGame()">Load Game</button>
+    <div *ngIf="isLoaded">
+      <div>
+        <tbody>
+        <tr *ngFor="let raw of chessboard; let i = index">
+          <td *ngFor="let column of raw; let j=index" class="pieceSetup"
+              (drop)="drop($event)"
+              (dragover)="allowDrop($event)">
+            <!--<button ngDraggable class="border" id="{{i}}{{j}}"
+                (click)="testButton(i, j)"
+                (started)="onDragBegin($event, i, j)"
+             dragStart  (stopped)="onDragEnd($event, i, j)"
+                (movingOffset)="onMoving($event, i, j)"
+                (endOffset)="onMoveEnd($event, i, j)"> R: {{ getRaw(i) }} C: {{ j }}</button>-->
+            <!--id="{{ getRaw(i) }}{{j}}"-->
+            <!--R: {{ getRaw(i) }} C: {{ j }}  -->
 
-          <button draggable="true" class="border" id="{{getRaw(i)}}{{j}}"
-                  (dragstart)="dragStart($event, i, j)">
-            R: {{ getRaw(i) }} C: {{ j }}
-          </button>
-        </td>
-      </tr>
-      </tbody>
+            <button draggable="true" class="border" id="{{ getRaw(i) }}{{j}}"
+                    (dragstart)="dragStart($event, i, j)">
+              <span *ngIf="!column.isFaceDown">
+                {{column.piece}}
+              </span>
+              <span *ngIf="column.isFaceDown" (click)="toggleFaceDownPiece( $event, i, j )">
+                Click to See Piece
+              </span>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </div>
+
     </div>
-
-  </div>
 
