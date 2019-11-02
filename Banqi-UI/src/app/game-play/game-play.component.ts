@@ -14,7 +14,7 @@ export class GamePlayComponent implements OnInit {
   isLoaded: boolean = false;
   boardPosition;
   GET_GAME = "http://localhost:31406/getGame";
-  GAME_NOT_LOADED = "There is no game to load";
+  GAME_NOT_LOADED = "There is no game to load! Please invite your friend and start the game again!";
   FLIP_PIECE = "http://localhost:31406/flip";
 
   constructor( private http: HttpClient,
@@ -148,7 +148,7 @@ export class GamePlayComponent implements OnInit {
 
     return this.http.get<any>( this.GET_GAME, {headers: httpOptions.headers, params: params})
       .subscribe(( result ) => {
-        if( result.board ) {
+        if( result && result.board ) {
           for( let  raw: number = 0; raw < this.boardPosition.length; raw += 1 ) {
             this.chessboard[raw] = this.boardPosition[raw];
             for( let column: number = 0; column< this.boardPosition[0].length; column += 1 ) {
@@ -160,7 +160,7 @@ export class GamePlayComponent implements OnInit {
           this.isLoaded = true;
         } else {
           this._snackBar.open(this.GAME_NOT_LOADED, "", {
-            duration: 5000,
+            duration: 500000,
             horizontalPosition: "right",
             verticalPosition: "top",
             panelClass: ["customSnackBar"]
@@ -207,18 +207,49 @@ export class GamePlayComponent implements OnInit {
   }
 
   drop( event ) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    const userNickName = this.userDetails.userName;
+
     event.preventDefault();
     let data = event.dataTransfer.getData("text");
-    if( event.target.nodeName.toLowerCase() !== 'button'&&
-        event.currentTarget.nodeName.toLowerCase() === 'td' ) {
-      if( event.currentTarget.childElementCount == 1 ) {
-        event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data))
-      } else {
-        event.target.appendChild(document.getElementById(data));
-      }
-    } else {
-      event.target.replaceWith(document.getElementById(data))
+    const from = data,
+      to = event.currentTarget.id && event.currentTarget.id.split("_")[1];
+
+    if( from !== to ) {
+      let params = new HttpParams().set('user', userNickName).set('from', from ).set("to", to);
+
+      return this.http.get<any>( this.FLIP_PIECE, {headers: httpOptions.headers, params: params})
+        .subscribe(( result ) => {
+
+          if( result[0].validMove.toLowerCase() == 'true' ) {
+            if( event.target.nodeName.toLowerCase() !== 'button'&&
+              event.currentTarget.nodeName.toLowerCase() === 'td' ) {
+              if( event.currentTarget.childElementCount == 1 ) {
+                event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data))
+              } else {
+                event.target.appendChild(document.getElementById(data));
+              }
+            } else {
+              event.target.replaceWith(document.getElementById(data))
+            }
+          }
+          else {
+            this._snackBar.open("Invalid Move!", "", {
+              duration: 5000,
+              horizontalPosition: "right",
+              verticalPosition: "top",
+              panelClass: ["customSnackBar"]
+
+            });
+          }
+        });
+
     }
+
     //if( !this.dummyTest ) {
       // event.target.replaceWith(document.getElementById(data))
     // } else {
@@ -240,7 +271,7 @@ export class GamePlayComponent implements OnInit {
   }
 
   toggleFaceDownPiece( event, raw, column ) {
-    const position: string = this.getRaw(raw) + column ;
+    const position: string = this.getRaw(raw) +( column + 1 );
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'

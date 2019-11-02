@@ -29,7 +29,7 @@
       this.userDetails.invitationSubject.subscribe( ( value ) => {
         this.invitationFromUserName = value.invitaionSentFrom ;
         console.log("Updated after the invitation");
-      } )
+      } );
 
       const httpOptions = {
         headers: new HttpHeaders({

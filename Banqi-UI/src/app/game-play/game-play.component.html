@@ -5,7 +5,7 @@
         <tr *ngFor="let raw of chessboard; let i = index">
           <td *ngFor="let column of raw; let j=index" class="pieceSetup"
               (drop)="drop($event)"
-              (dragover)="allowDrop($event)">
+              (dragover)="allowDrop($event)" id="TD_{{ getRaw(i) }}{{j}}">
             <!--<button ngDraggable class="border" id="{{i}}{{j}}"
                 (click)="testButton(i, j)"
                 (started)="onDragBegin($event, i, j)"
@@ -17,12 +17,29 @@
 
             <button draggable="true" class="border" id="{{ getRaw(i) }}{{j}}"
                     (dragstart)="dragStart($event, i, j)">
-              <span *ngIf="!column.isFaceDown">
+              <div *ngIf="!column.isFaceDown; else elseBlock" >
                 {{column.piece}}
-              </span>
-              <span *ngIf="column.isFaceDown" (click)="toggleFaceDownPiece( $event, i, j )">
+              </div>
+              <ng-template #elseBlock>
+                <div (click)="toggleFaceDownPiece( $event, i, j )">
                 Click to See Piece
-              </span>
+                </div>
+              </ng-template>
+              <!--<div *ngIf="!column.isFaceDown" (click)="toggleFaceDownPiece( $event, i, j )">
+                Click to See Piece
+              </div>-->
+
+              <!--<div *ngIf="!column.isFaceDown; then thenBlock else elseBlock"></div>
+              <ng-template #thenBlock>
+                <div>
+                  {{column.piece}}
+                </div>
+              </ng-template>
+              <ng-template #elseBlock>
+                <div (click)="toggleFaceDownPiece( $event, i, j )">
+                  Click to See Piece
+                </div>
+              </ng-template>-->
             </button>
           </td>
         </tr>

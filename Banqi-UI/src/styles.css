@@ -303,10 +303,7 @@ svg#clouds {
 }
 
 .customSnackBar{
-  background: white !important;
+  background: #d4ebf4 !important;
   color: black;
-}
-
-.customSnackBar span {
-
+  margin-top: 80px !important;
 }
