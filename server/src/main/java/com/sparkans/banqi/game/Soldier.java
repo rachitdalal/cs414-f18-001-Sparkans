@@ -9,7 +9,7 @@ public class Soldier extends BanqiPiece {
 	ArrayList<String> legalMoves;
 
 	@Expose
-	private static final String name = "Soldier";
+	private final String piece  = "Soldier";
 
 	public Soldier(BanqiBoard board, Color color) {
 		super(board, color);

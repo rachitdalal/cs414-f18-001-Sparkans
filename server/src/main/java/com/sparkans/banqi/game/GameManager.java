@@ -8,16 +8,16 @@ public class GameManager {
 
     private ArrayList<BanqiBoard> boards = new ArrayList<BanqiBoard>();
 
-    public BanqiPiece[][] addGame(UserBean user1, UserBean user2){
+    public BanqiBoard addGame(UserBean user1, UserBean user2){
         BanqiBoard b = new BanqiBoard(user1,user2);
         boards.add(b);
-        return b.getBoard();
+        return b;
     }
 
-    public BanqiPiece[][] getGame(String user1, String user2){
+    public BanqiBoard getGame(String user1, String user2){
         for(BanqiBoard b : boards){
             if(b.getUser1().getNickname().equals(user1) && b.getUser2().getNickname().equals(user2)){
-                return b.getBoard();
+                return b;
             }
         }
         return null;

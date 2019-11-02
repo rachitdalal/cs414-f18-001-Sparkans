@@ -19,12 +19,11 @@ public class UserObject {
 
 	public UserObject() {
 
-		conn = MySqlCon.getConnection();
 	}
 
-	public UserObject returnUser(String user) throws SQLException {
-
-		UserObject userObject = new UserObject();
+	public UserBean returnUser(String user) throws SQLException {
+		conn = MySqlCon.getConnection();
+		UserBean userObject = new UserBean();
 		
 		try
 		{
@@ -34,7 +33,7 @@ public class UserObject {
 			resultSet = statement.executeQuery();
 
 			userObject.nickName = resultSet.getString("nickname");
-			userObject.email_id = resultSet.getString("email_id");
+			userObject.email = resultSet.getString("email_id");
 			userObject.isActive_flag = resultSet.getString("isActive_flag");
 			userObject.isLoggedIn_flag = resultSet.getString("isLoggedIn_flag");
 

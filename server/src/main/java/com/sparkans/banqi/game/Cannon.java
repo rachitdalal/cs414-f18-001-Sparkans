@@ -8,7 +8,7 @@ public class Cannon extends BanqiPiece {
 	
 	ArrayList<String> legalMoves;
 	@Expose
-	private static final String name = "Cannon";
+	private final String piece = "Cannon";
 
 
 	public Cannon(BanqiBoard board, Color color) {
