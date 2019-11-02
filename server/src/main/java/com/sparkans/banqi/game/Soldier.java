@@ -1,7 +1,6 @@
 package com.sparkans.banqi.game;
 
 import com.google.gson.annotations.Expose;
-
 import java.util.ArrayList;
 
 public class Soldier extends BanqiPiece {
@@ -9,7 +8,7 @@ public class Soldier extends BanqiPiece {
 	ArrayList<String> legalMoves;
 
 	@Expose
-	private final String piece  = "Soldier";
+	private final String piece = "Soldier";
 
 	public Soldier(BanqiBoard board, Color color) {
 		super(board, color);
@@ -43,28 +42,33 @@ public class Soldier extends BanqiPiece {
 		return legalMoves;
 	}
 
-	//Helper Method to determine if the Soldier's move is legal.
+	// Helper Method to determine if the Soldier's move is legal.
 	private boolean moveSoldier(String fromPosition, String toPosition) throws IllegalMoveException {
 		boolean inValid = false;
-		try 
-		{
+		try {
 			int sourceRow = this.row;
 			int sourceColumn = this.column;
+			Color sourceColor = this.color;
 
 			// to avoid Null pointer Exception if destination piece is null.
 			BanqiPiece destinationPiece = board.getPiece(toPosition);
 			int destRow = destinationPiece != null ? destinationPiece.row : parsePosition(toPosition).get("row");
-			int destColumn = destinationPiece != null ? destinationPiece.column : parsePosition(toPosition).get("column");
+			int destColumn = destinationPiece != null ? destinationPiece.column
+					: parsePosition(toPosition).get("column");
+			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-			//can capture only a General
-			if(!destinationPiece.toString().equals("WG") || !destinationPiece.toString().equals("RG"))
+			// Can capture only a General
+			if (!destinationPiece.toString().equals("WG") || !destinationPiece.toString().equals("RG"))
 				return inValid;
-			//Soldier cannot move diagonally.
+			// Soldier cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
 				return inValid;
-			//Soldier can move only one square horizontal or vertical.
-			if(Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1 )
-				return inValid;				
+			// Soldier can move only one square horizontal or vertical.
+			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
+				return inValid;
+			// Soldier can capture only opponent's piece.
+			if (destinationColor != null && sourceColor.equals(destinationColor))
+				return inValid;
 
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Invalid Move. Moving to a destination outside the board");
