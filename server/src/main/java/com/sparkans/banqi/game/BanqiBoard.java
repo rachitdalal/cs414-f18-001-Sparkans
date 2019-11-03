@@ -38,8 +38,11 @@ public class BanqiBoard {
 		return board;
 	}
 
-	// initialize the board to standard Banqi opening state
-	private void initialize() {
+	/*
+	 * initialize the board to standard Banqi opening state. all pieces face down in
+	 * random order.
+	 */
+	public void initialize() {
 		BanqiPiece[] pieces = new BanqiPiece[32];
 		Random r = new Random();
 
@@ -92,12 +95,10 @@ public class BanqiBoard {
 				randr = r.nextInt(4);
 				randc = r.nextInt(8);
 			}
-
 			board[randr][randc] = pieces[i];
 			pieces[i].row = randr;
 			pieces[i].column = randc;
 		}
-
 	}
 
 	// Helper Method to store row and column indexes as Key-Value Pair.
@@ -150,9 +151,9 @@ public class BanqiBoard {
 				board[row][column] = piece;
 				return true;
 			} else {
-				if (existingPiece.color.equals(piece.color)) {
+				if (existingPiece.color.equals(piece.color))
 					return false;
-				} else {
+				else {
 					piece.setPosition(position);
 					board[row][column] = piece;
 					return true;

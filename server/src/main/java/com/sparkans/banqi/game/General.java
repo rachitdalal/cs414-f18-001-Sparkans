@@ -54,8 +54,7 @@ public class General extends BanqiPiece {
 			// to avoid Null pointer Exception if destination piece is null.
 			BanqiPiece destinationPiece = board.getPiece(toPosition);
 			int destRow = destinationPiece != null ? destinationPiece.row : parsePosition(toPosition).get("row");
-			int destColumn = destinationPiece != null ? destinationPiece.column
-					: parsePosition(toPosition).get("column");
+			int destColumn = destinationPiece != null ? destinationPiece.column : parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
 			// cannot capture a Soldier
