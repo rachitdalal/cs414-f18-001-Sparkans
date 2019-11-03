@@ -137,10 +137,10 @@ public class MicroServer {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return "{\"registered\": \"false\"}";
+			return gson.toJson(e);
 		}
         catch (Exception e){
-            return "{\"registered\": \"false\"}";
+            return gson.toJson(e);
         }
 		return "{\"registered\": \"true\"}";
 
