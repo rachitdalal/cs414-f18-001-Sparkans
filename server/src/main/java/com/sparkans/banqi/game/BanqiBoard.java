@@ -19,7 +19,7 @@ public class BanqiBoard {
 	// initialize the board to 4x8 array
 	public BanqiBoard() {
 		if (this.board == null) {
-			this.board = new BanqiPiece[4][8];
+			this.board = new BanqiPiece[8][4];
 			initialize();
 		}
 	}
@@ -29,7 +29,7 @@ public class BanqiBoard {
 		this.user2 = user2;
 
 		if (this.board == null) {
-			this.board = new BanqiPiece[4][8];
+			this.board = new BanqiPiece[8][4];
 			initialize();
 		}
 	}
@@ -91,11 +91,11 @@ public class BanqiBoard {
 			int randr = r.nextInt(4);
 			int randc = r.nextInt(8);
 			// if a spot is already assigned try a different one
-			while (board[randr][randc] != null) {
+			while (board[randc][randr] != null) {
 				randr = r.nextInt(4);
 				randc = r.nextInt(8);
 			}
-			board[randr][randc] = pieces[i];
+			board[randc][randr] = pieces[i];
 			pieces[i].row = randr;
 			pieces[i].column = randc;
 		}

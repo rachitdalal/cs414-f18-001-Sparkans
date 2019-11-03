@@ -137,10 +137,10 @@ public class MicroServer {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return "{\"registered\": \"false\"}";
+			return gson.toJson(e);
 		}
         catch (Exception e){
-            return "{\"registered\": \"false\"}";
+            return gson.toJson(e);
         }
 		return "{\"registered\": \"true\"}";
 
@@ -254,7 +254,7 @@ public class MicroServer {
                 user2.setNickName(i.from);
 
                 gameManager.addGame(user1,user2);
-                return "[{\"inviteStatus\":\"accepted\"}]";
+                return "[{\"inviteStatus\":\"accepted\"}, {\"inviteFrom\":\""+ user2.getNickname()+ "\"} ]";
             }
         }
 
