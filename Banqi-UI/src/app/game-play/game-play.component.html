@@ -1,11 +1,14 @@
-    <button (click)="loadGame()">Load Game</button>
+<html>
+<button (click)="loadGame()">Load Game</button>
+<body >
+
     <div *ngIf="isLoaded">
-      <div>
-        <tbody>
-        <tr *ngFor="let raw of chessboard; let i = index">
-          <td *ngFor="let column of raw; let j=index" class="pieceSetup"
+        <tbody id = "board">
+        <div class="banqibaord">
+        <tr class="white"  *ngFor="let raw of chessboard; let i = index">
+          <td class="grey" *ngFor="let column of raw; let j=index" class="pieceSetup"
               (drop)="drop($event)"
-              (dragover)="allowDrop($event)" id="TD_{{ getRaw(i) }}{{j+1}}">
+              (dragover)="allowDrop($event)" id="TD_{{ getRaw(i) }}{{j}}">
             <!--<button ngDraggable class="border" id="{{i}}{{j}}"
                 (click)="testButton(i, j)"
                 (started)="onDragBegin($event, i, j)"
@@ -15,9 +18,9 @@
             <!--id="{{ getRaw(i) }}{{j}}"-->
             <!--R: {{ getRaw(i) }} C: {{ j }}  -->
 
-            <button draggable="true" class="border" id="{{ getRaw(i) }}{{j+1}}"
+            <button draggable="true"  id="{{ getRaw(i) }}{{j}}"
                     (dragstart)="dragStart($event, i, j)">
-              <div [ngClass]="{ 'red' : column.color === 'RED', 'white' : column.color === 'WHITE'    }" *ngIf="!column.isFaceDown; else elseBlock" >
+              <div *ngIf="!column.isFaceDown; else elseBlock" >
                 {{column.piece}}
               </div>
               <ng-template #elseBlock>
@@ -43,8 +46,10 @@
             </button>
           </td>
         </tr>
+        </div>
         </tbody>
       </div>
+</body>
 
-    </div>
+</html>
 
