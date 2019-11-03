@@ -25,116 +25,7 @@ export class GamePlayComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.boardPosition = [
-      [{"piece": "Advisor", "row": 0, "column": 0, "color": "RED", "isFaceDown": true},
-        {
-        "piece": "Horse",
-        "row": 0,
-        "column": 1,
-        "color": "RED",
-        "isFaceDown": true
-      },
-        {"piece": "Advisor", "row": 0, "column": 2, "color": "WHITE", "isFaceDown": true},
-        {
-        "piece": "Advisor",
-        "row": 0,
-        "column": 3,
-        "color": "WHITE",
-        "isFaceDown": true
-      },
-        {"piece": "Advisor", "row": 0, "column": 4, "color": "RED", "isFaceDown": true},
-        {
-        "piece": "Chariot",
-        "row": 0,
-        "column": 5,
-        "color": "RED",
-        "isFaceDown": true
-      },
-        {"piece": "Soldier", "row": 0, "column": 6, "color": "WHITE", "isFaceDown": true},
-        {
-        "piece": "Minister",
-        "row": 0,
-        "column": 7,
-        "color": "WHITE",
-        "isFaceDown": true
-      }],
-      [{"piece": "Cannon", "row": 1, "column": 0, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Minister",
-        "row": 1,
-        "column": 1,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Chariot", "row": 1, "column": 2, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Cannon",
-        "row": 1,
-        "column": 3,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Horse", "row": 1, "column": 4, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 1,
-        "column": 5,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "General", "row": 1, "column": 6, "color": "RED", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 1,
-        "column": 7,
-        "color": "RED",
-        "isFaceDown": true
-      }],
 
-      [{"piece": "Horse", "row": 2, "column": 0, "color": "RED", "isFaceDown": true}, {
-        "piece": "Horse",
-        "row": 2,
-        "column": 1,
-        "color": "WHITE",
-        "isFaceDown": true
-      }, {"piece": "Cannon", "row": 2, "column": 2, "color": "RED", "isFaceDown": true}, {
-        "piece": "Chariot",
-        "row": 2,
-        "column": 3,
-        "color": "WHITE",
-        "isFaceDown": true
-      }, {"piece": "Minister", "row": 2, "column": 4, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Chariot",
-        "row": 2,
-        "column": 5,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Soldier", "row": 2, "column": 6, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "General",
-        "row": 2,
-        "column": 7,
-        "color": "WHITE",
-        "isFaceDown": true
-      }],
-
-      [{"piece": "Soldier", "row": 3, "column": 0, "color": "RED", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 3,
-        "column": 1,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Soldier", "row": 3, "column": 2, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 3,
-        "column": 3,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Soldier", "row": 3, "column": 4, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Minister",
-        "row": 3,
-        "column": 5,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Cannon", "row": 3, "column": 6, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 3,
-        "column": 7,
-        "color": "WHITE",
-        "isFaceDown": true
-      }]]
   }
 
   loadGame() {
@@ -149,6 +40,7 @@ export class GamePlayComponent implements OnInit {
     return this.http.get<any>( this.GET_GAME, {headers: httpOptions.headers, params: params})
       .subscribe(( result ) => {
         if( result && result.board ) {
+          this.boardPosition = result.board
           for( let  raw: number = 0; raw < this.boardPosition.length; raw += 1 ) {
             this.chessboard[raw] = this.boardPosition[raw];
             for( let column: number = 0; column< this.boardPosition[0].length; column += 1 ) {
