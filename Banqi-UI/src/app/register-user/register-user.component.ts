@@ -60,7 +60,7 @@ export class RegisterUserComponent implements OnInit {
 
     return this.http.post<any>( this.REGISTER_USER_URL, userDetails, httpOptions)
       .subscribe(( results ) => {
-        if( results.registered ){
+        if( results.registered !== 'false' ){
           /* TODO: emit subject from here to app component to display name on the header*/
           this._snackBar.open("User has been registered !", "", {
             duration: 5000,
@@ -71,6 +71,14 @@ export class RegisterUserComponent implements OnInit {
           });
           // this.userName = userDetails['nickName'];
          this.router.navigate(['/signin']);
+        } else {
+          this._snackBar.open( results.detailMessage, "", {
+            duration: 5000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+
+          });
         }
       // this.result = results;
     }, (error) => {

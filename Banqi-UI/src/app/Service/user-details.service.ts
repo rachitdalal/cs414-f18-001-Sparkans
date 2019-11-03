@@ -9,6 +9,7 @@ export class UserDetailsService {
   private _userName: string;
   public invitationSubject = new Subject<any>();
   private _invitedUserName: String;
+  private _userName2: string;
 
   get userName(): string {
     return this._userName;
@@ -25,6 +26,14 @@ export class UserDetailsService {
 
   set invitedUserName(value: String) {
     this._invitedUserName = value;
+  }
+
+  get userName2(): string {
+    return this._userName2;
+  }
+
+  set userName2(value: string) {
+    this._userName2 = value;
   }
 
   constructor() { }

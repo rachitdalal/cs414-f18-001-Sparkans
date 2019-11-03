@@ -48,7 +48,7 @@
                   && !this.haveYouGotInvitation)  {
           this.haveYouGotInvitation = true;
           this._snackBar.open("You have got Invitation!", "", {
-            duration: 10000,
+            duration: 5000,
             horizontalPosition: "right",
             verticalPosition: "top",
             panelClass: ["customSnackBar"]
@@ -61,12 +61,13 @@
         }
         /* user who sent invitation Navigates to gamePlay route */
         else if( data[0].inviteStatus.toLowerCase() == "accepted" ) {
+          this.userDetails.userName2 = data[2].inviteTo;
           this.gamePlay();
         }
 
       }, ( error ) => {
         this._snackBar.open("Something Went Wrong!!! ", "", {
-          duration: 10000,
+          duration: 5000,
           horizontalPosition: "right",
           verticalPosition: "top",
           panelClass: ["customSnackBar"]
@@ -94,36 +95,45 @@
     }
 
     onInvite( inviteUser: HTMLInputElement ) {
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json'
-          })
-        };
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
       const userNickName = this.userDetails.userName;
-      let params = new HttpParams().set('from', userNickName).set('to',  inviteUser.value);
 
-      return this.http.get<any>( this.SEND_INVITE, {headers: httpOptions.headers, params: params})
-        .subscribe(( results ) => {
-          if( results[0].inviteFor !== "" &&  results[1].from !== "" ){
-            console.log("Working httpGet Invite");
-            /*this.router.navigate(['gamePlay']);*/
-            this.userDetails.invitationSubject.next({invitaionSentFrom: this.userDetails.userName});
-            this.userDetails.invitedUserName = this.userDetails.userName;
-            this.isInvitationSentByThisUser = true;
-            this._snackBar.open("Invitation has been sent", "", {
-              duration: 10000,
-              horizontalPosition: "right",
-              verticalPosition: "top",
-              panelClass: ["customSnackBar"]
+      let params = new HttpParams().set('from', userNickName).set('to', inviteUser.value);
+      if (userNickName.toLowerCase() !== inviteUser.value.toLowerCase()) {
+        return this.http.get<any>(this.SEND_INVITE, {headers: httpOptions.headers, params: params})
+          .subscribe((results) => {
+            if (results[0].inviteFor !== "" && results[1].from !== "") {
+              console.log("Working httpGet Invite");
+              this.userDetails.invitationSubject.next({invitaionSentFrom: this.userDetails.userName});
+              this.userDetails.invitedUserName = this.userDetails.userName;
+              this.isInvitationSentByThisUser = true;
+              this._snackBar.open("Invitation has been sent", "", {
+                duration: 5000,
+                horizontalPosition: "right",
+                verticalPosition: "top",
+                panelClass: ["customSnackBar"]
 
-            });
+              });
 
-          }
-          // this.result = results;
-        }, (error) => {
-          console.log(" Error Working httpGet Invite user ", error);
+            }
+            // this.result = results;
+          }, (error) => {
+            console.log(" Error Working httpGet Invite user ", error);
+          });
+      } else {
+        this._snackBar.open("You cannot send request to yourself", "", {
+          duration: 5000,
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          panelClass: ["customSnackBar"]
+
         });
 
+      }
     }
 
     onAccept() {
@@ -137,7 +147,10 @@
 
       return this.http.get<any>( this.ACCEPT_INVITATION, {headers: httpOptions.headers, params: params})
         .subscribe(( results ) => {
-          this.gamePlay();
+          if( results[0].inviteStatus  &&  results[1].inviteFrom ) {
+            this.userDetails.userName2 = results[1].inviteFrom;
+            this.gamePlay();
+          }
         }, (error) => {
           console.log(" Error Working httpGet Invite user ", error);
         });

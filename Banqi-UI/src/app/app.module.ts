@@ -17,6 +17,7 @@ import { GamePlayComponent } from './game-play/game-play.component';
 
 import { InviteComponent } from './invite/invite.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {UserDetailsService} from "./Service/user-details.service";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     HttpClientModule
 
   ],
-  providers: [],
+  providers: [ UserDetailsService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

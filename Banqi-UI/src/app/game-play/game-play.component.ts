@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {UserDetailsService} from "../Service/user-details.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-game-play',
@@ -13,19 +14,26 @@ export class GamePlayComponent implements OnInit {
   dummyTest: boolean = false;
   isLoaded: boolean = false;
   boardPosition;
+  subject;
   GET_GAME = "http://localhost:31406/getGame";
   GAME_NOT_LOADED = "There is no game to load! Please invite your friend and start the game again!";
   FLIP_PIECE = "http://localhost:31406/flip";
 
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
-               private _snackBar: MatSnackBar ) {
+               private _snackBar: MatSnackBar,
+               private route: ActivatedRoute) {
 
       this.chessboard = [];
   }
 
   ngOnInit() {
 
+    this.subject = this.route
+      .data
+      .subscribe(( username ) => {
+        console.log(username);
+      });
   }
 
   loadGame() {
@@ -35,12 +43,13 @@ export class GamePlayComponent implements OnInit {
       })
     };
     const userNickName = this.userDetails.userName;
-    let params = new HttpParams().set('user1', userNickName).set('user2',  "tester11");
+    const user2NickName = this.userDetails.userName2;
+    let params = new HttpParams().set('user1', userNickName).set('user2',  user2NickName);
 
     return this.http.get<any>( this.GET_GAME, {headers: httpOptions.headers, params: params})
       .subscribe(( result ) => {
         if( result && result.board ) {
-          this.boardPosition = result.board
+          this.boardPosition = result.board;
           for( let  raw: number = 0; raw < this.boardPosition.length; raw += 1 ) {
             this.chessboard[raw] = this.boardPosition[raw];
             for( let column: number = 0; column< this.boardPosition[0].length; column += 1 ) {
@@ -79,7 +88,7 @@ export class GamePlayComponent implements OnInit {
       case 3:
         return "d";
         break;
-        default:
+      default:
           break;
     }
 
