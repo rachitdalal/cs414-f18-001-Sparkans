@@ -213,7 +213,7 @@ public class BanqiBoard {
 	}
 
 	private boolean faceUp(BanqiPiece piece) {
-		return false;
+		return !piece.isFaceDown;
 	}
 
 	public UserBean getUser1() {
