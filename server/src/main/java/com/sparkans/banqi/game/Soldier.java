@@ -18,9 +18,9 @@ public class Soldier extends BanqiPiece {
 	@Override
 	public String toString() {
 		if (this.color.equals(Color.WHITE))
-			return "WG";
+			return "WS";
 		else
-			return "RG";
+			return "RS";
 	}
 
 	@Override
@@ -29,8 +29,8 @@ public class Soldier extends BanqiPiece {
 		String fromPosition = this.getPosition();
 		String toPosition;
 
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 8; j++) {
 				toPosition = Character.toString((char) (97 + j)) + String.valueOf(i + 1);
 				try {
 					if (moveSoldier(fromPosition, toPosition))
