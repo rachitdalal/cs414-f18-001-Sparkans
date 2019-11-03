@@ -5,7 +5,7 @@
         <tr *ngFor="let raw of chessboard; let i = index">
           <td *ngFor="let column of raw; let j=index" class="pieceSetup"
               (drop)="drop($event)"
-              (dragover)="allowDrop($event)" id="TD_{{ getRaw(i) }}{{j}}">
+              (dragover)="allowDrop($event)" id="TD_{{ getRaw(i) }}{{j+1}}">
             <!--<button ngDraggable class="border" id="{{i}}{{j}}"
                 (click)="testButton(i, j)"
                 (started)="onDragBegin($event, i, j)"
@@ -15,7 +15,7 @@
             <!--id="{{ getRaw(i) }}{{j}}"-->
             <!--R: {{ getRaw(i) }} C: {{ j }}  -->
 
-            <button draggable="true" class="border" id="{{ getRaw(i) }}{{j}}"
+            <button draggable="true" class="border" id="{{ getRaw(i) }}{{j+1}}"
                     (dragstart)="dragStart($event, i, j)">
               <div *ngIf="!column.isFaceDown; else elseBlock" >
                 {{column.piece}}
