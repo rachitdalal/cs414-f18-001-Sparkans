@@ -31,7 +31,7 @@ public class Minister extends BanqiPiece {
 
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 8; j++) {
-				toPosition = Character.toString((char) (97 + j)) + String.valueOf(i + 1);
+				toPosition = Character.toString((char) (97 + i)) + String.valueOf(j + 1);
 				try {
 					if (moveMinister(fromPosition, toPosition))
 						legalMoves.add(toPosition);
@@ -59,7 +59,7 @@ public class Minister extends BanqiPiece {
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
 			// can capture only a Soldier
-			if (!destinationPiece.toString().equals("WS") || !destinationPiece.toString().equals("RS"))
+			if (!(destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS")))
 				return inValid;
 			// Minister cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))

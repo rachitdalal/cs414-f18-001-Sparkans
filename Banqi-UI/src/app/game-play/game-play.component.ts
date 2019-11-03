@@ -142,7 +142,7 @@ export class GamePlayComponent implements OnInit {
 
           if( result[0].validMove.toLowerCase() == 'true' ) {
             if( event.target.nodeName.toLowerCase() !== 'button'&&
-              event.currentTarget.nodeName.toLowerCase() === 'td' ) {
+              event.currentTarget && event.currentTarget.nodeName.toLowerCase() === 'td' ) {
               if( event.currentTarget.childElementCount == 1 ) {
                 /* Replacing/ Capturing the piece when move is legal */
                 event.target.getElementsByClassName("border").length > 0 ? event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data)) :

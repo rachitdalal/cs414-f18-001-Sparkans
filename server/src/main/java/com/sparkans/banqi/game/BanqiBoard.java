@@ -162,14 +162,14 @@ public class BanqiBoard {
 
 			if (null == existingPiece) {
 				piece.setPosition(position);
-				board[row][column] = piece;
+				board[column][row] = piece;
 				return true;
 			} else {
 				if (existingPiece.color.equals(piece.color))
 					return false;
 				else {
 					piece.setPosition(position);
-					board[row][column] = piece;
+					board[column][row] = piece;
 					return true;
 				}
 			}
