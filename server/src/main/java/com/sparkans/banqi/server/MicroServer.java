@@ -219,7 +219,7 @@ public class MicroServer {
         for(Invitation in:invites){
             if((in.to.equals(User) || in.from.equals(User)) && in.accepted == true){
                 System.out.println(User +"[{\"inviteStatus\":\"accepted\"},{\"inviteFrom\":\"" + in.from + "\"}]");
-                return "[{\"inviteStatus\":\"accepted\"},{\"inviteFrom\":\"" + in.from + "\"}]";
+                return "[{\"inviteStatus\":\"accepted\"},{\"inviteFrom\":\"" + in.from + "\"}, {\"inviteTo\":\"" + in.to + "\"}]";
             }
             if(in.to.equals(User)){
                 System.out.println(User + "[{\"inviteStatus\":\"not accepted\"},{\"inviteFrom\":\"" + in.from + "\"}]");
