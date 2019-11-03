@@ -1,7 +1,6 @@
 package com.sparkans.banqi.game;
 
 import com.google.gson.annotations.Expose;
-
 import java.util.ArrayList;
 
 public class Minister extends BanqiPiece {
@@ -9,7 +8,7 @@ public class Minister extends BanqiPiece {
 	ArrayList<String> legalMoves;
 
 	@Expose
-	private static final String name = "Minister";
+	private final String piece = "Minister";
 
 	public Minister(BanqiBoard board, Color color) {
 		super(board, color);
@@ -47,25 +46,30 @@ public class Minister extends BanqiPiece {
 	private boolean moveMinister(String fromPosition, String toPosition) throws IllegalMoveException {
 
 		boolean inValid = false;
-		try 
-		{
+		try {
 			int sourceRow = this.row;
 			int sourceColumn = this.column;
+			Color sourceColor = this.color;
 
 			// to avoid Null pointer Exception if destination piece is null.
 			BanqiPiece destinationPiece = board.getPiece(toPosition);
 			int destRow = destinationPiece != null ? destinationPiece.row : parsePosition(toPosition).get("row");
-			int destColumn = destinationPiece != null ? destinationPiece.column : parsePosition(toPosition).get("column");
+			int destColumn = destinationPiece != null ? destinationPiece.column
+					: parsePosition(toPosition).get("column");
+			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-			//can capture only a Soldier
-			if(!destinationPiece.toString().equals("WS") || !destinationPiece.toString().equals("RS"))
+			// can capture only a Soldier
+			if (!destinationPiece.toString().equals("WS") || !destinationPiece.toString().equals("RS"))
 				return inValid;
-			//Minister cannot move diagonally.
+			// Minister cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
 				return inValid;
-			//Minister can move only one square horizontal or vertical.
-			if(Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1 )
-				return inValid;				
+			// Minister can move only one square horizontal or vertical.
+			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
+				return inValid;
+			// Minister can capture only opponent's piece.
+			if (destinationColor != null && sourceColor.equals(destinationColor))
+				return inValid;
 
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Invalid Move. Moving to a destination outside the board");
@@ -73,4 +77,3 @@ public class Minister extends BanqiPiece {
 		return !inValid;
 	}
 }
-

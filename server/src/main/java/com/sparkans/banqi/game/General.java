@@ -1,7 +1,6 @@
 package com.sparkans.banqi.game;
 
 import com.google.gson.annotations.Expose;
-
 import java.util.ArrayList;
 
 public class General extends BanqiPiece {
@@ -9,7 +8,7 @@ public class General extends BanqiPiece {
 	ArrayList<String> legalMoves;
 
 	@Expose
-	private static final String name = "General";
+	private final String piece = "General";
 
 	public General(BanqiBoard board, Color color) {
 		super(board, color);
@@ -43,29 +42,33 @@ public class General extends BanqiPiece {
 		return legalMoves;
 	}
 
-	//Helper Method to determine if the General's move is legal.
+	// Helper Method to determine if the General's move is legal.
 	private boolean moveGeneral(String fromPosition, String toPosition) throws IllegalMoveException {
 
 		boolean inValid = false;
-		try 
-		{
+		try {
 			int sourceRow = this.row;
 			int sourceColumn = this.column;
+			Color sourceColor = this.color;
 
 			// to avoid Null pointer Exception if destination piece is null.
 			BanqiPiece destinationPiece = board.getPiece(toPosition);
 			int destRow = destinationPiece != null ? destinationPiece.row : parsePosition(toPosition).get("row");
 			int destColumn = destinationPiece != null ? destinationPiece.column : parsePosition(toPosition).get("column");
+			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-			//cannot capture a Soldier
-			if(destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS"))
+			// cannot capture a Soldier
+			if (destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS"))
 				return inValid;
-			//General cannot move diagonally.
+			// General cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
 				return inValid;
-			//General can move only one square horizontal or vertical.
-			if(Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1 )
-				return inValid;				
+			// General can move only one square horizontal or vertical.
+			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
+				return inValid;
+			// General can capture only opponent's piece.
+			if (destinationColor != null && sourceColor.equals(destinationColor))
+				return inValid;
 
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Invalid Move. Moving to a destination outside the board");

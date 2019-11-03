@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {UserDetailsService} from "../Service/user-details.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-sign-in-component',
@@ -18,7 +19,8 @@ export class SignInComponentComponent implements OnInit {
 
   constructor( private http: HttpClient,
                private router: Router,
-               private userDetails: UserDetailsService ) { }
+               private userDetails: UserDetailsService,
+               private _snackBar: MatSnackBar ) { }
 
   ngOnInit() {
   }
@@ -46,11 +48,32 @@ export class SignInComponentComponent implements OnInit {
 
     return this.http.post<any>( this.SIGN_IN_URL, userDetails, httpOptions)
       .subscribe(( results ) => {
-        if( results.signedin ){
+        if( results.signedin && results.signedin !== "false" ){
+          this._snackBar.open("successfully Signed In !", "", {
+            duration: 5000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+
+          });
           this.userDetails.userName = value['nickName'];
           this.router.navigate(['invite']);
+        } else {
+          this._snackBar.open(results.detailMessage, "", {
+            duration: 5000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+          });
         }
       }, (error) => {
+        this._snackBar.open("Something Went Wrong!!", "", {
+          duration: 5000,
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          panelClass: ["customSnackBar"]
+
+        });
       });
 
   }

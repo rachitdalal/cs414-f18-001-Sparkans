@@ -65,6 +65,9 @@ public class MicroServer {
 		get("/sendInvite", this::sendInvite);
 		get("/acceptInvite", this::acceptInvite);
 		get("/waitingInvite", this::waitingInvite);
+		get("/getGame", this::getGame);
+		get("/checkValidMove", this::checkValidMove);
+		get("/flip", this::flip);
 
 		options("/*", (request,response)->{
 			String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -156,10 +159,10 @@ public class MicroServer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "{\"signedin\": \"false\"}";
+			return gson.toJson(e);
 		}
 		catch (Exception e){
-		    return "{\"signedin\": \"false\"}";
+		    return gson.toJson(e);
         }
 		return "{\"signedin\": \"true\"}";
 
@@ -233,26 +236,82 @@ public class MicroServer {
     }
 
 
-	private String acceptInvite(Request request, Response response){
+	private String acceptInvite(Request request, Response response) {
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");
 
 		//for now we create UserBean users from the name given but eventually we will pull users from DB
 		String user = request.queryParams("user");
+        UserObject userObj = new UserObject();
+
 		for(Invitation i : invites){
 		    if(i.to.equals(user)){
 		        i.accepted = true;
-				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 UserBean user1 = new UserBean();
-                user1.setNickName(i.to);
                 UserBean user2 = new UserBean();
+
+                user1.setNickName(i.to);
                 user2.setNickName(i.from);
-                /*return gson.toJson(gameManager.addGame(user1,user2), BanqiPiece[][].class);*/
+
+                gameManager.addGame(user1,user2);
                 return "[{\"inviteStatus\":\"accepted\"}]";
             }
         }
 
 		return "[{\"inviteStatus\":\"no invites\"}]";
+	}
+
+	private String getGame(Request request, Response response){
+        response.type("application/json");
+        response.header("Access-Control-Allow-Headers", "*");
+
+        String user1 = request.queryParams("user1");
+        String user2 = request.queryParams("user2");
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+        BanqiBoard b = gameManager.getGame(user1,user2);
+        if(b == null){
+        	b = gameManager.getGame(user2,user1);
+		}
+
+	    return gson.toJson(b);
+    }
+
+    private String checkValidMove(Request request, Response response){
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user = request.queryParams("user");
+		String from = request.queryParams("from");
+		String to = request.queryParams("to");
+
+		boolean valid = gameManager.updateBoard(user,from,to);
+
+		if(valid){
+			return "[{\"validMove\":\"true\"}]";
+		}
+		else{
+			return "[{\"validMove\":\"false\"}]";
+		}
+
+	}
+
+	private String flip(Request request, Response response){
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user = request.queryParams("user");
+		String pos = request.queryParams("position");
+
+		boolean flipped = gameManager.updateBoard(user,pos);
+
+		if(flipped){
+			return "[{\"flipped\":\"true\"}]";
+		}
+		else{
+			return "[{\"flipped\":\"false\"}]";
+		}
+
 	}
 
 	private String team(Request request, Response response) {

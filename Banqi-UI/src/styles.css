@@ -301,3 +301,9 @@ svg#clouds {
 .banqi-button-row a {
   margin-right: 8px;
 }
+
+.customSnackBar{
+  background: #d4ebf4 !important;
+  color: black;
+  margin-top: 80px !important;
+}

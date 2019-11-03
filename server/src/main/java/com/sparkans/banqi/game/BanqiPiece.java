@@ -1,7 +1,6 @@
 package com.sparkans.banqi.game;
 
 import com.google.gson.annotations.Expose;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

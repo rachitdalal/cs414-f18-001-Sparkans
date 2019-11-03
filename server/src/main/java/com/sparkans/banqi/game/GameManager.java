@@ -8,16 +8,16 @@ public class GameManager {
 
     private ArrayList<BanqiBoard> boards = new ArrayList<BanqiBoard>();
 
-    public BanqiPiece[][] addGame(UserBean user1, UserBean user2){
+    public BanqiBoard addGame(UserBean user1, UserBean user2){
         BanqiBoard b = new BanqiBoard(user1,user2);
         boards.add(b);
-        return b.getBoard();
+        return b;
     }
 
-    public BanqiPiece[][] getGame(String user1, String user2){
+    public BanqiBoard getGame(String user1, String user2){
         for(BanqiBoard b : boards){
             if(b.getUser1().getNickname().equals(user1) && b.getUser2().getNickname().equals(user2)){
-                return b.getBoard();
+                return b;
             }
         }
         return null;
@@ -33,8 +33,36 @@ public class GameManager {
         return false;
     }
 
-    public boolean updateBoard(UserBean user1, UserBean user2, String src, String dest){
+    public boolean updateBoard(String user, String src, String dest){
 
+        for(BanqiBoard b : boards) {
+            if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
+                try {
+                    b.move(src, dest);
+                    return true;
+                } catch (IllegalMoveException e) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean updateBoard(String user, String position){
+
+        for(BanqiBoard b : boards) {
+            if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
+                try {
+                    if(b.getPiece(position).isFaceDown = true){
+                        b.getPiece(position).isFaceDown = false;
+                        return true;
+
+                    }
+                } catch (IllegalPositionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return false;
     }
 }
