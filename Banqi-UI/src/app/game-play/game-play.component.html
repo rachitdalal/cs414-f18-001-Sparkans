@@ -17,7 +17,7 @@
 
             <button draggable="true" class="border" id="{{ getRaw(i) }}{{j+1}}"
                     (dragstart)="dragStart($event, i, j)">
-              <div *ngIf="!column.isFaceDown; else elseBlock" >
+              <div [ngClass]="{ 'red' : column.color === 'RED', 'white' : column.color === 'WHITE'    }" *ngIf="!column.isFaceDown; else elseBlock" >
                 {{column.piece}}
               </div>
               <ng-template #elseBlock>
