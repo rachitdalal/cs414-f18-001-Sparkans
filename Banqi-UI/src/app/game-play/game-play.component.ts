@@ -18,6 +18,7 @@ export class GamePlayComponent implements OnInit {
   GET_GAME = "http://localhost:31406/getGame";
   GAME_NOT_LOADED = "There is no game to load! Please invite your friend and start the game again!";
   FLIP_PIECE = "http://localhost:31406/flip";
+  CHECK_LEGAL_MOVE = "http://localhost:31406/checkValidMove";
 
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
@@ -123,7 +124,7 @@ export class GamePlayComponent implements OnInit {
     if( from !== to ) {
       let params = new HttpParams().set('user', userNickName).set('from', from ).set("to", to);
 
-      return this.http.get<any>( this.FLIP_PIECE, {headers: httpOptions.headers, params: params})
+      return this.http.get<any>( this.CHECK_LEGAL_MOVE, {headers: httpOptions.headers, params: params})
         .subscribe(( result ) => {
 
           if( result[0].validMove.toLowerCase() == 'true' ) {
