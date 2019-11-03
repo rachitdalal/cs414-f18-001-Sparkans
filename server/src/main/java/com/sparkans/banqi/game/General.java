@@ -31,7 +31,7 @@ public class General extends BanqiPiece {
 
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 8; j++) {
-				toPosition = Character.toString((char) (97 + j)) + String.valueOf(i + 1);
+				toPosition = Character.toString((char) (97 + i)) + String.valueOf(j + 1);
 				try {
 					if (moveGeneral(fromPosition, toPosition))
 						legalMoves.add(toPosition);
