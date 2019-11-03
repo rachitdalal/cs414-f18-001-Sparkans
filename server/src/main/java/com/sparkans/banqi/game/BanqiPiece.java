@@ -31,7 +31,7 @@ public abstract class BanqiPiece {
 	}
 
 	public String getPosition() {
-		return Character.toString((char) (97 + column)) + String.valueOf(row + 1);
+		return Character.toString((char) (row + 97)) + String.valueOf(column + 1);
 	}
 
 	public void setPosition(String position) throws IllegalPositionException {
@@ -41,8 +41,8 @@ public abstract class BanqiPiece {
 		if (!matcher.matches())
 			throw new IllegalPositionException("Illegal Position. Position should be between a1 through d8");
 
-		row = Integer.parseInt(String.valueOf(position.charAt(1))) - 1;
-		column = position.charAt(0) - 'a';
+		column = Integer.parseInt(String.valueOf(position.charAt(1))) - 1;
+		row = position.charAt(0) - 'a';
 	}
 
 	// Helper Method to store row and column indexes as Key-Value Pair.

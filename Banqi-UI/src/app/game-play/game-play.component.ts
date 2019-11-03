@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {UserDetailsService} from "../Service/user-details.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-game-play',
@@ -13,128 +14,27 @@ export class GamePlayComponent implements OnInit {
   dummyTest: boolean = false;
   isLoaded: boolean = false;
   boardPosition;
+  subject;
   GET_GAME = "http://localhost:31406/getGame";
   GAME_NOT_LOADED = "There is no game to load! Please invite your friend and start the game again!";
   FLIP_PIECE = "http://localhost:31406/flip";
+  CHECK_LEGAL_MOVE = "http://localhost:31406/checkValidMove";
 
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
-               private _snackBar: MatSnackBar ) {
+               private _snackBar: MatSnackBar,
+               private route: ActivatedRoute) {
 
       this.chessboard = [];
   }
 
   ngOnInit() {
-    this.boardPosition = [
-      [{"piece": "Advisor", "row": 0, "column": 0, "color": "RED", "isFaceDown": true},
-        {
-        "piece": "Horse",
-        "row": 0,
-        "column": 1,
-        "color": "RED",
-        "isFaceDown": true
-      },
-        {"piece": "Advisor", "row": 0, "column": 2, "color": "WHITE", "isFaceDown": true},
-        {
-        "piece": "Advisor",
-        "row": 0,
-        "column": 3,
-        "color": "WHITE",
-        "isFaceDown": true
-      },
-        {"piece": "Advisor", "row": 0, "column": 4, "color": "RED", "isFaceDown": true},
-        {
-        "piece": "Chariot",
-        "row": 0,
-        "column": 5,
-        "color": "RED",
-        "isFaceDown": true
-      },
-        {"piece": "Soldier", "row": 0, "column": 6, "color": "WHITE", "isFaceDown": true},
-        {
-        "piece": "Minister",
-        "row": 0,
-        "column": 7,
-        "color": "WHITE",
-        "isFaceDown": true
-      }],
-      [{"piece": "Cannon", "row": 1, "column": 0, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Minister",
-        "row": 1,
-        "column": 1,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Chariot", "row": 1, "column": 2, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Cannon",
-        "row": 1,
-        "column": 3,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Horse", "row": 1, "column": 4, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 1,
-        "column": 5,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "General", "row": 1, "column": 6, "color": "RED", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 1,
-        "column": 7,
-        "color": "RED",
-        "isFaceDown": true
-      }],
 
-      [{"piece": "Horse", "row": 2, "column": 0, "color": "RED", "isFaceDown": true}, {
-        "piece": "Horse",
-        "row": 2,
-        "column": 1,
-        "color": "WHITE",
-        "isFaceDown": true
-      }, {"piece": "Cannon", "row": 2, "column": 2, "color": "RED", "isFaceDown": true}, {
-        "piece": "Chariot",
-        "row": 2,
-        "column": 3,
-        "color": "WHITE",
-        "isFaceDown": true
-      }, {"piece": "Minister", "row": 2, "column": 4, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Chariot",
-        "row": 2,
-        "column": 5,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Soldier", "row": 2, "column": 6, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "General",
-        "row": 2,
-        "column": 7,
-        "color": "WHITE",
-        "isFaceDown": true
-      }],
-
-      [{"piece": "Soldier", "row": 3, "column": 0, "color": "RED", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 3,
-        "column": 1,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Soldier", "row": 3, "column": 2, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 3,
-        "column": 3,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Soldier", "row": 3, "column": 4, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Minister",
-        "row": 3,
-        "column": 5,
-        "color": "RED",
-        "isFaceDown": true
-      }, {"piece": "Cannon", "row": 3, "column": 6, "color": "WHITE", "isFaceDown": true}, {
-        "piece": "Soldier",
-        "row": 3,
-        "column": 7,
-        "color": "WHITE",
-        "isFaceDown": true
-      }]]
+    this.subject = this.route
+      .data
+      .subscribe(( username ) => {
+        console.log(username);
+      });
   }
 
   loadGame() {
@@ -144,11 +44,13 @@ export class GamePlayComponent implements OnInit {
       })
     };
     const userNickName = this.userDetails.userName;
-    let params = new HttpParams().set('user1', userNickName).set('user2',  "tester11");
+    const user2NickName = this.userDetails.userName2;
+    let params = new HttpParams().set('user1', userNickName).set('user2',  user2NickName);
 
     return this.http.get<any>( this.GET_GAME, {headers: httpOptions.headers, params: params})
       .subscribe(( result ) => {
         if( result && result.board ) {
+          this.boardPosition = result.board;
           for( let  raw: number = 0; raw < this.boardPosition.length; raw += 1 ) {
             this.chessboard[raw] = this.boardPosition[raw];
             for( let column: number = 0; column< this.boardPosition[0].length; column += 1 ) {
@@ -187,7 +89,7 @@ export class GamePlayComponent implements OnInit {
       case 3:
         return "d";
         break;
-        default:
+      default:
           break;
     }
 
@@ -206,6 +108,19 @@ export class GamePlayComponent implements OnInit {
     event.preventDefault();
   }
 
+ /* if( event.target.nodeName.toLowerCase() !== 'button'&&
+  event.currentTarget.nodeName.toLowerCase() === 'td' ) {
+  if( event.currentTarget.childElementCount == 1 ) {
+  /!* Replacing/ Capturing the piece when move is legal *!/
+  event.target.getElementsByClassName("border").length > 0 ? event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data)) :
+  event.currentTarget.getElementsByClassName('border').length > 0 ? event.currentTarget.getElementsByClassName('border')[0].replaceWith(document.getElementById(data)) : '';
+} else {
+  event.target.appendChild(document.getElementById(data));
+}
+} else {
+  event.target.replaceWith(document.getElementById(data))
+}*/
+
   drop( event ) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -222,14 +137,16 @@ export class GamePlayComponent implements OnInit {
     if( from !== to ) {
       let params = new HttpParams().set('user', userNickName).set('from', from ).set("to", to);
 
-      return this.http.get<any>( this.FLIP_PIECE, {headers: httpOptions.headers, params: params})
+      return this.http.get<any>( this.CHECK_LEGAL_MOVE, {headers: httpOptions.headers, params: params})
         .subscribe(( result ) => {
 
           if( result[0].validMove.toLowerCase() == 'true' ) {
             if( event.target.nodeName.toLowerCase() !== 'button'&&
-              event.currentTarget.nodeName.toLowerCase() === 'td' ) {
+              event.currentTarget && event.currentTarget.nodeName.toLowerCase() === 'td' ) {
               if( event.currentTarget.childElementCount == 1 ) {
-                event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data))
+                /* Replacing/ Capturing the piece when move is legal */
+                event.target.getElementsByClassName("border").length > 0 ? event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data)) :
+                  event.currentTarget.getElementsByClassName('border').length > 0 ? event.currentTarget.getElementsByClassName('border')[0].replaceWith(document.getElementById(data)) : '';
               } else {
                 event.target.appendChild(document.getElementById(data));
               }

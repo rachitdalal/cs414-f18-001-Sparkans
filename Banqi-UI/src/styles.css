@@ -307,3 +307,6 @@ svg#clouds {
   color: black;
   margin-top: 80px !important;
 }
+.textAlignCentre {
+  text-align: center;
+}

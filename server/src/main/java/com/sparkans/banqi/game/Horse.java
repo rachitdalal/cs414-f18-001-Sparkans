@@ -18,9 +18,9 @@ public class Horse extends BanqiPiece {
 	@Override
 	public String toString() {
 		if (this.color.equals(Color.WHITE))
-			return "WG";
+			return "WH";
 		else
-			return "RG";
+			return "RH";
 	}
 
 	@Override
@@ -29,9 +29,9 @@ public class Horse extends BanqiPiece {
 		String fromPosition = this.getPosition();
 		String toPosition;
 
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 4; j++) {
-				toPosition = Character.toString((char) (97 + j)) + String.valueOf(i + 1);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 8; j++) {
+				toPosition = Character.toString((char) (97 + i)) + String.valueOf(j + 1);
 				try {
 					if (moveHorse(fromPosition, toPosition))
 						legalMoves.add(toPosition);
