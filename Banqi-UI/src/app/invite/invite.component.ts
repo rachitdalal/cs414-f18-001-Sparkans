@@ -37,7 +37,7 @@
         })
       };
 
-      this.obs =  timer(0, 10000 )
+      this.obs =  timer(0, 2000 )
         .pipe(switchMap(() => this.http.get(this.WAITING_INVITE,
                               {headers: httpOptions.headers,
                                 params: this.getWaitingUser()} )));

@@ -108,6 +108,19 @@ export class GamePlayComponent implements OnInit {
     event.preventDefault();
   }
 
+ /* if( event.target.nodeName.toLowerCase() !== 'button'&&
+  event.currentTarget.nodeName.toLowerCase() === 'td' ) {
+  if( event.currentTarget.childElementCount == 1 ) {
+  /!* Replacing/ Capturing the piece when move is legal *!/
+  event.target.getElementsByClassName("border").length > 0 ? event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data)) :
+  event.currentTarget.getElementsByClassName('border').length > 0 ? event.currentTarget.getElementsByClassName('border')[0].replaceWith(document.getElementById(data)) : '';
+} else {
+  event.target.appendChild(document.getElementById(data));
+}
+} else {
+  event.target.replaceWith(document.getElementById(data))
+}*/
+
   drop( event ) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -131,7 +144,9 @@ export class GamePlayComponent implements OnInit {
             if( event.target.nodeName.toLowerCase() !== 'button'&&
               event.currentTarget.nodeName.toLowerCase() === 'td' ) {
               if( event.currentTarget.childElementCount == 1 ) {
-                event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data))
+                /* Replacing/ Capturing the piece when move is legal */
+                event.target.getElementsByClassName("border").length > 0 ? event.target.getElementsByClassName("border")[0].replaceWith(document.getElementById(data)) :
+                  event.currentTarget.getElementsByClassName('border').length > 0 ? event.currentTarget.getElementsByClassName('border')[0].replaceWith(document.getElementById(data)) : '';
               } else {
                 event.target.appendChild(document.getElementById(data));
               }
