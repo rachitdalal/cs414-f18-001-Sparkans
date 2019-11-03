@@ -254,7 +254,7 @@ public class MicroServer {
                 user2.setNickName(i.from);
 
                 gameManager.addGame(user1,user2);
-                return "[{\"inviteStatus\":\"accepted\"}]";
+                return "[{\"inviteStatus\":\"accepted\"}, {\"inviteFrom\":\""+ user2.getNickname()+ "\"} ]";
             }
         }
 
