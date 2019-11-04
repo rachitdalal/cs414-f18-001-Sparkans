@@ -58,9 +58,12 @@ public class Chariot extends BanqiPiece {
 					: parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-			// cannot capture a General
-			if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG"))
-				return inValid;
+			if(destinationPiece!= null){
+				// cannot capture a General
+				if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG"))
+					return inValid;
+
+			}
 			// Chariot cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
 				return inValid;

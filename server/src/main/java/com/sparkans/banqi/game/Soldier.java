@@ -59,7 +59,7 @@ public class Soldier extends BanqiPiece {
 
 			if(destinationPiece != null){
 				// can capture only a General
-				if (!destinationPiece.toString().equals("WG") || !destinationPiece.toString().equals("RG"))
+				if (!(destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG")))
 					return inValid;
 				// Soldier cannot move diagonally.
 
