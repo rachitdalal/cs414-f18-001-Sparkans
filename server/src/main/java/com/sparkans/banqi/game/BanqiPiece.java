@@ -53,8 +53,8 @@ public abstract class BanqiPiece {
 		char col = position.charAt(0);
 		int row = Integer.parseInt(String.valueOf(position.charAt(1))) - 1;
 		column = col - 'a';
-		parsedPositions.put("row", row);
-		parsedPositions.put("column", column);
+		parsedPositions.put("row", column);
+		parsedPositions.put("column", row);
 		return parsedPositions;
 	}
 	

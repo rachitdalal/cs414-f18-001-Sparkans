@@ -195,7 +195,7 @@ public class BanqiBoard {
 			if (!faceUp(sourcePiece))
 				throw new IllegalMoveException("No move allowed for a face-down piece");
 
-			if (!faceUp(destinationPiece)
+			if (destinationPiece != null && !faceUp(destinationPiece)
 					&& (!sourcePiece.toString().equals("RCa") || !sourcePiece.toString().equals("WCa")))
 				throw new IllegalMoveException("Cannot capture a face-down piece");
 
