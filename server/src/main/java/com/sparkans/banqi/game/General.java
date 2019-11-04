@@ -57,9 +57,12 @@ public class General extends BanqiPiece {
 			int destColumn = destinationPiece != null ? destinationPiece.column : parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-			// cannot capture a Soldier
-			if (destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS"))
-				return inValid;
+			if(destinationPiece != null){
+				// cannot capture a Soldier
+				if (destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS"))
+					return inValid;
+			}
+
 			// General cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
 				return inValid;
