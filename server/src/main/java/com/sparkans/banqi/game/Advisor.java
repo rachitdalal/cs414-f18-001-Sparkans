@@ -58,11 +58,15 @@ public class Advisor extends BanqiPiece {
 					: parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-			// cannot capture a General or a Chariot or a Horse
-			if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG")
-					|| destinationPiece.toString().equals("WCh") || destinationPiece.toString().equals("RCh")
-					|| destinationPiece.toString().equals("WH") || destinationPiece.toString().equals("RH"))
-				return inValid;
+
+			if(destinationPiece != null){
+				// cannot capture a General or a Chariot or a Horse
+				if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG")
+						|| destinationPiece.toString().equals("WCh") || destinationPiece.toString().equals("RCh")
+						|| destinationPiece.toString().equals("WH") || destinationPiece.toString().equals("RH"))
+					return inValid;
+			}
+
 			// Advisor cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
 				return inValid;

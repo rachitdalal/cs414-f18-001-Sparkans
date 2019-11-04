@@ -47,6 +47,7 @@ public class Horse extends BanqiPiece {
 
 		boolean inValid = false;
 		try {
+
 			int sourceRow = this.row;
 			int sourceColumn = this.column;
 			Color sourceColor = this.color;
@@ -59,9 +60,13 @@ public class Horse extends BanqiPiece {
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
 			// Cannot capture a General or a Chariot
-			if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG")
-					|| destinationPiece.toString().equals("WCh") || destinationPiece.toString().equals("RCh"))
-				return inValid;
+			if(destinationPiece != null){
+				if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG")
+						|| destinationPiece.toString().equals("WCh") || destinationPiece.toString().equals("RCh"))
+					return inValid;
+			}
+
+
 			// Horse cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
 				return inValid;

@@ -100,8 +100,8 @@ export class GamePlayComponent implements OnInit {
   }
 
   dragStart(event, row, column) {
-    event.dataTransfer.setData("text", event.target.id);
-   // this.dummyTest = true;
+    /*event.dataTransfer.setData("text", event.target.id);*/
+    event.dataTransfer.setData("text", event.target.parentNode.getAttribute("id").split("_")[1]);
   }
 
   allowDrop( event ) {
@@ -131,8 +131,10 @@ export class GamePlayComponent implements OnInit {
 
     event.preventDefault();
     let data = event.dataTransfer.getData("text");
-    const from = data,
-      to = event.currentTarget.id && event.currentTarget.id.split("_")[1];
+    const from = data;
+      let to = event.currentTarget.id && event.currentTarget.id.split("_")[1];
+
+    //to = to.charAt(0).toString() + ( Number(to.charAt(1)) - 1 ).toString()
 
     if( from !== to ) {
       let params = new HttpParams().set('user', userNickName).set('from', from ).set("to", to);
@@ -150,9 +152,20 @@ export class GamePlayComponent implements OnInit {
               } else {
                 event.target.appendChild(document.getElementById(data));
               }
-            } else {
-              event.target.replaceWith(document.getElementById(data))
             }
+            /*THis will capture the piece when move is legal*/
+            else if ( event.target.parentNode.nodeName.toLocaleLowerCase() === 'button' && event.target.nodeName.toLowerCase() === 'div') {
+              /*if()*/
+              event.target.parentNode.replaceWith(document.getElementById(data));
+              /*event.target.replaceWith(document.getElementById(data))*/
+            }
+            /* THis else if condition will be called when piece will move to empty space*/
+            else  {
+              if( event.target.nodeName.toLowerCase() === 'td') {
+                event.target.appendChild(document.getElementById("TD_"+data).firstElementChild );
+              }
+            }
+
           }
           else {
             this._snackBar.open("Invalid Move!", "", {

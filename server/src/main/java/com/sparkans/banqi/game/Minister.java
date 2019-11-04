@@ -58,19 +58,21 @@ public class Minister extends BanqiPiece {
 					: parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-			// can capture only a Soldier
-			if (!(destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS")))
-				return inValid;
+			if(destinationPiece != null){
+				// can capture only a Soldier
+				if (!(destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS")))
+					return inValid;
+
+			}
 			// Minister cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
-				return inValid;
-			// Minister can move only one square horizontal or vertical.
-			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
 				return inValid;
 			// Minister can capture only opponent's piece.
 			if (destinationColor != null && sourceColor.equals(destinationColor))
 				return inValid;
-
+			// Minister can move only one square horizontal or vertical.
+			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
+				return inValid;
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Invalid Move. Moving to a destination outside the board");
 		}
