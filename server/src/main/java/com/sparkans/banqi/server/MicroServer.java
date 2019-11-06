@@ -137,10 +137,11 @@ public class MicroServer {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return gson.toJson(e);
+			return gson.toJson(e).replaceFirst("}", ",\"registered\": \"false\"}");
 		}
         catch (Exception e){
-            return gson.toJson(e);
+			e.printStackTrace();
+            return gson.toJson(e).replaceFirst("}", ",\"registered\": \"false\"}");
         }
 		return "{\"registered\": \"true\"}";
 
@@ -159,10 +160,10 @@ public class MicroServer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return gson.toJson(e);
+			return gson.toJson(e).replaceFirst("}", ",\"signedin\": \"false\"}");
 		}
 		catch (Exception e){
-		    return gson.toJson(e);
+		    return gson.toJson(e).replaceFirst("}", ",\"signedin\": \"false\"}");
         }
 		return "{\"signedin\": \"true\"}";
 
