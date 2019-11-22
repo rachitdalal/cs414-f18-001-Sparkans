@@ -262,6 +262,22 @@ public class MicroServer {
 		return "[{\"inviteStatus\":\"no invites\"}]";
 	}
 
+	private String rejectInvite(Request request, Response response) {
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		//for now we create UserBean users from the name given but eventually we will pull users from DB
+		String user = request.queryParams("user");
+		String fromUser = request.queryParams("fromUser");
+		UserObject userObj = new UserObject();
+
+		//query DB for invite and set status to rejected
+		//return "[{\"inviteStatus\":\"rejected\"}, {\"inviteFrom\":\""+ fromUser+ "\"} ]";
+
+
+		return "[{\"inviteStatus\":\"no invites\"}]";
+	}
+
 	private String getGame(Request request, Response response){
         response.type("application/json");
         response.header("Access-Control-Allow-Headers", "*");
