@@ -64,6 +64,7 @@ public class MicroServer {
 		get("/invite", this::invite);
 		get("/sendInvite", this::sendInvite);
 		get("/acceptInvite", this::acceptInvite);
+		get("/rejectInvite", this::rejectInvite);
 		get("/waitingInvite", this::waitingInvite);
 		get("/getGame", this::getGame);
 		get("/checkValidMove", this::checkValidMove);
