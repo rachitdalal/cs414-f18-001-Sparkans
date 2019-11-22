@@ -63,7 +63,7 @@ public class MicroServer {
 		post("/signin", this::signin);
 		get("/invite", this::invite);
 		get("/sendInvite", this::sendInvite);
-		get("/acceptInvite", this::acceptInvite);
+		get("/inviteHandler", this::inviteHandler);
 		get("/waitingInvite", this::waitingInvite);
 		get("/getGame", this::getGame);
 		get("/checkValidMove", this::checkValidMove);
@@ -237,13 +237,25 @@ public class MicroServer {
     }
 
 
-	private String acceptInvite(Request request, Response response) {
+	private String inviteHandler(Request request, Response response) {
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");
 
 		//for now we create UserBean users from the name given but eventually we will pull users from DB
 		String user = request.queryParams("user");
+		String fromUser = request.queryParams("fromUser");
+		String userResponse = request.queryParams("userResponse");
         UserObject userObj = new UserObject();
+
+        if(userResponse.equals("accept")){
+        	//change to accepted in database
+			//create new game
+			//return accepted
+		}
+        if(userResponse.equals("reject")){
+        	//change to rejected in database
+        	//return rejected
+		}
 
 		for(Invitation i : invites){
 		    if(i.to.equals(user)){
