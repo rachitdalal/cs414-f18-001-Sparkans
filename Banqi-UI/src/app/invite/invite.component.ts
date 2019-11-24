@@ -17,9 +17,11 @@
     ACCEPT_INVITATION = "http://localhost:31406/acceptInvite";
     obs;
     subscriber;
+    isUserSignedIn: boolean = false;
     isInvitationSentByThisUser: boolean = false;
     haveYouGotInvitation: boolean = false;
     invitationFromUserName: string ;
+    currentUser: string;
 
     constructor( private router: Router,
                  private http: HttpClient,
@@ -81,8 +83,12 @@
       this.userDetails.invitationSubject.subscribe( ( value ) => {
         this.invitationFromUserName = value.invitaionSentFrom ;
         console.log("Updated after the invitation");
-      } )
+      } );
 
+      if( localStorage.getItem("user1") ) {
+        this.isUserSignedIn = true;
+        this.currentUser = localStorage.getItem("user1");
+      }
     }
 
     getWaitingUser() {

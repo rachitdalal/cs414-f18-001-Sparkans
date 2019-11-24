@@ -29,6 +29,8 @@
     </span>
   </div>
 </div>
+<h2 *ngIf="isUserSignedIn" class="userNamePosition">{{currentUser.toUpperCase()}}
+</h2>
 <!--<div>
   <button (click)="gamePlay()"> Start Game </button>
 </div>-->
