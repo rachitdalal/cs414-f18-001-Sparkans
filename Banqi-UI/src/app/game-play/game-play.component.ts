@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {UserDetailsService} from "../Service/user-details.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute} from "@angular/router";
+import {interval, pipe, timer} from "rxjs";
 
 @Component({
   selector: 'app-game-play',
@@ -10,8 +11,8 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./game-play.component.css']
 })
 export class GamePlayComponent implements OnInit {
-  private readonly chessboard: any[][];
-  dummyTest: boolean = false;
+  private chessboard: any[][];
+  subscriber;
   isLoaded: boolean = false;
   boardPosition;
   subject;
@@ -35,6 +36,23 @@ export class GamePlayComponent implements OnInit {
       .subscribe(( username ) => {
         console.log(username);
       });
+
+   /* /!*this.loadGame();*!/
+    let timer1 = timer(1000, 2000);
+    this.subscriber = timer1.subscribe((data) => {
+      console.log("Test");
+      /!*this.chessboard = this.userDetails.chessBoard;*!/
+      if(localStorage.getItem("board")) {
+        this.chessboard = JSON.parse(localStorage.getItem("board"));
+      }
+
+    });
+
+    /!*this.userDetails.pieceMoved.subscribe( ( data ) => {
+      console.log("Test");
+      this.chessboard = data;
+      this.chessboard = JSON.parse(localStorage.getItem("board"));
+    })*!/*/
   }
 
   loadGame() {
@@ -43,14 +61,15 @@ export class GamePlayComponent implements OnInit {
         'Content-Type': 'application/json'
       })
     };
-    const userNickName = this.userDetails.userName;
-    const user2NickName = this.userDetails.userName2;
+    const userNickName = localStorage.getItem("user1");
+    const user2NickName = localStorage.getItem("user2");
     let params = new HttpParams().set('user1', userNickName).set('user2',  user2NickName);
 
     return this.http.get<any>( this.GET_GAME, {headers: httpOptions.headers, params: params})
       .subscribe(( result ) => {
         if( result && result.board ) {
           this.boardPosition = result.board;
+          /*this.userDetails.chessBoard = this.boardPosition;*/
           for( let  raw: number = 0; raw < this.boardPosition.length; raw += 1 ) {
             this.chessboard[raw] = this.boardPosition[raw];
             for( let column: number = 0; column< this.boardPosition[0].length; column += 1 ) {
@@ -165,7 +184,6 @@ export class GamePlayComponent implements OnInit {
                 event.target.appendChild(document.getElementById("TD_"+data).firstElementChild );
               }
             }
-
           }
           else {
             this._snackBar.open("Invalid Move!", "", {
@@ -216,6 +234,12 @@ export class GamePlayComponent implements OnInit {
           if( result[0].flipped ) {
             /*setTimeout( ( ) => {*/
             this.chessboard[raw][column].isFaceDown = false;
+           // this.userDetails.pieceMoved.next( this.chessboard );
+            /*this.userDetails.chessBoard = this.chessboard;
+            if( localStorage.getItem("board")) {
+              localStorage.removeItem("board");
+            }
+            localStorage.setItem("board", JSON.stringify(this.chessboard));*/
             /*}, 0);*/
           }
         }, ( error ) => {

@@ -45,6 +45,7 @@ export class SignInComponentComponent implements OnInit {
       })
     };
     const userDetails = value;
+    localStorage.clear();
 
     return this.http.post<any>( this.SIGN_IN_URL, userDetails, httpOptions)
       .subscribe(( results ) => {
@@ -56,6 +57,7 @@ export class SignInComponentComponent implements OnInit {
             panelClass: ["customSnackBar"]
 
           });
+          localStorage.setItem("user1", value['nickName'] );
           this.userDetails.userName = value['nickName'];
           this.router.navigate(['invite']);
         } else {

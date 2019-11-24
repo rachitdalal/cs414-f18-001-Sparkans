@@ -8,8 +8,10 @@ export class UserDetailsService {
 
   private _userName: string;
   public invitationSubject = new Subject<any>();
+  public pieceMoved = new Subject<any>();
   private _invitedUserName: String;
   private _userName2: string;
+  private _chessBoard: any[][];
 
   get userName(): string {
     return this._userName;
@@ -34,6 +36,14 @@ export class UserDetailsService {
 
   set userName2(value: string) {
     this._userName2 = value;
+  }
+
+  get chessBoard(): any[][] {
+    return this._chessBoard;
+  }
+
+  set chessBoard(value: any[][]) {
+    this._chessBoard = value;
   }
 
   constructor() { }

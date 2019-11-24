@@ -62,6 +62,7 @@
         /* user who sent invitation Navigates to gamePlay route */
         else if( data[0].inviteStatus.toLowerCase() == "accepted" ) {
           this.userDetails.userName2 = data[2].inviteTo;
+          localStorage.setItem("user2", this.userDetails.userName2 );
           this.gamePlay();
         }
 
@@ -149,6 +150,7 @@
         .subscribe(( results ) => {
           if( results[0].inviteStatus  &&  results[1].inviteFrom ) {
             this.userDetails.userName2 = results[1].inviteFrom;
+            localStorage.setItem("user2", this.userDetails.userName2 );
             this.gamePlay();
           }
         }, (error) => {
