@@ -88,24 +88,24 @@ public class UserInvite {
 		return invited;
 	}
 
-	public List<InviteObject> getInvites(String user) throws SQLException {
+	public List<InviteObject> getSentInvites(String user) throws SQLException {
 
 		InviteObject invObj = new InviteObject();
-		List<InviteObject> inviteList = new ArrayList<>();
+		List<InviteObject> sentInviteList = new ArrayList<>();
 		try {
 			conn = MySqlCon.getConnection();
-			statement = conn.prepareStatement("SELECT sent_user,status FROM sparkans.Banqi_Invitation WHERE received_user=?");
+			statement = conn.prepareStatement("SELECT received_user,status FROM sparkans.Banqi_Invitation WHERE sent_user =?");
 			statement.setString(1, user);
 			resultSet = statement.executeQuery();
 			while(resultSet.next())
 			{
-				invObj.setSentUser(resultSet.getString("sent_user"));
+				invObj.setReceivedUser(resultSet.getString("received_user"));
 				invObj.setStatus(resultSet.getString("status"));
-				inviteList.add(invObj);
+				sentInviteList.add(invObj);
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Something went wrong in getInvites()!!");
+			System.out.println("Something went wrong in getSentInvites()!!");
 		} finally {
 			if (resultSet != null) {
 				resultSet.close();
@@ -117,9 +117,40 @@ public class UserInvite {
 				conn.close();
 			}
 		}
-		return inviteList;
+		return sentInviteList;
 	}
+	
+	public List<InviteObject> getReceivedInvites(String user) throws SQLException {
 
+		InviteObject invObj = new InviteObject();
+		List<InviteObject> recInviteList = new ArrayList<>();
+		try {
+			conn = MySqlCon.getConnection();
+			statement = conn.prepareStatement("SELECT sent_user,status FROM sparkans.Banqi_Invitation WHERE received_user =?");
+			statement.setString(1, user);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
+			{
+				invObj.setSentUser(resultSet.getString("sent_user"));
+				invObj.setStatus(resultSet.getString("status"));
+				recInviteList.add(invObj);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Something went wrong in getReceivedInvites()!!");
+		} finally {
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if (statement != null) {
+				statement.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return recInviteList;
+	}
 
 	public void updateInvite(String user1, String user2, String status) throws SQLException {
 
