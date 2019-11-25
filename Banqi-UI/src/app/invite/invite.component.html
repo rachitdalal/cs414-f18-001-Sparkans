@@ -25,12 +25,23 @@
       <button (click)="onAccept()"> Accept </button>
     </span>
     <span>
-      <button> Reject </button>
+      <button (click)= "onReject()"> Reject </button>
     </span>
   </div>
 </div>
 <h2 *ngIf="isUserSignedIn" class="userNamePosition">{{currentUser.toUpperCase()}}
 </h2>
+
+<div style="text-align:center">
+  <nav>
+    <a routerLink ="/signin" routerLinkActive="active="> Logout</a>
+  </nav>
+</div>
+
+
+
+
+
 <!--<div>
   <button (click)="gamePlay()"> Start Game </button>
 </div>-->

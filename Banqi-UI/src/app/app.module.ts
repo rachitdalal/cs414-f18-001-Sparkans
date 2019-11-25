@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { GamePlayComponent } from './game-play/game-play.component';
 import { InviteComponent } from './invite/invite.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {UserDetailsService} from "./Service/user-details.service";
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import {UserDetailsService} from "./Service/user-details.service";
     SignInComponentComponent,
     HomeComponent,
     GamePlayComponent,
-    InviteComponent
+    InviteComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

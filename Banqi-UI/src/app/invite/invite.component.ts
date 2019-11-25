@@ -15,6 +15,7 @@
     SEND_INVITE = "http://localhost:31406/sendInvite";
     WAITING_INVITE = "http://localhost:31406/waitingInvite";
     ACCEPT_INVITATION = "http://localhost:31406/acceptInvite";
+    REJECT_INVITATION = "http://localhost:31406/rejectInvite";
     obs;
     subscriber;
     isUserSignedIn: boolean = false;
@@ -143,6 +144,7 @@
       }
     }
 
+
     onAccept() {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -164,6 +166,27 @@
         });
 
     }
+    onReject(){
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      const userNickName = this.userDetails.userName;
+      let params = new HttpParams().set('user', userNickName);
+
+      return this.http.get<any>( this.REJECT_INVITATION, {headers: httpOptions.headers, params: params})
+        .subscribe(( results ) => {
+          if( results[0].inviteStatus  &&  results[1].inviteFrom ) {
+            this.userDetails.userName2 = results[1].inviteFrom;
+            this.gamePlay();
+          }
+        }, (error) => {
+          console.log(" Error Working httpGet Invite user ", error);
+        });
+
+    }
+
 
     ngOnDestroy(): void {
 
