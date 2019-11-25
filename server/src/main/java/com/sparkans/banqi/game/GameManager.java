@@ -53,8 +53,8 @@ public class GameManager {
         for(BanqiBoard b : boards) {
             if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
                 try {
-                    if(b.getPiece(position).isFaceDown = true){
-                        b.getPiece(position).isFaceDown = false;
+                    if(b.getPiece(position).isFaceDown){
+                        b.flip(position);
                         return true;
 
                     }

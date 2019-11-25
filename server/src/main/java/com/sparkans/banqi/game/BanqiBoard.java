@@ -16,6 +16,10 @@ public class BanqiBoard {
 	private UserBean user1;
 	private UserBean user2;
 
+	private String redPlayer = null;
+	private String whitePlayer = null;
+	private boolean isFirstMove = true;
+
 	// initialize the board to 4x8 array
 	public BanqiBoard() {
 		if (this.board == null) {
@@ -32,6 +36,7 @@ public class BanqiBoard {
 			this.board = new BanqiPiece[4][8];
 			initialize();
 		}
+
 	}
 
 	public BanqiPiece[][] getBoard() {
@@ -88,19 +93,6 @@ public class BanqiBoard {
 		// assign each piece to a random spot on the board
 		for (int i = 0; i < 32; i++) {
 
-			/*
-			int randr = r.nextInt(4);
-			int randc = r.nextInt(8);
-			// if a spot is already assigned try a different one
-			while (board[randc][randr] != null) {
-				randr = r.nextInt(4);
-				randc = r.nextInt(8);
-			}
-			board[randc][randr] = pieces[i];
-			pieces[i].row = randr;
-			pieces[i].column = randc;
-
-			 */
 			int randr = r.nextInt(4);
 			int randc = r.nextInt(8);
 			// if a spot is already assigned try a different one
@@ -210,6 +202,14 @@ public class BanqiBoard {
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Illegal Move due to invalid position. " + e.getMessage());
 		}
+	}
+
+	public void flip(String position) throws IllegalPositionException {
+		if(isFirstMove){
+
+		}
+
+		getPiece(position).isFaceDown = false;
 	}
 
 	private boolean faceUp(BanqiPiece piece) {
