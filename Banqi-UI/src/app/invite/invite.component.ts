@@ -92,7 +92,7 @@
     }
 
     getWaitingUser() {
-      const params = new HttpParams().set('user', this.userDetails.userName);
+      const params = new HttpParams().set('user', localStorage.getItem("user1"));
 
       return params;
     }

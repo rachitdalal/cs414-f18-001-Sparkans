@@ -63,6 +63,7 @@ public class MicroServer {
 		//for client sending data, HTTP POST is used instead of a GET
 		post("/register", this::register);
 		post("/signin", this::signin);
+		get("/logout",this::logOut);
 		get("/invite", this::invite);
 		get("/sendInvite", this::sendInvite);
 		get("/acceptInvite", this::acceptInvite);
@@ -172,6 +173,18 @@ public class MicroServer {
 
 	}
 
+	private String logOut(Request request, Response response) {
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user = request.queryParams("user");
+
+		//set to logged out in DB
+
+		return "{\"logout\": \"true\"}";
+
+	}
+
 	private String invite(Request request, Response response) {
 
 		response.type("application/json");
@@ -190,7 +203,7 @@ public class MicroServer {
 
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");
-		//@TODO add DB connection
+
 		String user = request.queryParams("to");
 		String fromUser = request.queryParams("from");
 
