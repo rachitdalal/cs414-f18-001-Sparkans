@@ -222,11 +222,11 @@ public class MicroServer {
         response.type("application/json");
         response.header("Access-Control-Allow-Headers", "*");
 
-        String User = request.queryParams("user");
+        String user = request.queryParams("user");
         Gson gson = new Gson();
 
         try {
-            List<InviteObject> invites = userInvite.getInvites(User);
+            List<InviteObject> invites = userInvite.getInvites(user);
             return gson.toJson(invites);
         } catch (SQLException e) {
             e.printStackTrace();

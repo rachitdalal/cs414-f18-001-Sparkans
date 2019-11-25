@@ -120,6 +120,7 @@ public class UserInvite {
 		return inviteList;
 	}
 
+
 	public void updateInvite(String user1, String user2, String status) throws SQLException {
 
 		try {
