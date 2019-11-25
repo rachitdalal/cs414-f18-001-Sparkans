@@ -73,7 +73,7 @@ public class UserInvite {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Something went wrong in createInvite()!!");
+			System.out.println("Something went wrong in createInvite()!! \n" + e.getMessage());
 		} finally {
 			if (resultSet != null) {
 				resultSet.close();
