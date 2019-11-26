@@ -15,7 +15,7 @@ public class InviteObject {
 	public String getReceivedUser() {
 		return receivedUser;
 	}
-	public void setReceivedUser(String sentUser) {
+	public void setReceivedUser(String receivedUser) {
 		this.receivedUser = receivedUser;
 	}
 	public String getStatus() {
