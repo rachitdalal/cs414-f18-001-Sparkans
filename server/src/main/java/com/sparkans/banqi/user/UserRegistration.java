@@ -9,18 +9,17 @@ public class UserRegistration {
 	private UserBean userBean;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
+	private Connection conn = null;
 
 	public UserRegistration() {
 		this.userBean = new UserBean();
 	}
 
 	// validating if email_id is unique
-	public boolean validateEmail(String email) throws SQLException {
+	public boolean validateEmail(String email, Connection conn) throws SQLException {
 
 		boolean isValid = false;
-		Connection conn = null;
 		try {
-			conn = MySqlCon.getConnection();
 			statement = conn.prepareStatement("SELECT 1 FROM sparkans.Banqi_Users where email_id = ? ");
 			statement.setString(1, email);
 			resultSet = statement.executeQuery();
@@ -32,26 +31,19 @@ public class UserRegistration {
 		} catch (SQLException e) {
 			throw e;
 		} finally {
-			if (resultSet != null) {
+			if (resultSet != null) 
 				resultSet.close();
-			}
-			if (statement != null) {
+			if (statement != null) 
 				statement.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
 		}
 		return isValid;
 	}
 
 	// validating if nickname is unique and follows the criteria.
-	public boolean validateNickName(String nickName) throws SQLException {
+	public boolean validateNickName(String nickName, Connection conn) throws SQLException {
 
 		boolean isValid = false;
-		Connection conn = null;
 		try {
-			conn = MySqlCon.getConnection();
 			statement = conn.prepareStatement("SELECT 1 FROM sparkans.Banqi_Users where nickname = ?");
 			statement.setString(1, nickName);
 			resultSet = statement.executeQuery();
@@ -68,15 +60,10 @@ public class UserRegistration {
 		} catch (SQLException e) {
 			throw e;
 		} finally {
-			if (resultSet != null) {
+			if (resultSet != null) 
 				resultSet.close();
-			}
-			if (statement != null) {
+			if (statement != null) 
 				statement.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
 		}
 		return isValid;
 	}
@@ -105,11 +92,11 @@ public class UserRegistration {
 	public boolean createUser(UserBean userBean) throws SQLException {
 		
 		boolean created = false;
-		Connection conn = null;
 		try {
 			conn = MySqlCon.getConnection();
-			if (validateEmail(userBean.getEmail()) && validateNickName(userBean.getNickname())
-					&& validatePassword(userBean.getPassword())) {
+			if (validateEmail(userBean.getEmail(),conn) && validateNickName(userBean.getNickname(),conn)
+					&& validatePassword(userBean.getPassword())) 
+			{
 				System.out.println("\nInserting records into table...");
 
 				String sql = "INSERT INTO sparkans.Banqi_Users"
@@ -124,28 +111,24 @@ public class UserRegistration {
 				statement.setTimestamp(5, userBean.getCreateTS());
 				statement.setString(6, String.valueOf('N'));
 				statement.setTimestamp(7, null);
-				// statement.setNull(7, java.sql.Types.TIMESTAMP);
 
 				statement.executeUpdate();
 				System.out.println("You are successfully Registered in the Game!!");
 				created = true;
 
-			} else {
+			} 
+			else 
 				throw new RuntimeException("Could not Register!!");
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Something went wrong in User Registration!!");
 		} finally {
-			if (resultSet != null) {
+			if (resultSet != null) 
 				resultSet.close();
-			}
-			if (statement != null) {
+			if (statement != null) 
 				statement.close();
-			}
-			if (conn != null) {
+			if (conn != null) 
 				conn.close();
-			}
 		}
 		return created;
 	}
