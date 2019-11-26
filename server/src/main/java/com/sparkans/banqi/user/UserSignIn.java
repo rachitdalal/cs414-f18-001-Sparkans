@@ -8,14 +8,9 @@ import com.sparkans.banqi.db.*;
 
 public class UserSignIn {
 
-	private UserBean userBean;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 	private Connection conn = null;
-
-	public UserSignIn() {
-		this.userBean = new UserBean();
-	}
 
 	// validating if nickname present in Database
 	public boolean validUser(String nickName, ResultSet resultSet) throws SQLException {
@@ -26,26 +21,26 @@ public class UserSignIn {
 		return false;
 	}
 
-	public boolean signInUser(UserBean userBean) throws SQLException {
+	public boolean signInUser(UserBean user) throws SQLException {
 
 		boolean signedIn = false;
 		try {
 			conn = MySqlCon.getConnection();
 			statement = conn.prepareStatement("SELECT nickname, password, isActive_flag  FROM sparkans.Banqi_Users "
 					+ "WHERE nickname =?");
-			statement.setString(1, userBean.getNickname());
+			statement.setString(1, user.getNickname());
 			resultSet = statement.executeQuery();
 
-			if (validUser(userBean.getNickname(), resultSet)) 
+			if (validUser(user.getNickname(), resultSet)) 
 			{
-				if (resultSet.getString("password").equals(userBean.getPassword())
+				if (resultSet.getString("password").equals(user.getPassword())
 						&& resultSet.getString("isActive_flag").equals("Y")) {
 
 					PreparedStatement update = conn.prepareStatement("UPDATE sparkans.Banqi_Users "
 							+ "SET isLoggedIn_flag = ?, lastLoggedIn_TS = ? WHERE nickname = ?");
 					update.setString(1, String.valueOf('Y'));
-					update.setTimestamp(2, userBean.getLastLoggedInTS());
-					update.setString(3, userBean.getNickname());
+					update.setTimestamp(2, user.getLastLoggedInTS());
+					update.setString(3, user.getNickname());
 					update.executeUpdate();
 
 					System.out.println("Credentials verified. You are Logged In!!");

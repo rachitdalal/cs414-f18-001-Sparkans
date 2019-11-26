@@ -6,14 +6,9 @@ import java.util.regex.*;
 
 public class UserRegistration {
 
-	private UserBean userBean;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 	private Connection conn = null;
-
-	public UserRegistration() {
-		this.userBean = new UserBean();
-	}
 
 	// validating if email_id is unique
 	public boolean validateEmail(String email, Connection conn) throws SQLException {
@@ -89,13 +84,13 @@ public class UserRegistration {
 		return isValid;
 	}
 
-	public boolean createUser(UserBean userBean) throws SQLException {
+	public boolean createUser(UserBean user) throws SQLException {
 		
 		boolean created = false;
 		try {
 			conn = MySqlCon.getConnection();
-			if (validateEmail(userBean.getEmail(),conn) && validateNickName(userBean.getNickname(),conn)
-					&& validatePassword(userBean.getPassword())) 
+			if (validateEmail(user.getEmail(),conn) && validateNickName(user.getNickname(),conn)
+					&& validatePassword(user.getPassword())) 
 			{
 				System.out.println("\nInserting records into table...");
 
@@ -104,11 +99,11 @@ public class UserRegistration {
 						+ " VALUES(?, ?, ?, ?, ?, ?,?)";
 
 				statement = conn.prepareStatement(sql);
-				statement.setString(1, userBean.getNickname());
-				statement.setString(2, userBean.getPassword());
-				statement.setString(3, userBean.getEmail());
+				statement.setString(1, user.getNickname());
+				statement.setString(2, user.getPassword());
+				statement.setString(3, user.getEmail());
 				statement.setString(4, String.valueOf('Y'));
-				statement.setTimestamp(5, userBean.getCreateTS());
+				statement.setTimestamp(5, user.getCreateTS());
 				statement.setString(6, String.valueOf('N'));
 				statement.setTimestamp(7, null);
 
