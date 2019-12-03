@@ -11,22 +11,22 @@
   </div>
 </div>
 
-<div *ngIf="haveYouGotInvitation">
+<div *ngIf="newInvitations">
   <div></div>
   <div></div>
   <hr>
-  <div>
-  <span>
-    You have got Invite !
-  </span>
-  </div>
-  <div>
+  <div *ngFor="let invitationUser of newInvitations; let i = index">
     <span>
-      <button (click)="onAccept()"> Accept </button>
+      You have got Invite from {{invitationUser["sentUser"]}}!
     </span>
-    <span>
-      <button> Reject </button>
-    </span>
+    <div>
+      <span>
+        <button (click)="onAccept( invitationUser['sentUser'] )"> Accept </button>
+      </span>
+      <span>
+        <button> Reject </button>
+      </span>
+    </div>
   </div>
 </div>
 <h2 *ngIf="isUserSignedIn" class="userNamePosition">{{currentUser.toUpperCase()}}
