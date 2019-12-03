@@ -18,6 +18,7 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static spark.Spark.options;
 
@@ -31,7 +32,8 @@ public class MicroServer {
 	private String path = "/public";
 
 	private GameManager gameManager = new GameManager();
-	private ArrayList<Invitation> invites = new ArrayList<>();
+	private UserInvite userInvite = new UserInvite();
+
 
 	/** Creates a micro-server to load static files and provide REST APIs.
 	 *
@@ -61,6 +63,7 @@ public class MicroServer {
 		//for client sending data, HTTP POST is used instead of a GET
 		post("/register", this::register);
 		post("/signin", this::signin);
+		get("/logout",this::logOut);
 		get("/invite", this::invite);
 		get("/sendInvite", this::sendInvite);
 		get("/acceptInvite", this::acceptInvite);
@@ -170,6 +173,18 @@ public class MicroServer {
 
 	}
 
+	private String logOut(Request request, Response response) {
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user = request.queryParams("user");
+
+		//set to logged out in DB
+
+		return "{\"logout\": \"true\"}";
+
+	}
+
 	private String invite(Request request, Response response) {
 
 		response.type("application/json");
@@ -188,24 +203,16 @@ public class MicroServer {
 
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");
-		//@TODO add DB connection
+
 		String user = request.queryParams("to");
 		String fromUser = request.queryParams("from");
-		/*
-		UserInvite userInvite = new UserInvite();
-		try 
-		{
-			userInvite.invitedUser(user);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return "{\"invitedUser\": \"false\"}";
-		}
-        catch (Exception e){
-            return "{\"invitedUser\": \"false\"}";
+
+        try {
+            userInvite.createInvite(fromUser,user);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-		 */
-        Invitation invite = new Invitation(user,fromUser);
-        invites.add(invite);
+
         System.out.println("sent invite to " + user + " from "  + fromUser);
 		return "[{\"inviteFor\":\"" + user + "\"}, {\"from\": \"" + fromUser + "\"}]";
 
@@ -215,9 +222,19 @@ public class MicroServer {
         response.type("application/json");
         response.header("Access-Control-Allow-Headers", "*");
 
-        String User = request.queryParams("user");
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String user = request.queryParams("user");
+        Gson gson = new Gson();
 
+        try {
+            List<InviteObject> invites = userInvite.getInvites(user);
+            return gson.toJson(invites);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return gson.toJson(null);
+        }
+
+
+        /*
         for(Invitation in:invites){
             if((in.to.equals(User) || in.from.equals(User)) && in.accepted == true){
                 System.out.println(User +"[{\"inviteStatus\":\"accepted\"},{\"inviteFrom\":\"" + in.from + "\"}]");
@@ -234,7 +251,7 @@ public class MicroServer {
         }
         System.out.println(User +"[{\"inviteStatus\":\"not accepted\"}]");
         return "[{\"inviteStatus\":\"not accepted\"}]";
-
+        */
     }
 
 
@@ -244,8 +261,23 @@ public class MicroServer {
 
 		//for now we create UserBean users from the name given but eventually we will pull users from DB
 		String user = request.queryParams("user");
+        String fromUser = request.queryParams("fromUser");
         UserObject userObj = new UserObject();
 
+        try {
+            userInvite.updateInvite(user,fromUser,"Accepted");
+            UserBean user1 = new UserBean();
+            UserBean user2 = new UserBean();
+
+            user1.setNickName(user);
+            user2.setNickName(fromUser);
+            gameManager.addGame(user1,user2);
+            return "[{\"inviteStatus\":\"accepted\"}]";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "[{\"inviteStatus\":\"not accepted\"}]";
+        }
+        /*
 		for(Invitation i : invites){
 		    if(i.to.equals(user)){
 		        i.accepted = true;
@@ -259,8 +291,7 @@ public class MicroServer {
                 return "[{\"inviteStatus\":\"accepted\"}, {\"inviteFrom\":\""+ user2.getNickname()+ "\"} ]";
             }
         }
-
-		return "[{\"inviteStatus\":\"no invites\"}]";
+        */
 	}
 
 	private String rejectInvite(Request request, Response response) {
@@ -273,10 +304,14 @@ public class MicroServer {
 		UserObject userObj = new UserObject();
 
 		//query DB for invite and set status to rejected
-		//return "[{\"inviteStatus\":\"rejected\"}, {\"inviteFrom\":\""+ fromUser+ "\"} ]";
-
-
-		return "[{\"inviteStatus\":\"no invites\"}]";
+        try {
+            userInvite.updateInvite(user,fromUser,"rejected");
+            return "[{\"inviteStatus\":\"rejected\"}]";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "[{\"inviteStatus\":\"not rejected\"}]";
+        }
+        //return "[{\"inviteStatus\":\"rejected\"}, {\"inviteFrom\":\""+ fromUser+ "\"} ]";
 	}
 
 	private String getGame(Request request, Response response){

@@ -12,14 +12,6 @@ public class UserObject {
 	private Connection conn = null;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
-	private String nickName;
-	private String email_id;
-	private String isActive_flag;
-	private String isLoggedIn_flag; 
-
-	public UserObject() {
-
-	}
 
 	public UserBean returnUser(String user) throws SQLException {
 		conn = MySqlCon.getConnection();
@@ -32,10 +24,10 @@ public class UserObject {
 			statement.setString(1, user);
 			resultSet = statement.executeQuery();
 
-			userObject.nickName = resultSet.getString("nickname");
-			userObject.email = resultSet.getString("email_id");
-			userObject.isActive_flag = resultSet.getString("isActive_flag");
-			userObject.isLoggedIn_flag = resultSet.getString("isLoggedIn_flag");
+			userObject.setNickName(resultSet.getString("nickname"));
+			userObject.setEmail(resultSet.getString("email_id")); 
+			userObject.setActive(resultSet.getString("isActive_flag"));
+			userObject.setLoggedIn(resultSet.getString("isLoggedIn_flag"));
 
 		}catch (SQLException e) {
 			System.out.println("Something went wrong in User Invite!!");

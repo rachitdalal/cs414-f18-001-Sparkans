@@ -23,6 +23,9 @@
     haveYouGotInvitation: boolean = false;
     invitationFromUserName: string ;
     currentUser: string;
+    newInvitations : Array<string> = [];
+    acceptedInvitation: Array<string> = [];
+    rejectedInvitations: Array<string> = [];
 
     constructor( private router: Router,
                  private http: HttpClient,
@@ -47,7 +50,7 @@
 
       this.subscriber = this.obs.subscribe((data) => {
 
-        if( data[0].inviteStatus.toLowerCase() == "not accepted" && data.length > 1
+        /*if( data[0].inviteStatus.toLowerCase() == "not accepted" && data.length > 1
                   && !this.haveYouGotInvitation)  {
           this.haveYouGotInvitation = true;
           this._snackBar.open("You have got Invitation!", "", {
@@ -58,18 +61,54 @@
           });
 
         }
-        /* Idea state For both the user to wait for the invitation and acceptance*/
+        /!* Idea state For both the user to wait for the invitation and acceptance*!/
         else if( data[0].inviteStatus.toLowerCase() == "not accepted" ) {
           console.log("waiting for the invite!!!");
         }
-        /* user who sent invitation Navigates to gamePlay route */
+        /!* user who sent invitation Navigates to gamePlay route *!/
         else if( data[0].inviteStatus.toLowerCase() == "accepted" ) {
           this.userDetails.userName2 = data[2].inviteTo;
           localStorage.setItem("user2", this.userDetails.userName2 );
           this.gamePlay();
-        }
+        }*/
 
-      }, ( error ) => {
+        if( data.length > 0 && data[0] ) {
+          for(var index = 0; index < data.length ; index += 1 ) {
+            if (data[index]["status"].toLowerCase() == "waiting") {
+              if (this.newInvitations.length == 0) {
+                this.newInvitations.push(data[index]);
+                this._snackBar.open("You have got Invitation!", "", {
+                  duration: 5000,
+                  horizontalPosition: "right",
+                  verticalPosition: "top",
+                  panelClass: ["customSnackBar"]
+                });
+              } else {
+                this.newInvitations.forEach( x => {
+                  if ( x["sentUser"] != data[index]["sentUser"] ) {
+                    this.newInvitations.push(data[index]);
+                    this._snackBar.open("You have got Invitation!", "", {
+                      duration: 5000,
+                      horizontalPosition: "right",
+                      verticalPosition: "top",
+                      panelClass: ["customSnackBar"]
+                    });
+                  }
+                });
+              }
+
+            }
+            else if (data[index]["status"].toLowerCase() == "rejected") {
+              this.rejectedInvitations.push(data[index]);
+            }
+            else {
+              this.acceptedInvitation.push(data[index]);
+              this.userDetails.userName2 = data[index]["sentUser"];
+              localStorage.setItem("user2", data[index]["sentUser"] );
+              this.gamePlay();
+            }
+          }
+      } }, ( error ) => {
         this._snackBar.open("Something Went Wrong!!! ", "", {
           duration: 5000,
           horizontalPosition: "right",
@@ -93,7 +132,7 @@
     }
 
     getWaitingUser() {
-      const params = new HttpParams().set('user', this.userDetails.userName);
+      const params = new HttpParams().set('user', localStorage.getItem("user1"));
 
       return params;
     }
@@ -144,21 +183,20 @@
       }
     }
 
-
-    onAccept() {
+    onAccept( inviteeName: string) {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
         })
       };
       const userNickName = this.userDetails.userName;
-      let params = new HttpParams().set('user', userNickName);
+      let params = new HttpParams().set('user', userNickName).set('fromUser', inviteeName);
 
       return this.http.get<any>( this.ACCEPT_INVITATION, {headers: httpOptions.headers, params: params})
         .subscribe(( results ) => {
-          if( results[0].inviteStatus  &&  results[1].inviteFrom ) {
-            this.userDetails.userName2 = results[1].inviteFrom;
-            localStorage.setItem("user2", this.userDetails.userName2 );
+          if( results[0].inviteStatus.toLowerCase() == 'accepted' ) {
+           /* this.userDetails.userName2 = results[1].inviteFrom;*/
+            localStorage.setItem("user2", inviteeName );
             this.gamePlay();
           }
         }, (error) => {
