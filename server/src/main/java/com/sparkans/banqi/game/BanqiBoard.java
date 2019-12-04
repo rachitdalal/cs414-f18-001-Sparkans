@@ -47,7 +47,7 @@ public class BanqiBoard {
 	 * initialize the board to standard Banqi opening state. all pieces face down in
 	 * random order.
 	 */
-	public void initialize() {
+	private void initialize() {
 		BanqiPiece[] pieces = new BanqiPiece[32];
 		Random r = new Random();
 

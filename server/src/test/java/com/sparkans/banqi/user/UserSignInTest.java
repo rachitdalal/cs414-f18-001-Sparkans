@@ -19,7 +19,7 @@ public class UserSignInTest {
 		testSubject = createTestSubject();
 		//result = testSubject.validUser(nickName);
 	}
-
+/*
 	@Test
 	public void testSignInUser() throws Exception {
 		UserSignIn testSubject;
@@ -30,4 +30,6 @@ public class UserSignInTest {
 		testSubject = createTestSubject();
 		result = testSubject.signInUser(userBean);
 	}
+
+ */
 }
