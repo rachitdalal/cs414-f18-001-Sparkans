@@ -171,7 +171,10 @@
     gamePlay() {
       this.router.navigate(['/gamePlay']);
     }
-
+    navigateToAlreadyExistingGmae(user2, flag?:string) {
+      localStorage.setItem("user2", user2);
+      this.router.navigate(['/gamePlay']);
+    }
     onInvite( inviteUser: HTMLInputElement ) {
       const httpOptions = {
         headers: new HttpHeaders({
