@@ -12,4 +12,15 @@ public class AdvisorTest {
 	void init() {
 		board = new BanqiBoard();
 	}
+
+	@Test
+    void advisorTest() {
+
+	    Advisor aR = new Advisor(board, BanqiPiece.Color.RED);
+	    board.placePiece(aR, "a1");
+	   // IllegalMoveException.class, () -> board.move("a1","a2");
+
+
+    }
+
 }

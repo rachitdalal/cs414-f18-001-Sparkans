@@ -24,7 +24,6 @@ public class BanqiBoard {
 	public BanqiBoard() {
 		if (this.board == null) {
 			this.board = new BanqiPiece[4][8];
-			initialize();
 		}
 	}
 
