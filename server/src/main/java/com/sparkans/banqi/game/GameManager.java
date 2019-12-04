@@ -53,8 +53,11 @@ public class GameManager {
         for(BanqiBoard b : boards) {
             if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
                 try {
-                    if(b.getPiece(position).isFaceDown){
+                    if(b.getPiece(position).isFaceDown && b.isFirstMove){
                         b.flip(position);
+                        if(b.getPiece(position).getColor().equals(BanqiPiece.Color.RED)){
+                            b.setRedPlayer(user);
+                        }
                         return true;
 
                     }

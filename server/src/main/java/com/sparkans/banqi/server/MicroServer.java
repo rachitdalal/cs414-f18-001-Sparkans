@@ -226,7 +226,8 @@ public class MicroServer {
         Gson gson = new Gson();
 
         try {
-            List<InviteObject> invites = userInvite.getInvites(user);
+            List<InviteObject> invites = userInvite.getReceivedInvites(user);
+            invites.addAll(userInvite.getSentInvites(user));
             return gson.toJson(invites);
         } catch (SQLException e) {
             e.printStackTrace();
