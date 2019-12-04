@@ -141,14 +141,13 @@ public class MicroServer {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return gson.toJson(e.getMessage()).replaceFirst("}", ",\"registered\": \"false\"}");
+			return "[{\"registered\": \"false\"}, {\"detailMessage\": \"" + e.getMessage() + "\"}]";
 		}
         catch (Exception e){
 			e.printStackTrace();
-            return gson.toJson(e.getMessage()).replaceFirst("}", ",\"registered\": \"false\"}");
+			return "[{\"registered\": \"false\"}, {\"detailMessage\": \"" + e.getMessage() + "\"}]";
         }
 		return "{\"registered\": \"true\"}";
-
 	}
 
 	private String signin(Request request, Response response) {
