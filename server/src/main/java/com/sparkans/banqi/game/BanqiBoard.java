@@ -18,7 +18,7 @@ public class BanqiBoard {
 
 	private String redPlayer = null;
 	private String whitePlayer = null;
-	private boolean isFirstMove = true;
+	public boolean isFirstMove = true;
 
 	// initialize the board to 4x8 array
 	public BanqiBoard() {
@@ -222,5 +222,21 @@ public class BanqiBoard {
 
 	public UserBean getUser2() {
 		return user2;
+	}
+
+	public String getRedPlayer() {
+		return redPlayer;
+	}
+
+	public void setRedPlayer(String redPlayer) {
+		this.redPlayer = redPlayer;
+	}
+
+	public String getWhitePlayer() {
+		return whitePlayer;
+	}
+
+	public void setWhitePlayer(String whitePlayer) {
+		this.whitePlayer = whitePlayer;
 	}
 }
