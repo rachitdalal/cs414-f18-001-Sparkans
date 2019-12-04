@@ -201,6 +201,8 @@ public class BanqiBoard {
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Illegal Move due to invalid position. " + e.getMessage());
 		}
+
+	//	checkForWin();
 	}
 
 	public void flip(String position) throws IllegalPositionException {
@@ -223,6 +225,19 @@ public class BanqiBoard {
 
 		getPiece(position).isFaceDown = false;
 	}
+	/*
+	private void checkForWin(){
+		boolean isWhite = false;
+		boolean isRed = false;
+
+		for(int i=0;i < 4; i++){
+			for (int j=0;j<8;j++){
+				if(g)
+			}
+		}
+	}
+
+	 */
 
 	private boolean faceUp(BanqiPiece piece) {
 		return !piece.isFaceDown;

@@ -207,7 +207,14 @@ public class MicroServer {
 		String fromUser = request.queryParams("from");
 
         try {
-            userInvite.createInvite(fromUser,user);
+        	if(userInvite.getSentInvites(fromUser) == null){
+				userInvite.createInvite(fromUser,user);
+			}
+        	else{
+        		userInvite.updateInvite(user,fromUser,"waiting");
+			}
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -271,7 +278,10 @@ public class MicroServer {
 
             user1.setNickName(user);
             user2.setNickName(fromUser);
-            gameManager.addGame(user1,user2);
+            if(gameManager.getGame(user1.getNickname(),user2.getNickname()) == null){
+				gameManager.addGame(user1,user2);
+			}
+
             return "[{\"inviteStatus\":\"accepted\"}]";
         } catch (SQLException e) {
             e.printStackTrace();
@@ -305,7 +315,7 @@ public class MicroServer {
 
 		//query DB for invite and set status to rejected
         try {
-            userInvite.updateInvite(user,fromUser,"rejected");
+            userInvite.updateInvite(fromUser,user,"rejected");
             return "[{\"inviteStatus\":\"rejected\"}]";
         } catch (SQLException e) {
             e.printStackTrace();
@@ -364,6 +374,19 @@ public class MicroServer {
 		else{
 			return "[{\"flipped\":\"false\"}]";
 		}
+
+	}
+
+	private String yourMove(Request request, Response response){
+		//user trying to move
+		//boolean : is it there move
+		//gameboard
+		//win or loose
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user = request.queryParams("user");
+	return null;
 
 	}
 
