@@ -314,3 +314,10 @@ svg#clouds {
 .paddingTop18px {
   padding-top: 18px;
 }
+
+.userNamePosition {
+  position: absolute;
+  top: 20px;
+  right: 150px;
+  color: white;
+}

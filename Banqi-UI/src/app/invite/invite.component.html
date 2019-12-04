@@ -47,19 +47,34 @@
   <div></div>
   <div></div>
   <hr>
-  <div *ngFor="let invitationUser of newInvitations; let i = index">
+  <div *ngIf="!isInvitationSentByThisUser">
+    <div *ngFor="let invitationUser of newInvitations; let i = index" >
     <span>
       You have got Invite from {{invitationUser["sentUser"]}}!
     </span>
-    <div>
+      <div>
       <span>
         <button (click)="onAccept( invitationUser['sentUser'] )"> Accept </button>
       </span>
       <span>
         <button (click)= "onReject( invitationUser['sentUser'] )"> Reject </button>
       </span>
+      </div>
     </div>
   </div>
+
+  <!--<div *ngIf="!isInvitationSentByThisUser">-->
+  <div *ngFor="let invitationUser of receivedUser; let i = index">
+    <span>
+      Waiting for the {{invitationUser["receivedUser"]}} user to Accept!
+    </span>
+    <div>
+      <span>
+        <button (click)="gamePlay()"> Start the Game  </button>
+      </span>
+    </div>
+  </div>
+  <!--</div>-->
 </div>
 <h2 *ngIf="isUserSignedIn" class="userNamePosition">{{currentUser.toUpperCase()}}
 </h2>

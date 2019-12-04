@@ -25,10 +25,12 @@
     invitationFromUserName: string ;
     currentUser: string;
     newInvitations : Array<string> = [];
+    receivedUser: Array<string> = [];
     acceptedInvitation: Array<string> = [];
     rejectedInvitations: Array<string> = [];
     selectedCategory: string;
     categories = ['tester1','tester11','nisha'];
+    isInvitationAccepted = false;
 
     constructor( private router: Router,
                  private http: HttpClient,
@@ -79,7 +81,7 @@
 
         if( data.length > 0 && data[0] ) {
           for(let index = 0; index < data.length ; index += 1 ) {
-            if (data[index]["status"] && data[index]["status"].toLowerCase() == "waiting") {
+            if (data[index]["status"] &&  data[index]["status"].toLowerCase() == "waiting" && data[index]["sentUser"] ) {
               if (this.newInvitations.length == 0) {
                 this.newInvitations.push(data[index]);
                 this._snackBar.open("You have got Invitation!", "", {
@@ -98,6 +100,30 @@
                       verticalPosition: "top",
                       panelClass: ["customSnackBar"]
                     });
+                  }
+                });
+              }
+
+            }
+            else if (data[index]["status"].toLowerCase() == "waiting" && data[index]["receivedUser"] ) {
+              if (this.receivedUser.length == 0) {
+                this.receivedUser.push(data[index]);
+                /*this._snackBar.open("You have got Invitation!", "", {
+                  duration: 5000,
+                  horizontalPosition: "right",
+                  verticalPosition: "top",
+                  panelClass: ["customSnackBar"]
+                });*/
+              } else {
+                this.receivedUser.forEach( x => {
+                  if ( x["receivedUser"] != data[index]["receivedUser"] ) {
+                    this.receivedUser.push(data[index]);
+                    /*this._snackBar.open("You have got Invitation!", "", {
+                      duration: 5000,
+                      horizontalPosition: "right",
+                      verticalPosition: "top",
+                      panelClass: ["customSnackBar"]
+                    });*/
                   }
                 });
               }
@@ -195,7 +221,8 @@
         })
       };
       const userNickName = this.userDetails.userName;
-      let params = new HttpParams().set('user', userNickName).set('fromUser', localStorage.getItem("user2"));
+      localStorage.setItem("user2", inviteeName );
+      let params = new HttpParams().set('user', userNickName).set('fromUser', inviteeName);
 
       return this.http.get<any>( this.ACCEPT_INVITATION, {headers: httpOptions.headers, params: params})
         .subscribe(( results ) => {

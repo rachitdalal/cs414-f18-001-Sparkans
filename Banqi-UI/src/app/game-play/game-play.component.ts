@@ -20,7 +20,7 @@ export class GamePlayComponent implements OnInit {
   GAME_NOT_LOADED = "There is no game to load! Please invite your friend and start the game again!";
   FLIP_PIECE = "http://localhost:31406/flip";
   CHECK_LEGAL_MOVE = "http://localhost:31406/checkValidMove";
-
+  currentUser;
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
                private _snackBar: MatSnackBar,
@@ -53,6 +53,8 @@ export class GamePlayComponent implements OnInit {
       this.chessboard = data;
       this.chessboard = JSON.parse(localStorage.getItem("board"));
     })*!/*/
+
+    this.currentUser = localStorage.getItem("user1");
   }
 
   loadGame() {
@@ -63,7 +65,7 @@ export class GamePlayComponent implements OnInit {
     };
     const userNickName = localStorage.getItem("user1");
     const user2NickName = localStorage.getItem("user2");
-    let params = new HttpParams().set('user1', userNickName).set('user2',  user2NickName);
+    let params = new HttpParams().set('user1', this.currentUser).set('user2',  user2NickName);
 
     return this.http.get<any>( this.GET_GAME, {headers: httpOptions.headers, params: params})
       .subscribe(( result ) => {
@@ -93,6 +95,45 @@ export class GamePlayComponent implements OnInit {
       });
   }
 
+  latestMove() {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+
+    };
+    const userNickName = localStorage.getItem("user1");
+    const user2NickName = localStorage.getItem("user2");
+    let params = new HttpParams().set('user1', this.currentUser).set('user2',  user2NickName);
+
+    return this.http.get<any>( this.GET_GAME, {headers: httpOptions.headers, params: params})
+      .subscribe(( result ) => {
+        if( result && result.board ) {
+          this.boardPosition = result.board;
+          /*this.userDetails.chessBoard = this.boardPosition;*/
+          for( let  raw: number = 0; raw < this.boardPosition.length; raw += 1 ) {
+            this.chessboard[raw] = this.boardPosition[raw];
+            for( let column: number = 0; column< this.boardPosition[0].length; column += 1 ) {
+              this.chessboard[raw][column] == result.board[raw][column];
+              /*this.chessboard[raw][column] = Object.assign({}, this.boardPosition[raw][column]);*/
+            }
+
+          }
+          this.isLoaded = true;
+        } else {
+          this._snackBar.open(this.GAME_NOT_LOADED, "", {
+            duration: 500000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+
+          });
+        }
+      }, ( error ) => {
+
+      });
+  }
 
   getRaw(i: number) {
     switch (i) {
@@ -156,7 +197,7 @@ export class GamePlayComponent implements OnInit {
     //to = to.charAt(0).toString() + ( Number(to.charAt(1)) - 1 ).toString()
 
     if( from !== to ) {
-      let params = new HttpParams().set('user', userNickName).set('from', from ).set("to", to);
+      let params = new HttpParams().set('user', this.currentUser).set('from', from ).set("to", to);
 
       return this.http.get<any>( this.CHECK_LEGAL_MOVE, {headers: httpOptions.headers, params: params})
         .subscribe(( result ) => {

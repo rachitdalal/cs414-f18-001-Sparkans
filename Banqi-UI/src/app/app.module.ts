@@ -18,8 +18,8 @@ import { GamePlayComponent } from './game-play/game-play.component';
 
 import { InviteComponent } from './invite/invite.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {UserDetailsService} from "./Service/user-details.service";
-import {HistoryComponent} from  "./history/history.component"
+import {UserDetailsService} from "./Service/user-details.service";/*
+import {HistoryComponent} from  "./history/history.component"*/
 
 
 @NgModule({
@@ -29,8 +29,8 @@ import {HistoryComponent} from  "./history/history.component"
     SignInComponentComponent,
     HomeComponent,
     GamePlayComponent,
-    InviteComponent,
-    HistoryComponent,
+    InviteComponent,/*
+    HistoryComponent,*/
 
   ],
   imports: [

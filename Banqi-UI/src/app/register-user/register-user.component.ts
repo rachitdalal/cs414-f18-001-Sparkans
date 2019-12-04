@@ -60,7 +60,7 @@ export class RegisterUserComponent implements OnInit {
 
     return this.http.post<any>( this.REGISTER_USER_URL, userDetails, httpOptions)
       .subscribe(( results ) => {
-        if( results.registered !== 'false' ){
+        if( results[0].registered !== 'false' ){
           /* TODO: emit subject from here to app component to display name on the header*/
           this._snackBar.open("User has been registered !", "", {
             duration: 5000,
@@ -72,7 +72,7 @@ export class RegisterUserComponent implements OnInit {
           // this.userName = userDetails['nickName'];
          this.router.navigate(['/signin']);
         } else {
-          this._snackBar.open( results.detailMessage, "", {
+          this._snackBar.open( results[1].detailMessage, "", {
             duration: 5000,
             horizontalPosition: "right",
             verticalPosition: "top",
