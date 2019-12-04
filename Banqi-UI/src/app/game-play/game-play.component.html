@@ -1,4 +1,5 @@
     <button (click)="loadGame()">Load Game</button>
+    <button (click)="latestMove()">Your Move</button>
     <div *ngIf="isLoaded">
       <div>
         <tbody>
@@ -15,7 +16,7 @@
             <!--id="{{ getRaw(i) }}{{j}}"-->
             <!--R: {{ getRaw(i) }} C: {{ j }}  -->
 
-            <button *ngIf="column" draggable="true" class="border" id="{{ getRaw(i) }}{{j+1}}"
+            <button *ngIf="column" draggable="true" class="border buttonAlignment" id="{{ getRaw(i) }}{{j+1}}"
                     (dragstart)="dragStart($event, i, j)">
               <div [ngClass]="{ 'red' : column.color === 'RED', 'white' : column.color === 'WHITE'    }" *ngIf="!column.isFaceDown; else elseBlock" >
                 {{column.piece}}
@@ -53,3 +54,5 @@
       </nav>
     </div>
 
+    <h2 class="userNamePosition">{{currentUser.toUpperCase()}}
+    </h2>
