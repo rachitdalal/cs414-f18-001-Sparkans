@@ -1,6 +1,19 @@
 .userNamePosition {
   position: absolute;
   top: 20px;
-  right: 150px;
+  right: 160px;
   color: white;
 }
+
+/*
+.box {
+  position: absolute;
+  left: 565px;
+  right: 50px;
+}
+
+#rec{
+  width: 200px;
+  height: 25px;
+}
+*/

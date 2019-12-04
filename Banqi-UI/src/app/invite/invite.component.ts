@@ -5,6 +5,7 @@
   import {interval, pipe, timer} from "rxjs";
   import {UserDetailsService} from "../Service/user-details.service";
   import {MatSnackBar} from "@angular/material/snack-bar";
+  //import { AuthService } from '../Service_1/auth.service';
 
   @Component({
     selector: 'app-invite',
@@ -26,11 +27,15 @@
     newInvitations : Array<string> = [];
     acceptedInvitation: Array<string> = [];
     rejectedInvitations: Array<string> = [];
+    selectedCategory: string;
+    categories = ['tester1','tester11','nisha'];
 
     constructor( private router: Router,
                  private http: HttpClient,
                  private userDetails: UserDetailsService,
-                 private _snackBar: MatSnackBar ) {
+                 private _snackBar: MatSnackBar)
+                 // private auth: AuthService)
+    {
 
       this.userDetails.invitationSubject.subscribe( ( value ) => {
         this.invitationFromUserName = value.invitaionSentFrom ;
@@ -73,8 +78,8 @@
         }*/
 
         if( data.length > 0 && data[0] ) {
-          for(var index = 0; index < data.length ; index += 1 ) {
-            if (data[index]["status"].toLowerCase() == "waiting") {
+          for(let index = 0; index < data.length ; index += 1 ) {
+            if (data[index]["status"] && data[index]["status"].toLowerCase() == "waiting") {
               if (this.newInvitations.length == 0) {
                 this.newInvitations.push(data[index]);
                 this._snackBar.open("You have got Invitation!", "", {
@@ -98,7 +103,7 @@
               }
 
             }
-            else if (data[index]["status"].toLowerCase() == "rejected") {
+            else if (data[index]["status"] && data[index]["status"].toLowerCase() == "rejected") {
               this.rejectedInvitations.push(data[index]);
             }
             else {
@@ -190,7 +195,7 @@
         })
       };
       const userNickName = this.userDetails.userName;
-      let params = new HttpParams().set('user', userNickName).set('fromUser', inviteeName);
+      let params = new HttpParams().set('user', userNickName).set('fromUser', localStorage.getItem("user2"));
 
       return this.http.get<any>( this.ACCEPT_INVITATION, {headers: httpOptions.headers, params: params})
         .subscribe(( results ) => {
@@ -204,20 +209,31 @@
         });
 
     }
-    onReject(){
+    onReject( userToReject ){
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
         })
       };
-      const userNickName = this.userDetails.userName;
-      let params = new HttpParams().set('user', userNickName);
+      const userNickName =  localStorage.getItem("user1");
+      let params = new HttpParams().set('user', userNickName).set('fromUser', localStorage.getItem("user2"));
 
       return this.http.get<any>( this.REJECT_INVITATION, {headers: httpOptions.headers, params: params})
         .subscribe(( results ) => {
-          if( results[0].inviteStatus  &&  results[1].inviteFrom ) {
-            this.userDetails.userName2 = results[1].inviteFrom;
-            this.gamePlay();
+          if( results[0].inviteStatus.toLowerCase() === 'rejected' ) {
+            /*this._snackBar.open("Invitation has been Rejected", "", {
+              duration: 5000,
+              horizontalPosition: "right",
+              verticalPosition: "top",
+              panelClass: ["customSnackBar"]
+
+            });
+
+            for( let index = 0; index < this.newInvitations.length ; index +=1 ) {
+              if( this.newInvitations[index]["sentUser"] === userToReject ) {
+                this.newInvitations.splice(index, 1 );
+              }
+            }*/
           }
         }, (error) => {
           console.log(" Error Working httpGet Invite user ", error);

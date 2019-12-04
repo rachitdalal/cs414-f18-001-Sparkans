@@ -6,6 +6,7 @@ import {AppComponent} from "./app.component";
 import {HomeComponent} from "./home/home.component";
 import {GamePlayComponent} from "./game-play/game-play.component";
 import {InviteComponent} from "./invite/invite.component";
+import {HistoryComponent} from "./history/history.component"
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'signin', component: SignInComponentComponent },
   { path: 'gamePlay', component: GamePlayComponent },
   { path: 'invite', component: InviteComponent },
+  { path: 'history', component: HistoryComponent},
   { path: '',
     redirectTo: '/Home',
     pathMatch: 'full'
