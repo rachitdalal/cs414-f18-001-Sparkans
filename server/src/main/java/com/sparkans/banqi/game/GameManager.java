@@ -58,6 +58,10 @@ public class GameManager {
                         if(b.getPiece(position).getColor().equals(BanqiPiece.Color.RED)){
                             b.setRedPlayer(user);
                         }
+                        else if(b.getPiece(position).getColor().equals(BanqiPiece.Color.WHITE)){
+                            b.setWhitePlayer(user);
+                        }
+
                         return true;
 
                     }
