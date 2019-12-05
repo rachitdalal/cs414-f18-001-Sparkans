@@ -57,9 +57,21 @@ public class GameManager {
                         b.flip(position);
                         if(b.getPiece(position).getColor().equals(BanqiPiece.Color.RED)){
                             b.setRedPlayer(user);
+                            if(b.getUser1().getNickname().equals(user)){
+                                b.setWhitePlayer(b.getUser2().getNickname());
+                            }
+                            else {
+                                b.setWhitePlayer(b.getUser1().getNickname());
+                            }
                         }
                         else if(b.getPiece(position).getColor().equals(BanqiPiece.Color.WHITE)){
                             b.setWhitePlayer(user);
+                            if(b.getUser1().getNickname().equals(user)){
+                                b.setRedPlayer(b.getUser2().getNickname());
+                            }
+                            else {
+                                b.setWhitePlayer(b.getUser1().getNickname());
+                            }
                         }
 
                         return true;

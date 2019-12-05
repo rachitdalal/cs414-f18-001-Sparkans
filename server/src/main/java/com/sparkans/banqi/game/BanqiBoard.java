@@ -217,23 +217,7 @@ public class BanqiBoard {
 	}
 
 	public void flip(String position) throws IllegalPositionException {
-		if(redPlayer == null && whitePlayer != null){
-			if(whitePlayer.equals( user1.getNickname())){
-				setRedPlayer(user2.getNickname());
-			}
-			else if(whitePlayer.equals( user2.getNickname())){
-				setRedPlayer(user1.getNickname());
-			}
-		}
-		if(redPlayer != null && whitePlayer == null){
-			if(redPlayer.equals( user1.getNickname())){
-				setWhitePlayer(user2.getNickname());
-			}
-			else if(redPlayer.equals( user2.getNickname())){
-				setWhitePlayer(user1.getNickname());
-			}
-		}
-
+		isFirstMove = false;
 		getPiece(position).isFaceDown = false;
 	}
 	/*
