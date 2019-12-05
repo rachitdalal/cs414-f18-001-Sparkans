@@ -403,7 +403,7 @@ public class MicroServer {
 	}
 
 
-	private String yourMove(Request request, Response response){
+	/*private String yourMove(Request request, Response response){
 		//user trying to move
 		//boolean : is it there move
 		//gameboard
@@ -414,7 +414,7 @@ public class MicroServer {
 		String user = request.queryParams("user");
 	return null;
 
-	}
+	}*/
 
 	private String team(Request request, Response response) {
 

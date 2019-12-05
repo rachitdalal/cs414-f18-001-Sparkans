@@ -20,7 +20,9 @@ export class GamePlayComponent implements OnInit {
   GAME_NOT_LOADED = "There is no game to load! Please invite your friend and start the game again!";
   FLIP_PIECE = "http://localhost:31406/flip";
   CHECK_LEGAL_MOVE = "http://localhost:31406/checkValidMove";
-  currentUser;
+  currentUser: string;
+  playerTurn: string;
+
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
                private _snackBar: MatSnackBar,
@@ -80,7 +82,9 @@ export class GamePlayComponent implements OnInit {
             }
 
           }
+
           this.isLoaded = true;
+          this.playerTurn = result.playerTurn;
         } else {
           this._snackBar.open(this.GAME_NOT_LOADED, "", {
             duration: 500000,
@@ -121,6 +125,7 @@ export class GamePlayComponent implements OnInit {
 
           }
           this.isLoaded = true;
+          this.playerTurn = result.playerTurn;
         } else {
           this._snackBar.open(this.GAME_NOT_LOADED, "", {
             duration: 500000,
@@ -161,7 +166,20 @@ export class GamePlayComponent implements OnInit {
 
   dragStart(event, row, column) {
     /*event.dataTransfer.setData("text", event.target.id);*/
-    event.dataTransfer.setData("text", event.target.parentNode.getAttribute("id").split("_")[1]);
+    if(this.playerTurn && this.playerTurn.toLowerCase() === this.currentUser ) {
+      event.dataTransfer.setData("text", event.target.parentNode.getAttribute("id").split("_")[1]);
+    } else {
+      this._snackBar.open("It's not your turn", "", {
+        duration: 2000,
+        horizontalPosition: "right",
+        verticalPosition: "top",
+        panelClass: ["customSnackBar"]
+
+      });
+      event.preventDefault();
+      return;
+    }
+
   }
 
   allowDrop( event ) {
@@ -266,32 +284,44 @@ export class GamePlayComponent implements OnInit {
         'Content-Type': 'application/json'
       })
     };
-    const userNickName = this.userDetails.userName;
+    const userNickName = this.currentUser;
     let params = new HttpParams().set('user', userNickName).set('position', position );
-
-    if( this.chessboard[raw][column].isFaceDown ) {
-      return this.http.get<any>( this.FLIP_PIECE, {headers: httpOptions.headers, params: params})
-        .subscribe(( result ) => {
-          if( result[0].flipped ) {
-            /*setTimeout( ( ) => {*/
-            this.chessboard[raw][column].isFaceDown = false;
-           // this.userDetails.pieceMoved.next( this.chessboard );
-            /*this.userDetails.chessBoard = this.chessboard;
-            if( localStorage.getItem("board")) {
-              localStorage.removeItem("board");
+    if(this.playerTurn && this.playerTurn.toLowerCase() === this.currentUser ) {
+      if( this.boardPosition[raw][column].isFaceDown ) {
+        return this.http.get<any>( this.FLIP_PIECE, {headers: httpOptions.headers, params: params})
+          .subscribe(( result ) => {
+            if( result[0].flipped ) {
+              /*setTimeout( ( ) => {*/
+              this.chessboard[raw][column].isFaceDown = false;
+              this.boardPosition[raw][column].isFaceDown = false;
+              // this.userDetails.pieceMoved.next( this.chessboard );
+              /*this.userDetails.chessBoard = this.chessboard;
+              if( localStorage.getItem("board")) {
+                localStorage.removeItem("board");
+              }
+              localStorage.setItem("board", JSON.stringify(this.chessboard));*/
+              /*}, 0);*/
             }
-            localStorage.setItem("board", JSON.stringify(this.chessboard));*/
-            /*}, 0);*/
-          }
-        }, ( error ) => {
-          this._snackBar.open("Something went wrong!!! ", "", {
-            duration: 5000,
-            horizontalPosition: "right",
-            verticalPosition: "top",
-            panelClass: ["customSnackBar"]
+          }, ( error ) => {
+            this._snackBar.open("Something went wrong!!! ", "", {
+              duration: 5000,
+              horizontalPosition: "right",
+              verticalPosition: "top",
+              panelClass: ["customSnackBar"]
 
+            });
           });
-        });
+      }
+    } else {
+      this._snackBar.open("It's not your turn", "", {
+        duration: 2000,
+        horizontalPosition: "right",
+        verticalPosition: "top",
+        panelClass: ["customSnackBar"]
+
+      });
+      event.preventDefault();
+      return;
     }
 
   }

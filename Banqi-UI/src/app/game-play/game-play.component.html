@@ -1,4 +1,4 @@
-    <button (click)="loadGame()">Load Game</button>
+    <button *ngIf="!isLoaded" (click)="loadGame()">Load Game</button>
     <button (click)="latestMove()">Your Move</button>
     <div *ngIf="isLoaded">
       <div>
@@ -17,12 +17,13 @@
             <!--R: {{ getRaw(i) }} C: {{ j }}  -->
 
             <button *ngIf="column" draggable="true" class="border buttonAlignment" id="{{ getRaw(i) }}{{j+1}}"
-                    (dragstart)="dragStart($event, i, j)">
+                    (dragstart)="dragStart($event, i, j)" (click)="toggleFaceDownPiece( $event, i, j )">
               <div [ngClass]="{ 'red' : column.color === 'RED', 'white' : column.color === 'WHITE'    }" *ngIf="!column.isFaceDown; else elseBlock" >
                 {{column.piece}}
               </div>
               <ng-template #elseBlock>
-                <div (click)="toggleFaceDownPiece( $event, i, j )">
+                <!--<div (click)="toggleFaceDownPiece( $event, i, j )">-->
+                <div>
                 Click to See Piece
                 </div>
               </ng-template>
