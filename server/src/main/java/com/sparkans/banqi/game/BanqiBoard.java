@@ -209,6 +209,13 @@ public class BanqiBoard {
 				}
 			} else
 				throw new IllegalMoveException("Illegal Move.");
+
+				if(playerTurn.equals(user1.getNickname())){
+					playerTurn = user2.getNickname();
+				}
+				else{
+					playerTurn = user1.getNickname();
+				}
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Illegal Move due to invalid position. " + e.getMessage());
 		}
@@ -218,6 +225,12 @@ public class BanqiBoard {
 
 	public void flip(String position) throws IllegalPositionException {
 		isFirstMove = false;
+		if(playerTurn.equals(user1.getNickname())){
+			playerTurn = user2.getNickname();
+		}
+		else{
+			playerTurn = user1.getNickname();
+		}
 		getPiece(position).isFaceDown = false;
 	}
 	/*
