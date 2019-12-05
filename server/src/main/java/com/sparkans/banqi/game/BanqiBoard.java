@@ -16,9 +16,19 @@ public class BanqiBoard {
 	private UserBean user1;
 	private UserBean user2;
 
+	@Expose
 	private String redPlayer = null;
+	@Expose
 	private String whitePlayer = null;
+	@Expose
+	public String playerTurn = null;
+	@Expose
+	public String winner = null;
+
 	public boolean isFirstMove = true;
+
+	@Expose
+	private boolean gameOver = false;
 
 	// initialize the board to 4x8 array
 	public BanqiBoard() {
@@ -30,7 +40,8 @@ public class BanqiBoard {
 	public BanqiBoard(UserBean user1, UserBean user2) {
 		this.user1 = user1;
 		this.user2 = user2;
-
+		playerTurn = user1.getNickname();
+		winner = "none";
 		if (this.board == null) {
 			this.board = new BanqiPiece[4][8];
 			initialize();

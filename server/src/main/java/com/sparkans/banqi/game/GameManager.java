@@ -53,7 +53,7 @@ public class GameManager {
         for(BanqiBoard b : boards) {
             if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
                 try {
-                    if(b.getPiece(position).isFaceDown && b.isFirstMove){
+                    if(b.getPiece(position).isFaceDown && b.isFirstMove && b.playerTurn.equals(user)){
                         b.flip(position);
                         if(b.getPiece(position).getColor().equals(BanqiPiece.Color.RED)){
                             b.setRedPlayer(user);
@@ -64,6 +64,10 @@ public class GameManager {
 
                         return true;
 
+                    }
+                    else if(b.getPiece(position).isFaceDown ){
+                        b.flip(position);
+                        return true;
                     }
                 } catch (IllegalPositionException e) {
                     e.printStackTrace();

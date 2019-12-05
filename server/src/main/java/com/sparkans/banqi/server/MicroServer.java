@@ -147,7 +147,7 @@ public class MicroServer {
 			e.printStackTrace();
 			return "[{\"registered\": \"false\"}, {\"detailMessage\": \"" + e.getMessage() + "\"}]";
         }
-		return "{\"registered\": \"true\"}";
+		return "[{\"registered\": \"true\"}]";
 	}
 
 	private String signin(Request request, Response response) {
@@ -376,6 +376,32 @@ public class MicroServer {
 		}
 
 	}
+
+	private String yourMove(Request request, Response response){
+		//user trying to move
+		//boolean : is it there move
+		//gameboard
+		//win or loose
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user = request.queryParams("user");
+
+		String user1 = request.queryParams("user1");
+		String user2 = request.queryParams("user2");
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+		BanqiBoard b = gameManager.getGame(user1,user2);
+		if(b == null){
+			b = gameManager.getGame(user2,user1);
+		}
+		boolean yourTurn = b.playerTurn.equals(user);
+
+
+		return gson.toJson(b);
+
+	}
+
 
 	private String yourMove(Request request, Response response){
 		//user trying to move
