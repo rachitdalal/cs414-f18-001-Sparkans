@@ -40,7 +40,7 @@ public class UserInvite {
 				return false;
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Something went wrong in checkInvitedUser()!!");
 		} finally {
 			if (resultSet != null) {
@@ -72,7 +72,7 @@ public class UserInvite {
 				invited = true;
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Something went wrong in createInvite()!! \n" + e.getMessage());
 		} finally {
 			if (resultSet != null) {
@@ -104,7 +104,7 @@ public class UserInvite {
 				sentInviteList.add(invObj);
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Something went wrong in getSentInvites()!!");
 		} finally {
 			if (resultSet != null) {
@@ -136,7 +136,7 @@ public class UserInvite {
 				recInviteList.add(invObj);
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Something went wrong in getReceivedInvites()!!");
 		} finally {
 			if (resultSet != null) {
@@ -168,7 +168,7 @@ public class UserInvite {
 			statement.executeUpdate();
 			System.out.println("Invitation status Updated!!");
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Something went wrong in updateInvite()!!");
 		} finally {
 			if (resultSet != null) {
