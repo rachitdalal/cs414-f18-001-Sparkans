@@ -38,6 +38,9 @@ public class GameManager {
         for(BanqiBoard b : boards) {
             if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
                 try {
+                    if(!b.playerTurn.equals(user)){
+                        return false;
+                    }
                     b.move(src, dest);
                     return true;
                 } catch (IllegalMoveException e) {
