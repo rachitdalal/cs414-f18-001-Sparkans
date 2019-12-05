@@ -55,6 +55,9 @@ public class GameManager {
 
         for(BanqiBoard b : boards) {
             if ((b.getUser1().getNickname().equals(user) || b.getUser2().getNickname().equals(user))) {
+                if(!b.playerTurn.equals(user)){
+                    return false;
+                }
                 try {
                     if(b.getPiece(position).isFaceDown && b.isFirstMove && b.playerTurn.equals(user)){
                         b.flip(position);
