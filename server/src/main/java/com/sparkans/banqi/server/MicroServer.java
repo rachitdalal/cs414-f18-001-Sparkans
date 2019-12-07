@@ -1,7 +1,7 @@
 package com.sparkans.banqi.server;
 
+import com.sparkans.banqi.user.History;
 import com.sparkans.banqi.game.BanqiBoard;
-import com.sparkans.banqi.game.BanqiPiece;
 import com.sparkans.banqi.game.GameManager;
 import com.sparkans.banqi.user.*;
 
@@ -33,6 +33,7 @@ public class MicroServer {
 
 	private GameManager gameManager = new GameManager();
 	private UserInvite userInvite = new UserInvite();
+	private History history = new History();
 
 
 	/** Creates a micro-server to load static files and provide REST APIs.
@@ -72,6 +73,7 @@ public class MicroServer {
 		get("/getGame", this::getGame);
 		get("/checkValidMove", this::checkValidMove);
 		get("/flip", this::flip);
+		get("/history", this::history);
 
 		options("/*", (request,response)->{
 			String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -392,6 +394,16 @@ public class MicroServer {
 
 
 		return gson.toJson(b);
+
+	}
+	private String history(Request request, Response response){
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user1 = request.queryParams("user1");
+
+
+		return "";
 
 	}
 
