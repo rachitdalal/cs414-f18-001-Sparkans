@@ -23,7 +23,7 @@ public class GameData {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, user1); 
 			statement.setString(2, user2);
-			statement.setObject(3, board);
+			statement.setString(3, board);
 			statement.setString(4, status);
 
 			statement.executeUpdate();
