@@ -30,11 +30,19 @@ public class BanqiBoard {
 	@Expose
 	private boolean gameOver = false;
 
-	// initialize the board to 4x8 array
+	// default constructor for testing
 	public BanqiBoard() {
 		if (this.board == null) {
 			this.board = new BanqiPiece[4][8];
 		}
+		playerTurn = "red";
+		redPlayer = "red";
+		whitePlayer = "white";
+		user1 = new UserBean();
+		user1.setNickName("red");
+		user2 = new UserBean();
+		user2.setNickName("white");
+		winner = "none";
 	}
 
 	public BanqiBoard(UserBean user1, UserBean user2) {
@@ -213,6 +221,9 @@ public class BanqiBoard {
 				if (placePiece(sourcePiece, toPosition)) {
 					board[sourceRow][sourceColumn] = null;
 				}
+
+			checkForWin();
+
 			} else
 				throw new IllegalMoveException("Illegal Move.");
 
@@ -248,6 +259,12 @@ public class BanqiBoard {
 			for (int j=0;j<8;j++){
 				if(g)
 			}
+		}
+		if(whitePiece == false){
+			winner = redPlayer;
+		}
+		if(redPiece == false){
+			winner = whitePlayer;
 		}
 	}
 

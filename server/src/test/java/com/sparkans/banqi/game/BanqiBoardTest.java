@@ -52,4 +52,18 @@ public class BanqiBoardTest {
 
 
 	}
+
+	@Test
+	public void testForWin() throws IllegalPositionException, IllegalMoveException {
+		Soldier sW = new Soldier(board, BanqiPiece.Color.WHITE);
+		Minister mR = new Minister(board, BanqiPiece.Color.RED);
+		board.placePiece(sW,"a1");
+		board.placePiece(mR,"a2");
+		assert (board.winner.equals("none"));
+		board.flip("a1");
+		board.flip("a2");
+		board.move("a2","a1");
+		assert (board.winner.equals("red"));
+	}
+
 }
