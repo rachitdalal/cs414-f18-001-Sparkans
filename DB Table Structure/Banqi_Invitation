@@ -1,0 +1,7 @@
+CREATE TABLE sparkans.Banqi_Invitation (
+	invitation_id INT NOT NULL  AUTO_INCREMENT,
+    sent_user VARCHAR(50) NOT NULL UNIQUE,
+    received_user VARCHAR(50) NOT NULL UNIQUE,
+    status VARCHAR(50) DEFAULT 'Waiting',
+    PRIMARY KEY (invitation_id)
+);
