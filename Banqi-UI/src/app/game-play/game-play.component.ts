@@ -24,6 +24,7 @@ export class GamePlayComponent implements OnInit {
   playerTurn: string;
   blackPlayer: object = {};
   redPlayer: object = {};
+  winner: string;
 
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
@@ -136,7 +137,17 @@ export class GamePlayComponent implements OnInit {
               this.redPlayer['redPlayer'] =  'RED';
             }
           }
+          this.winner = result.winner;
+          if( this.winner.toLowerCase() !== 'none') {
+            const win = this.winner === this.currentUser;
+            this._snackBar.open( win ? 'You Won !' : ( this.winner === localStorage.getItem('user2') ? 'You Lost !' : ''), "", {
+              duration: 5000,
+              horizontalPosition: "right",
+              verticalPosition: "top",
+              panelClass: ["customSnackBar"]
 
+            });
+          }
         } else {
           this._snackBar.open(this.GAME_NOT_LOADED, "", {
             duration: 500000,
