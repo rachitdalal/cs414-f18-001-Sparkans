@@ -1,8 +1,6 @@
 package com.sparkans.banqi.game;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +11,7 @@ import com.sparkans.banqi.db.MySqlCon;
 public class GameData {
 
 	//Serialize Data and save to DB
-	public void saveGameData(String user1, String user2, Object board, String status) throws SQLException { 
+	public void saveGameData(String user1, String user2, String board, String status) throws SQLException { 
 
 		Connection conn = MySqlCon.getConnection();
 		PreparedStatement statement = null;
@@ -65,21 +63,7 @@ public class GameData {
 			resultSet = statement.executeQuery();
 			resultSet.next();
 
-			// Object object = rs.getObject(1);
-
-			byte[] buf = resultSet.getBytes(1);
-			ObjectInputStream objectIn = null;
-			if (buf != null)
-				objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
-
-			Object deSerializedBoard = objectIn.readObject();
-
-			resultSet.close();
-			statement.close();
-
-			System.out.println("Banqi board Object de-serialized from database ");
-			
-			return deSerializedBoard;
+			return resultSet.getString("current_state");
 			
 		} catch (Exception e) {
 			throw e;
