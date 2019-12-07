@@ -22,6 +22,8 @@ export class GamePlayComponent implements OnInit {
   CHECK_LEGAL_MOVE = "http://localhost:31406/checkValidMove";
   currentUser: string;
   playerTurn: string;
+  blackPlayer: object = {};
+  redPlayer: object = {};
 
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
@@ -126,6 +128,15 @@ export class GamePlayComponent implements OnInit {
           }
           this.isLoaded = true;
           this.playerTurn = result.playerTurn;
+          if(!this.blackPlayer.hasOwnProperty('blackPlayer')) {
+            if( result.whitePlayer === this.currentUser ) {
+              this.blackPlayer['blackPlayer'] =  'BLACK';
+            }
+            else if ( result.redPlayer === this.currentUser ) {
+              this.redPlayer['redPlayer'] =  'RED';
+            }
+          }
+
         } else {
           this._snackBar.open(this.GAME_NOT_LOADED, "", {
             duration: 500000,
@@ -243,6 +254,7 @@ export class GamePlayComponent implements OnInit {
                 event.target.appendChild(document.getElementById("TD_"+data).firstElementChild );
               }
             }
+            this.latestMove();
           }
           else {
             this._snackBar.open("Invalid Move!", "", {
@@ -301,6 +313,7 @@ export class GamePlayComponent implements OnInit {
               }
               localStorage.setItem("board", JSON.stringify(this.chessboard));*/
               /*}, 0);*/
+              this.latestMove();
             }
           }, ( error ) => {
             this._snackBar.open("Something went wrong!!! ", "", {

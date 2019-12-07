@@ -1,5 +1,7 @@
     <button *ngIf="!isLoaded" (click)="loadGame()">Load Game</button>
-    <button (click)="latestMove()">Your Move</button>
+    <button (click)="latestMove()">Latest Move</button>
+    <span  *ngIf="blackPlayer['blackPlayer']">You are {{blackPlayer['blackPlayer']}} !</span>
+    <span  *ngIf="redPlayer['redPlayer']">You are {{redPlayer['redPlayer']}} ! </span>
     <div *ngIf="isLoaded">
       <div>
         <tbody>
