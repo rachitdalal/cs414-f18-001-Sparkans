@@ -206,18 +206,11 @@ public class MicroServer {
 		String user = request.queryParams("to");
 		String fromUser = request.queryParams("from");
 
-        try {
-        	if(userInvite.getSentInvites(fromUser) == null){
-				userInvite.createInvite(fromUser,user);
-			}
-        	else{
-        		userInvite.updateInvite(user,fromUser,"waiting");
-			}
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		try {
+			userInvite.createInvite(fromUser,user);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 
         System.out.println("sent invite to " + user + " from "  + fromUser);
 		return "[{\"inviteFor\":\"" + user + "\"}, {\"from\": \"" + fromUser + "\"}]";
