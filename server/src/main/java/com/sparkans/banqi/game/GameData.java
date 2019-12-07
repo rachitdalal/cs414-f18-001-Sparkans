@@ -10,7 +10,6 @@ import com.sparkans.banqi.db.MySqlCon;
 
 public class GameData {
 
-	//Serialize Data and save to DB
 	public void saveGameData(String user1, String user2, String board, String status) throws SQLException { 
 
 		Connection conn = MySqlCon.getConnection();
@@ -40,10 +39,7 @@ public class GameData {
 		}
 	}
 
-
-
-	// De-serialize Data
-	public Object loadGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{   
+	public String loadGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{   
 
 		Connection conn = MySqlCon.getConnection();
 		PreparedStatement statement = null;
