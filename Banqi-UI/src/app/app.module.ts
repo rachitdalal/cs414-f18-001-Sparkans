@@ -19,6 +19,11 @@ import { GamePlayComponent } from './game-play/game-play.component';
 import { InviteComponent } from './invite/invite.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {UserDetailsService} from "./Service/user-details.service";
+import {HistoryComponent} from  "./history/history.component";
+import {MatTabsModule} from '@angular/material/tabs';
+import {ProfileComponent} from "./profile/profile.component";
+import {MatCardModule} from '@angular/material/card';
+import { GameRuleComponent } from './game-rule/game-rule.component';
 import { FinalComponentComponent } from './final-component/final-component.component';
 import {MatDialogModule} from "@angular/material/dialog";
 
@@ -34,6 +39,9 @@ import {HistoryComponent} from  "./history/history.component"*/
     HomeComponent,
     GamePlayComponent,
     InviteComponent,
+    HistoryComponent,
+    ProfileComponent,
+    GameRuleComponent,
     FinalComponentComponent,/*
     HistoryComponent,*/
 
@@ -50,8 +58,13 @@ import {HistoryComponent} from  "./history/history.component"*/
     MatIconModule,
     MatSnackBarModule,
     HttpClientModule,
+    MatTabsModule,
+    MatCardModule,
     MatDialogModule
 
+  ],
+  entryComponents : [
+    FinalComponentComponent
   ],
   providers: [ UserDetailsService ],
   bootstrap: [AppComponent]

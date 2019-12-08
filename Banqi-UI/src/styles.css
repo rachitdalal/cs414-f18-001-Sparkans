@@ -317,7 +317,12 @@ svg#clouds {
 
 .userNamePosition {
   position: absolute;
-  top: 20px;
-  right: 150px;
-  color: white;
+  top: 75px;
+  right: 25px;
+  color: black;
 }
+
+.active {
+  color: white !important;
+}
+
