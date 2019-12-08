@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -269,12 +267,34 @@ public class BanqiBoard implements Serializable {
 				if(g)
 			}
 		}
-		if(whitePiece == false){
+		if(whitePieces.isEmpty()){
 			winner = redPlayer;
 		}
-		if(redPiece == false){
+		else if(redPieces.isEmpty()){
 			winner = whitePlayer;
 		}
+		else{
+			boolean redMoves = false;
+			boolean whiteMoves = false;
+
+			for(BanqiPiece p : redPieces){
+				if(!p.legalMoves().isEmpty()){
+					redMoves = true;
+				}
+			}
+			for(BanqiPiece p : whitePieces){
+				if(!p.legalMoves().isEmpty()){
+					whiteMoves = true;
+				}
+			}
+			if(redMoves == false){
+				winner = whitePlayer;
+			}
+			else if(whiteMoves == false){
+				winner = redPlayer;
+			}
+		}
+
 	}
 
 	 */
