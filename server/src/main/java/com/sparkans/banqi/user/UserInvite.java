@@ -157,13 +157,12 @@ public class UserInvite {
 		try {
 			conn = MySqlCon.getConnection();
 			String sql = "UPDATE sparkans.Banqi_Invitation SET status=?"
-					+ "WHERE sent_user =? AND received_user=? AND status = ?";
+					+ "WHERE sent_user =? AND received_user=?";
 
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, status);
 			statement.setString(2, user1);
 			statement.setString(3, user2);
-			statement.setString(4, "Waiting");
 
 			statement.executeUpdate();
 			System.out.println("Invitation status Updated!!");
