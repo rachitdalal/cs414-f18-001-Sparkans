@@ -16,8 +16,9 @@ public class CannonTest {
 	void cannonPlacedOnBoard() throws IllegalPositionException,IllegalMoveException{
 		Cannon cR = new Cannon(board, BanqiPiece.Color.RED);
 		board.placePiece(cR,"c2");
+		cR.isFaceDown = false;
 		board.move("c2","c7");
-		assertTrue(board.getPiece("c2").legalMoves().containsAll(Arrays.asList("c3","c4","c5","c6","c7")));
+		assertTrue(board.getPiece("c7").legalMoves().containsAll(Arrays.asList("b7")));
 
 	}
 	@Test
@@ -43,7 +44,7 @@ public class CannonTest {
 		board.placePiece(aR,"c1");
 		Cannon aW = new Cannon(board, BanqiPiece.Color.WHITE);
 		board.placePiece(aW,"c2");
-		assertTrue(board.getPiece("c1").legalMoves().contains("c2"));
+		assertFalse(board.getPiece("c1").legalMoves().contains("c2"));
 	}
 
 
