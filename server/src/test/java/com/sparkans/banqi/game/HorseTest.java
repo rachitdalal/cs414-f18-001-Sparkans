@@ -22,6 +22,13 @@ public class HorseTest {
 		assertTrue(board.getPiece("b5").legalMoves().contains("b6"));
 	}
 
+	void horseIsOnBoard() throws IllegalMoveException, IllegalPositionException{
+		Horse gW = new Horse(board, BanqiPiece.Color.WHITE);
+		board.placePiece(gW,"b7");
+		board.move("b7","c7");
+		assertTrue(board.getPiece("c7").legalMoves().contains("b7"));
+	}
+
 	@Test
 	public void horseDoNotAttackSameColor() throws IllegalMoveException,IllegalPositionException {
 		Horse hR = new Horse(board, BanqiPiece.Color.RED);
