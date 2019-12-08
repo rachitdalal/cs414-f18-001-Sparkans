@@ -1,19 +1,23 @@
 <div  class="textAlignCentre">
 
-<!--  <div  class="textAlignCentre">-->
-<!--    <nav class="navbar navbar-inverse">-->
-<!--      <div class="container-fluid">-->
-<!--        <div class="navbar-header">-->
-<!--          <a class="navbar-brand" href="#">BANQI</a>-->
-<!--        </div>-->
-<!--        <ul  class="nav navbar-nav navbar-right">-->
-<!--          <li class="active "><a href="#">Home</a></li>-->
-<!--          <li><a routerLink="/signin">Sign In</a></li>-->
-<!--          <li><a routerLink="/history">History</a></li>-->
-<!--          <li><a  routerLink="/signin">Log Out</a></li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </nav>-->
+  <nav class="navbar navbar-inverse" >
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">BANQI</a>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a routerLink ="/home" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+        <li><a><span class="glyphicon glyphicon-pawn"></span>Game Rules</a></li>
+        <li><a routerLink ="/invite" routerLinkActive="active"><span class="glyphicon glyphicon-bullhorn"></span>Invite Friends</a></li>
+        <li><a routerLink ="/history" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span>History</a></li>
+        <li><a routerLink ="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-briefcase"></span>User Profile</a></li>
+        <li><a routerLink ="/signin" routerLinkActive="active"><span class="glyphicon glyphicon-log-out"></span> LogOut</a></li>
+
+      </ul>
+
+    </div>
+    </nav>
 
 
 
@@ -63,6 +67,21 @@
     </div>
   </div>
 
+  <div>
+    <div *ngIf="isInviteRejectedByThisUser">
+      <span>
+       You have rejected the Invitation{{playerTwo}}!
+      </span>
+    </div>
+    <div *ngIf="rejectedInvitations.length > 0 && !isInviteRejectedByThisUser">
+      <div *ngFor="let rejectedInvitation of rejectedInvitations; let i = index">
+        <span>
+         Your invitation has been rejected by {{rejectedInvitation["receivedUser"]}}!
+        </span>
+      </div>
+    </div>
+  </div>
+
   <!--<div *ngIf="!isInvitationSentByThisUser">-->
   <div *ngFor="let invitationUser of receivedUser; let i = index">
     <span>
@@ -76,8 +95,10 @@
   </div>
   <!--</div>-->
 </div>
+
 <h2 *ngIf="isUserSignedIn" class="userNamePosition">{{currentUser.toUpperCase()}}
 </h2>
+
 
 <!--<div>-->
 <!--    <span>-->
@@ -85,16 +106,8 @@
 <!--    </span>-->
 <!--</div>-->
 
-<div style="text-align:center">
-  <nav>
-    <a routerLink ="/signin" routerLinkActive="active="> Logout</a>
-  </nav>
-</div>
-
-
-
-
-
-<!--<div>
-  <button (click)="gamePlay()"> Start Game </button>
-</div>-->
+<!--<div style="text-align:center">-->
+<!--  <nav>-->
+<!--    <a routerLink ="/signin" routerLinkActive="active="> Logout</a>-->
+<!--  </nav>-->
+<!--</div>-->
