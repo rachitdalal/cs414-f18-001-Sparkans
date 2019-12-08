@@ -22,6 +22,11 @@ public class AdvisorTest {
 		Advisor aR = new Advisor(board, BanqiPiece.Color.RED);
 		board.placePiece(aR,"b1");
 		aR.isFaceDown = false;
+		board.setUser2("red");
+		board.setUser1("white");
+		board.setRedPlayer("red");
+		board.setWhitePlayer("white");
+		board.playerTurn = "red";
 		board.move("b1","a1");
 		assertTrue(board.getPiece("a1").legalMoves().contains("b1"));
 	}

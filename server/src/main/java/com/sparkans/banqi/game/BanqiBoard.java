@@ -42,7 +42,7 @@ public class BanqiBoard implements Serializable {
 		if (this.board == null) {
 			this.board = new BanqiPiece[4][8];
 		}
-
+        winner = "none";
 	}
 
 	public BanqiBoard(UserBean user1, UserBean user2) {

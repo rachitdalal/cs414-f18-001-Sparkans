@@ -17,6 +17,11 @@ public class CannonTest {
 		Cannon cR = new Cannon(board, BanqiPiece.Color.RED);
 		board.placePiece(cR,"c2");
 		cR.isFaceDown = false;
+		board.setUser2("red");
+		board.setUser1("white");
+		board.setRedPlayer("red");
+		board.setWhitePlayer("white");
+		board.playerTurn = "red";
 		board.move("c2","c7");
 		assertTrue(board.getPiece("c7").legalMoves().containsAll(Arrays.asList("b7")));
 

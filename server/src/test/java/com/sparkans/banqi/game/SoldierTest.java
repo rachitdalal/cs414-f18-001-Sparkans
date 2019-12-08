@@ -18,6 +18,11 @@ public class SoldierTest {
 		Soldier cR = new Soldier(board, BanqiPiece.Color.RED);
 		board.placePiece(cR,"c2");
 		cR.isFaceDown = false;
+		board.setUser2("red");
+		board.setUser1("white");
+		board.setRedPlayer("red");
+		board.setWhitePlayer("white");
+		board.playerTurn = "red";
 		board.move("c2","c3");
 		assertTrue(board.getPiece("c3").legalMoves().contains("c4"));
 	}

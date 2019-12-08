@@ -15,9 +15,14 @@ public class ChariotTest {
 
 	@Test
 	void chariotIsOnBoard() throws IllegalMoveException,IllegalPositionException{
-		Chariot cW = new Chariot(board, BanqiPiece.Color.RED);
+		Chariot cW = new Chariot(board, BanqiPiece.Color.WHITE);
 		board.placePiece(cW,"d1");
 		cW.isFaceDown = false;
+		board.setUser2("red");
+		board.setUser1("white");
+		board.setRedPlayer("red");
+		board.setWhitePlayer("white");
+		board.playerTurn = "white";
 		board.move("d1","d2");
 		assertTrue(board.getPiece("d2").legalMoves().contains("d3"));
 	}

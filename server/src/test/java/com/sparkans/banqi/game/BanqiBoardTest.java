@@ -60,8 +60,12 @@ public class BanqiBoardTest {
 		board.placePiece(sW,"a1");
 		board.placePiece(mR,"a2");
 		assert (board.winner.equals("none"));
-		board.flip("a1");
-		board.flip("a2");
+		sW.isFaceDown = false;
+		mR.isFaceDown = false;
+		board.setUser1("red");
+		board.setUser2("white");
+		board.setRedPlayer("red");
+		board.playerTurn = board.getRedPlayer();
 		board.move("a2","a1");
 		assert (board.winner.equals("red"));
 	}
