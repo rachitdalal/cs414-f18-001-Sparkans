@@ -96,7 +96,7 @@ export class GamePlayComponent implements OnInit {
           this.playerTurn = result.playerTurn;
         } else {
           this._snackBar.open(this.GAME_NOT_LOADED, "", {
-            duration: 500000,
+            duration: 5000,
             horizontalPosition: "right",
             verticalPosition: "top",
             panelClass: ["customSnackBar"]
@@ -306,7 +306,7 @@ export class GamePlayComponent implements OnInit {
           }
           else {
             this._snackBar.open("Invalid Move!", "", {
-              duration: 5000,
+              duration: 3000,
               horizontalPosition: "right",
               verticalPosition: "top",
               panelClass: ["customSnackBar"]

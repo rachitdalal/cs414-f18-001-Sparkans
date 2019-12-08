@@ -1,0 +1,30 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">BANQI</a>
+    </div>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li><a routerLink ="/home" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+      <li><a><span class="glyphicon glyphicon-pawn"></span>Game Rules</a></li>
+      <li><a routerLink ="/invite" routerLinkActive="active"><span class="glyphicon glyphicon-bullhorn"></span>Invite Friends</a></li>
+      <li><a routerLink ="/history" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span>History</a></li>
+      <li><a routerLink ="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-briefcase"></span>User Profile</a></li>
+      <li><a routerLink ="/signin" routerLinkActive="active"><span class="glyphicon glyphicon-log-out"></span> LogOut</a></li>
+
+    </ul>
+
+  </div>
+</nav>
+<br/><br/><br/>
+
+
+<mat-tab-group mat-align-tabs="center" animationDuration="0ms">
+  <mat-tab label="Active Games">Content </mat-tab>
+  <mat-tab label="Played Games">Content </mat-tab>
+</mat-tab-group>
+
+<h2 class="userNamePosition">{{currentUser.toUpperCase()}}</h2>
+
+
+

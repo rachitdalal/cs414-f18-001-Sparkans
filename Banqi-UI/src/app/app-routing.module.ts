@@ -6,15 +6,21 @@ import {AppComponent} from "./app.component";
 import {HomeComponent} from "./home/home.component";
 import {GamePlayComponent} from "./game-play/game-play.component";
 import {InviteComponent} from "./invite/invite.component";
-/*import {HistoryComponent} from "./history/history.component"*/
+import {HistoryComponent} from "./history/history.component";
+import {ProfileComponent} from "./profile/profile.component";
+import {GameRuleComponent} from "./game-rule/game-rule.component";
+
+
 
 
 const routes: Routes = [
   { path: 'register', component: RegisterUserComponent },
   { path: 'signin', component: SignInComponentComponent },
   { path: 'gamePlay', component: GamePlayComponent },
-  { path: 'invite', component: InviteComponent },/*
-  { path: 'history', component: HistoryComponent},*/
+  { path: 'invite', component: InviteComponent },
+  { path: 'history', component: HistoryComponent},
+  { path: 'profile', component: ProfileComponent},
+  { path: 'gameRule', component: GameRuleComponent},
   { path: '',
     redirectTo: '/Home',
     pathMatch: 'full'

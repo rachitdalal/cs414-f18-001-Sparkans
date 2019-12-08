@@ -28,9 +28,11 @@
     receivedUser: Array<string> = [];
     acceptedInvitation: Array<string> = [];
     rejectedInvitations: Array<string> = [];
+    playerTwo: string;
     selectedCategory: string;
     categories = ['tester1','tester11','nisha'];
     isInvitationAccepted = false;
+    isInviteRejectedByThisUser: boolean = false;
 
     constructor( private router: Router,
                  private http: HttpClient,
@@ -130,7 +132,15 @@
 
             }
             else if (data[index]["status"] && data[index]["status"].toLowerCase() == "rejected") {
-              this.rejectedInvitations.push(data[index]);
+              if (this.rejectedInvitations.length == 0) {
+                this.rejectedInvitations.push(data[index]);
+              } else {
+                this.rejectedInvitations.forEach( x => {
+                  if ( x["receivedUser"] != data[index]["receivedUser"] ) {
+                    this.rejectedInvitations.push(data[index]);
+                  }
+                });
+              }
             }
             else {
               this.acceptedInvitation.push(data[index]);
@@ -246,25 +256,33 @@
           'Content-Type': 'application/json'
         })
       };
-      const userNickName =  localStorage.getItem("user1");
+      const userNickName =  this.userDetails.userName || localStorage.getItem("user1");
+      localStorage.setItem("user2", userToReject);
       let params = new HttpParams().set('user', userNickName).set('fromUser', localStorage.getItem("user2"));
 
       return this.http.get<any>( this.REJECT_INVITATION, {headers: httpOptions.headers, params: params})
         .subscribe(( results ) => {
           if( results[0].inviteStatus.toLowerCase() === 'rejected' ) {
-            /*this._snackBar.open("Invitation has been Rejected", "", {
-              duration: 5000,
-              horizontalPosition: "right",
-              verticalPosition: "top",
-              panelClass: ["customSnackBar"]
+            localStorage.setItem("user2", userToReject );
+            this.playerTwo = userToReject;
+            this.isInviteRejectedByThisUser = true;
+            //if( userNickName !== this.currentUser) {
+              this._snackBar.open("Invitation has been Rejected", "", {
+                duration: 5000,
+                horizontalPosition: "right",
+                verticalPosition: "top",
+                panelClass: ["customSnackBar"]
 
-            });
+              });
+            //}
 
             for( let index = 0; index < this.newInvitations.length ; index +=1 ) {
               if( this.newInvitations[index]["sentUser"] === userToReject ) {
                 this.newInvitations.splice(index, 1 );
               }
-            }*/
+            }
+
+
           }
         }, (error) => {
           console.log(" Error Working httpGet Invite user ", error);

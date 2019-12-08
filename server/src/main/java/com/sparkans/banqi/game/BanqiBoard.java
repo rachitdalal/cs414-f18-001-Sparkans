@@ -1,17 +1,15 @@
 package com.sparkans.banqi.game;
 
-import com.google.gson.annotations.Expose;
-import com.sparkans.banqi.user.UserBean;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BanqiBoard implements Serializable {
+import com.google.gson.annotations.Expose;
+import com.sparkans.banqi.user.UserBean;
+
+public class BanqiBoard {
 
 	@Expose
 	private BanqiPiece[][] board;
@@ -42,7 +40,7 @@ public class BanqiBoard implements Serializable {
 		if (this.board == null) {
 			this.board = new BanqiPiece[4][8];
 		}
-        winner = "none";
+		winner = "none";
 	}
 
 	public BanqiBoard(UserBean user1, UserBean user2) {
@@ -54,7 +52,6 @@ public class BanqiBoard implements Serializable {
 			this.board = new BanqiPiece[4][8];
 			initialize();
 		}
-
 	}
 
 	public BanqiPiece[][] getBoard() {
@@ -176,7 +173,12 @@ public class BanqiBoard implements Serializable {
 				return true;
 			} else {
 				if (existingPiece.color.equals(piece.color))
-					return false;
+				{
+					if(piece.toString().equals("Cannon"))
+						return true;
+					else
+						return false;
+				}
 				else {
 					piece.setPosition(position);
 					board[column][row] = piece;
@@ -205,7 +207,8 @@ public class BanqiBoard implements Serializable {
 			if (!faceUp(sourcePiece))
 				throw new IllegalMoveException("No move allowed for a face-down piece");
 
-			if (destinationPiece != null && !faceUp(destinationPiece) && (!sourcePiece.toString().equals("Cannon")))
+			if (destinationPiece != null && !faceUp(destinationPiece) 
+				&& (!sourcePiece.toString().equals("Cannon")))
 				throw new IllegalMoveException("Cannot capture a face-down piece");
 			if (sourcePiece.getColor().equals(BanqiPiece.Color.RED) && !playerTurn.equals(redPlayer)){
 				throw new IllegalMoveException("Not your turn");
@@ -221,22 +224,22 @@ public class BanqiBoard implements Serializable {
 					board[sourceRow][sourceColumn] = null;
 				}
 
-			checkForWin();
+				//checkForWin();
 
 			} else
 				throw new IllegalMoveException("Illegal Move.");
 
-				if(playerTurn.equals(user1.getNickname())){
-					playerTurn = user2.getNickname();
-				}
-				else{
-					playerTurn = user1.getNickname();
-				}
+			if(playerTurn.equals(user1.getNickname())){
+				playerTurn = user2.getNickname();
+			}
+			else{
+				playerTurn = user1.getNickname();
+			}
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Illegal Move due to invalid position. " + e.getMessage());
 		}
 
-	//	checkForWin();
+		//	checkForWin();
 	}
 
 	public void flip(String position) throws IllegalPositionException {

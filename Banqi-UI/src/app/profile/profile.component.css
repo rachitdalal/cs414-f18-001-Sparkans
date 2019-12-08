@@ -1,0 +1,30 @@
+.example-card {
+  max-width: 400px;
+  width: 75%;
+  margin: 10px auto;
+}
+
+.example-header-image {
+  background-size: cover;
+}
+
+
+.user-profile {
+  position: absolute;
+  top: 50px;
+  right: 115px;
+  color: black;
+}
+.tittle{
+  position: absolute;
+  top: 20px;
+  right: 180px;
+  color: black;
+
+}
+.player {
+  position: absolute;
+  top: 450px;
+  right: 120px;
+  color: black;
+}
