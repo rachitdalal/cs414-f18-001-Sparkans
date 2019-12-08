@@ -76,4 +76,36 @@ public class GameData {
 				conn.close();
 		}
 	}
+	
+	public void removeGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{   
+
+		Connection conn = MySqlCon.getConnection();
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			
+			String sql = "DELETE FROM sparkans.Banqi_Game "
+					+ "WHERE user1 = ? OR user1 = ? AND user2 =? OR user2 = ?";
+
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, user1);
+			statement.setString(2, user2);
+			statement.setString(3, user1);
+			statement.setString(4, user2);
+
+			resultSet = statement.executeQuery();
+			resultSet.next();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (resultSet != null) 
+				resultSet.close();
+			if (statement != null) 
+				statement.close();
+			if (conn != null) 
+				conn.close();
+		}
+	}
 }
