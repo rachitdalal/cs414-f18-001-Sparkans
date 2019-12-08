@@ -44,4 +44,16 @@ public class SaveLoadGame {
         return null;
     }
 
+    public static void removeGame(String user1,String user2){
+        try {
+            GameData.removeGameData(user1,user2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

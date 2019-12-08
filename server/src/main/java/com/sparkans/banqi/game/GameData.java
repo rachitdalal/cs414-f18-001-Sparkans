@@ -77,7 +77,7 @@ public class GameData {
 		}
 	}
 	
-	public void removeGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{   
+	public static void removeGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{
 
 		Connection conn = MySqlCon.getConnection();
 		PreparedStatement statement = null;
