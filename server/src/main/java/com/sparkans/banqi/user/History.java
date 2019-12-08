@@ -32,7 +32,7 @@ public class History {
                 temp.add(String.valueOf(resultSet.getObject("board")));
                 temp.add(resultSet.getString("status"));
                 //TODO test it
-                System.out.println(temp);
+              /*  System.out.println(temp);*/
                 allTheGames.add(temp);
             }
 
