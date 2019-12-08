@@ -1,13 +1,15 @@
 package com.sparkans.banqi.game;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.google.gson.annotations.Expose;
 import com.sparkans.banqi.user.UserBean;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BanqiBoard {
 
@@ -40,7 +42,7 @@ public class BanqiBoard {
 		if (this.board == null) {
 			this.board = new BanqiPiece[4][8];
 		}
-		winner = "none";
+        winner = "none";
 	}
 
 	public BanqiBoard(UserBean user1, UserBean user2) {
@@ -52,6 +54,7 @@ public class BanqiBoard {
 			this.board = new BanqiPiece[4][8];
 			initialize();
 		}
+
 	}
 
 	public BanqiPiece[][] getBoard() {
@@ -207,7 +210,7 @@ public class BanqiBoard {
 			if (!faceUp(sourcePiece))
 				throw new IllegalMoveException("No move allowed for a face-down piece");
 
-			if (destinationPiece != null && !faceUp(destinationPiece) 
+			if (destinationPiece != null && !faceUp(destinationPiece)
 				&& (!sourcePiece.toString().equals("Cannon")))
 				throw new IllegalMoveException("Cannot capture a face-down piece");
 			if (sourcePiece.getColor().equals(BanqiPiece.Color.RED) && !playerTurn.equals(redPlayer)){
@@ -224,7 +227,7 @@ public class BanqiBoard {
 					board[sourceRow][sourceColumn] = null;
 				}
 
-				//checkForWin();
+			checkForWin();
 
 			} else
 				throw new IllegalMoveException("Illegal Move.");
