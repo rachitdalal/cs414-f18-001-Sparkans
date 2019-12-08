@@ -60,7 +60,9 @@ public class Soldier extends BanqiPiece {
 
 			// can capture only a General or opposite Soldier
 			if(destinationPiece != null){
-				if (!(destinationPiece.toString().equals("General") || destinationPiece.toString().equals("Soldier")))
+				if (destinationPiece.toString().equals("Chariot") || destinationPiece.toString().equals("Horse")
+						|| destinationPiece.toString().equals("Cannon") || destinationPiece.toString().equals("Advisor")
+						|| destinationPiece.toString().equals("Minister"))
 					return inValid;
 			}
 

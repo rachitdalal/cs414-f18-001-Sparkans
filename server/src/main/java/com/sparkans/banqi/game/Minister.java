@@ -61,7 +61,9 @@ public class Minister extends BanqiPiece {
 
 			if(destinationPiece != null){
 				// can capture only a Soldier and opposite Minister
-				if (!(destinationPiece.toString().equals("Soldier") || destinationPiece.toString().equals("Minister")))
+				if (destinationPiece.toString().equals("General") || destinationPiece.toString().equals("Chariot")
+						|| destinationPiece.toString().equals("Horse") || destinationPiece.toString().equals("Cannon")
+						|| destinationPiece.toString().equals("Advisor"))
 					return inValid;
 			}
 			// Minister cannot move diagonally.
