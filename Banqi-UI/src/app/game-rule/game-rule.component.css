@@ -1,0 +1,11 @@
+.example-card {
+  max-width: 1000px;
+  width: 75%;
+  margin: 199px auto;
+}
+
+.example-header-image {
+  width: 25%;
+  heigth: 12%;
+  margin: 10px auto;
+}

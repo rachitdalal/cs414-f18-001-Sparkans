@@ -1,4 +1,26 @@
 <div class="textAlignCentre">
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">BANQI</a>
+      </div>
+
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a routerLink ="/register" routerLinkActive="active"><span class="g	glyphicon glyphicon-pencil"></span> Register </a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li ><a routerLink ="/register" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+        <li><a><span class="glyphicon glyphicon-pawn"></span>Game Rules</a></li>
+        <li><a routerLink ="/signin" routerLinkActive="active"><span class="g	glyphicon glyphicon-user"></span> SignIn </a></li>
+      </ul>
+
+    </div>
+  </nav>
+
+
   <h3>Sign In</h3>
   <form [formGroup]="signInForm"  (ngSubmit)="signInUser(signInForm.value)">
   <div class="example-container">
