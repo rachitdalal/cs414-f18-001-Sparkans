@@ -17,7 +17,7 @@ public class Minister extends BanqiPiece {
 
 	@Override
 	public String toString() {
-		return "Advisor";
+		return "Minister";
 	}
 
 	@Override
