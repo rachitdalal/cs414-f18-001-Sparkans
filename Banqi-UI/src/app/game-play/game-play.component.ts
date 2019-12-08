@@ -288,7 +288,7 @@ export class GamePlayComponent implements OnInit {
 
   }
 
-  drop1( event ) {
+  /*drop1( event ) {
     event.preventDefault();
     let data = event.dataTransfer.getData("text");
     event.target.appendChild(document.getElementById(data));
@@ -298,7 +298,7 @@ export class GamePlayComponent implements OnInit {
     //  this.dummyTest = !this.dummyTest;
     // }
 
-  }
+  }*/
 
   toggleFaceDownPiece( event, raw, column ) {
     const position: string = this.getRaw(raw) +( column + 1 );
