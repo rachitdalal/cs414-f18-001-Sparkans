@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {NotificationsService} from "angular2-notifications";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
