@@ -2,7 +2,9 @@
     <button (click)="latestMove()">Latest Move</button>
     <span  *ngIf="blackPlayer['blackPlayer']">You are {{blackPlayer['blackPlayer']}} !</span>
     <span  *ngIf="redPlayer['redPlayer']">You are {{redPlayer['redPlayer']}} ! </span>
+    <!--<span  *ngIf="showTurn" class="paddingLeft18px"> It's Your Turn!</span>-->
     <div *ngIf="isLoaded">
+
       <div>
         <tbody>
         <tr *ngFor="let raw of chessboard; let i = index">

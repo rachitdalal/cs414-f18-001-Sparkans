@@ -18,7 +18,11 @@ import { GamePlayComponent } from './game-play/game-play.component';
 
 import { InviteComponent } from './invite/invite.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {UserDetailsService} from "./Service/user-details.service";/*
+import {UserDetailsService} from "./Service/user-details.service";
+import { FinalComponentComponent } from './final-component/final-component.component';
+import {MatDialogModule} from "@angular/material/dialog";
+
+/*
 import {HistoryComponent} from  "./history/history.component"*/
 
 
@@ -29,7 +33,8 @@ import {HistoryComponent} from  "./history/history.component"*/
     SignInComponentComponent,
     HomeComponent,
     GamePlayComponent,
-    InviteComponent,/*
+    InviteComponent,
+    FinalComponentComponent,/*
     HistoryComponent,*/
 
   ],
@@ -44,7 +49,8 @@ import {HistoryComponent} from  "./history/history.component"*/
     MatInputModule,
     MatIconModule,
     MatSnackBarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
 
   ],
   providers: [ UserDetailsService ],

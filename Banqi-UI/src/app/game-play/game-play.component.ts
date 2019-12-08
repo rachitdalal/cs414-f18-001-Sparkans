@@ -4,6 +4,8 @@ import {UserDetailsService} from "../Service/user-details.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute} from "@angular/router";
 import {interval, pipe, timer} from "rxjs";
+import {FinalComponentComponent} from "../final-component/final-component.component";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-game-play',
@@ -25,39 +27,32 @@ export class GamePlayComponent implements OnInit {
   blackPlayer: object = {};
   redPlayer: object = {};
   winner: string;
+  showTurn: boolean = false;
 
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
                private _snackBar: MatSnackBar,
-               private route: ActivatedRoute) {
+               private route: ActivatedRoute,
+               public dialog: MatDialog) {
 
       this.chessboard = [];
   }
 
   ngOnInit() {
 
-    this.subject = this.route
-      .data
-      .subscribe(( username ) => {
-        console.log(username);
-      });
-
-   /* /!*this.loadGame();*!/
+    /*this.loadGame();*/
     let timer1 = timer(1000, 2000);
     this.subscriber = timer1.subscribe((data) => {
       console.log("Test");
-      /!*this.chessboard = this.userDetails.chessBoard;*!/
-      if(localStorage.getItem("board")) {
-        this.chessboard = JSON.parse(localStorage.getItem("board"));
-      }
-
+      /*this.chessboard = this.userDetails.chessBoard;*/
+     this.latestMove();
     });
 
-    /!*this.userDetails.pieceMoved.subscribe( ( data ) => {
+    /*this.userDetails.pieceMoved.subscribe( ( data ) => {
       console.log("Test");
       this.chessboard = data;
       this.chessboard = JSON.parse(localStorage.getItem("board"));
-    })*!/*/
+    })*/
 
     this.currentUser = localStorage.getItem("user1");
   }
@@ -128,17 +123,20 @@ export class GamePlayComponent implements OnInit {
 
           }
           this.isLoaded = true;
-          this.playerTurn = result.playerTurn;
+          this.playerTurn = result.playerTurn.toLowerCase();
+          if( this.playerTurn.toLowerCase() === this.currentUser ) {
+            this.showTurn = true;
+          }
           if(!this.blackPlayer.hasOwnProperty('blackPlayer')) {
             if( result.whitePlayer === this.currentUser ) {
-              this.blackPlayer['blackPlayer'] =  'BLACK';
+              this.blackPlayer['blackPlayer'] =  'BLACK';
             }
             else if ( result.redPlayer === this.currentUser ) {
-              this.redPlayer['redPlayer'] =  'RED';
+              this.redPlayer['redPlayer'] =  'RED';
             }
           }
           this.winner = result.winner;
-          if( this.winner.toLowerCase() !== 'none') {
+          /*if( this.winner.toLowerCase() !== 'none') {
             const win = this.winner === this.currentUser;
             this._snackBar.open( win ? 'You Won !' : ( this.winner === localStorage.getItem('user2') ? 'You Lost !' : ''), "", {
               duration: 5000,
@@ -147,10 +145,38 @@ export class GamePlayComponent implements OnInit {
               panelClass: ["customSnackBar"]
 
             });
+          }*/
+          if( this.winner.toLowerCase() !== 'none' ) {
+            // const win = this.winner.toLowerCase() === this.currentUser.toLowerCase();
+            if( this.winner.toLowerCase() === this.currentUser.toLowerCase() ) {
+              const dialogRef = this.dialog.open(FinalComponentComponent, {
+                width: '250px',
+                data: {name: this.currentUser, status: 'Won'}
+              });
+            } else {
+              if(this.winner !== localStorage.getItem('user2')  ) {
+                const dialogRef = this.dialog.open(FinalComponentComponent, {
+                  width: '250px',
+                  data: {name: localStorage.getItem('user2'), status: 'Lost'}
+                });
+              }
+              else if( this.winner === localStorage.getItem('user2') ) {
+                const dialogRef = this.dialog.open(FinalComponentComponent, {
+                  width: '250px',
+                  data: {name: localStorage.getItem('user2'), status: 'Won'}
+                });
+              } else {
+                const dialogRef = this.dialog.open(FinalComponentComponent, {
+                  width: '250px',
+                  data: {name: localStorage.getItem('user1'), status: 'Lost'}
+                });
+              }
+
+            }
           }
         } else {
           this._snackBar.open(this.GAME_NOT_LOADED, "", {
-            duration: 500000,
+            duration: 5000,
             horizontalPosition: "right",
             verticalPosition: "top",
             panelClass: ["customSnackBar"]
@@ -158,7 +184,6 @@ export class GamePlayComponent implements OnInit {
           });
         }
       }, ( error ) => {
-
       });
   }
 
