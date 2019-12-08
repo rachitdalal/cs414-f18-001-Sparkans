@@ -17,6 +17,10 @@ public class GameManager {
         return b;
     }
 
+    public void addGame(BanqiBoard b){
+        boards.add(b);
+    }
+
     public BanqiBoard getGame(String user1, String user2){
         user1 = user1.toLowerCase();
         user2 = user2.toLowerCase();

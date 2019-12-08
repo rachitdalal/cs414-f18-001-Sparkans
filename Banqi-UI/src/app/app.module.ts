@@ -53,6 +53,9 @@ import {HistoryComponent} from  "./history/history.component"*/
     MatDialogModule
 
   ],
+  entryComponents : [
+    FinalComponentComponent
+  ],
   providers: [ UserDetailsService ],
   bootstrap: [AppComponent]
 })

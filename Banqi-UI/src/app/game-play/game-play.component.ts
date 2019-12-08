@@ -28,6 +28,7 @@ export class GamePlayComponent implements OnInit {
   redPlayer: object = {};
   winner: string;
   showTurn: boolean = false;
+  shouldIPollToServer: boolean = true;
 
   constructor( private http: HttpClient,
                private userDetails: UserDetailsService,
@@ -41,12 +42,22 @@ export class GamePlayComponent implements OnInit {
   ngOnInit() {
 
     /*this.loadGame();*/
-    let timer1 = timer(1000, 2000);
-    this.subscriber = timer1.subscribe((data) => {
-      console.log("Test");
-      /*this.chessboard = this.userDetails.chessBoard;*/
-     this.latestMove();
-    });
+    if( this.shouldIPollToServer ) {
+      let timer1 = timer(1000, 2000);
+      this.subscriber = timer1.subscribe((data) => {
+        console.log("Test");
+        /*this.chessboard = this.userDetails.chessBoard;*/
+        if(this.shouldIPollToServer) {
+          this.latestMove();
+        } else {
+          this.subscriber.unsubscribe();
+        }
+
+      });
+    } else {
+      this.subscriber.unsubscribe();
+    }
+
 
     /*this.userDetails.pieceMoved.subscribe( ( data ) => {
       console.log("Test");
@@ -148,22 +159,23 @@ export class GamePlayComponent implements OnInit {
           }*/
           if( this.winner.toLowerCase() !== 'none' ) {
             // const win = this.winner.toLowerCase() === this.currentUser.toLowerCase();
+            this.shouldIPollToServer = false;
             if( this.winner.toLowerCase() === this.currentUser.toLowerCase() ) {
               const dialogRef = this.dialog.open(FinalComponentComponent, {
                 width: '250px',
                 data: {name: this.currentUser, status: 'Won'}
               });
             } else {
-              if(this.winner !== localStorage.getItem('user2')  ) {
+              if(this.winner !== localStorage.getItem('user1')  ) {
                 const dialogRef = this.dialog.open(FinalComponentComponent, {
                   width: '250px',
-                  data: {name: localStorage.getItem('user2'), status: 'Lost'}
+                  data: {name: localStorage.getItem('user1'), status: 'Lost'}
                 });
               }
-              else if( this.winner === localStorage.getItem('user2') ) {
+              else if( this.winner === localStorage.getItem('user1') ) {
                 const dialogRef = this.dialog.open(FinalComponentComponent, {
                   width: '250px',
-                  data: {name: localStorage.getItem('user2'), status: 'Won'}
+                  data: {name: localStorage.getItem('user1'), status: 'Won'}
                 });
               } else {
                 const dialogRef = this.dialog.open(FinalComponentComponent, {

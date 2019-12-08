@@ -1,8 +1,7 @@
 package com.sparkans.banqi.server;
 
+import com.sparkans.banqi.game.*;
 import com.sparkans.banqi.user.History;
-import com.sparkans.banqi.game.BanqiBoard;
-import com.sparkans.banqi.game.GameManager;
 import com.sparkans.banqi.user.*;
 
 import spark.Request;
@@ -32,6 +31,7 @@ public class MicroServer {
 	private int    port;
 	private String name;
 	private String path = "/public";
+	private boolean DEBUG = true;
 
 	private GameManager gameManager = new GameManager();
 	private UserInvite userInvite = new UserInvite();
@@ -276,7 +276,22 @@ public class MicroServer {
             user1.setNickName(user);
             user2.setNickName(fromUser);
             if(gameManager.getGame(user1.getNickname(),user2.getNickname()) == null){
-				gameManager.addGame(user1,user2);
+				if(DEBUG){
+					BanqiBoard b = new BanqiBoard();
+					b.setUser1(user);
+					b.setUser2(fromUser);
+					b.playerTurn = fromUser;
+					b.setRedPlayer(fromUser);
+					Minister wS = new Minister(b, BanqiPiece.Color.WHITE);
+					Minister rM = new Minister(b, BanqiPiece.Color.RED);
+					b.placePiece(wS, "a1");
+					b.placePiece(rM,"a2");
+					gameManager.addGame(b);
+				}
+            	else{
+					gameManager.addGame(user1,user2);
+				}
+
 			}
 
             return "[{\"inviteStatus\":\"accepted\"}]";
