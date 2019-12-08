@@ -21,9 +21,9 @@ public class AdvisorTest {
 	public  void  moveAdvisor() throws IllegalMoveException, IllegalPositionException{
 		Advisor aR = new Advisor(board, BanqiPiece.Color.RED);
 		board.placePiece(aR,"b1");
-
+		aR.isFaceDown = false;
 		board.move("b1","a1");
-		assertTrue(board.getPiece("b1").legalMoves().contains("b1"));
+		assertTrue(board.getPiece("a1").legalMoves().contains("b1"));
 	}
 
 	@Test
