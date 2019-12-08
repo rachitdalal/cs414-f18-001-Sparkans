@@ -1,27 +1,44 @@
 package com.sparkans.banqi.user;
 
+import com.sparkans.banqi.game.GameData;
+import org.omg.CORBA.ARG_IN;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class History {
 
-    private Connection conn = null;
-    private PreparedStatement statement = null;
-    private ResultSet resultSet = null;
 
-    public boolean getUserHistory(String user, Connection conn) throws SQLException {
+    private List<ArrayList<String>> allTheGames = new ArrayList<>();
+
+    public List<ArrayList<String>> getUserHistory(String user) throws SQLException {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            statement = conn.prepareStatement("SELECT * FROM sparkans.Banqi_Users WHERE nickname ="+ user);
+            statement = conn.prepareStatement("SELECT * FROM sparkans.Banqi_Game WHERE nickname =?");
             statement.setString(1, user);
             resultSet = statement.executeQuery();
 
-            // History code will go here
+            while ( resultSet.next() ) {
+                ArrayList<String> temp=new ArrayList<>();
+                temp.add(resultSet.getString("user1"));
+                temp.add(resultSet.getString("user2"));
+                temp.add(String.valueOf(resultSet.getObject("board")));
+                temp.add(resultSet.getString("status"));
+                //TODO test it
+                System.out.println(temp);
+                allTheGames.add(temp);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
+        return null;
     }
 }
