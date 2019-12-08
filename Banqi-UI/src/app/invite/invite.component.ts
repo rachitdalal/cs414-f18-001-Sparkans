@@ -1,7 +1,7 @@
   import {Component, OnDestroy, OnInit} from '@angular/core';
   import {Router} from "@angular/router";
   import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-  import {concatMap, flatMap, map, switchMap, take, takeWhile} from "rxjs/operators";
+  import {switchMap} from "rxjs/operators";
   import {interval, pipe, timer} from "rxjs";
   import {UserDetailsService} from "../Service/user-details.service";
   import {MatSnackBar} from "@angular/material/snack-bar";
