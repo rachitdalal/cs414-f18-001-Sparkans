@@ -93,12 +93,23 @@
       </span>
     </div>
   </div>
+
+  <div *ngFor="let accepted of acceptedInvitation; let i = index">
+    <span>
+      Waiting for the {{accepted["receivedUser"]}} user to Accept!
+    </span>
+    <div>
+      <span>
+        <button (click)="navigateToAlreadyExistingGmae( accepted['receivedUser'], 'already Created')"> Start the Game  </button>
+      </span>
+    </div>
+  </div>
   <!--</div>-->
 </div>
 
 <h2 *ngIf="isUserSignedIn" class="userNamePosition">{{currentUser.toUpperCase()}}
 </h2>
-
+</div>
 
 <!--<div>-->
 <!--    <span>-->

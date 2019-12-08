@@ -143,11 +143,24 @@
               }
             }
             else {
-              this.acceptedInvitation.push(data[index]);
-              this.userDetails.userName2 = data[index]["receivedUser"];
-              localStorage.setItem("user2", data[index]["receivedUser"] );
-              this.gamePlay();
-
+              if (this.acceptedInvitation.length == 0) {
+                this.acceptedInvitation.push(data[index]);
+                this.userDetails.userName2 = data[index]["receivedUser"];
+                localStorage.setItem("user2", data[index]["receivedUser"] );
+                /*this.gamePlay(); */
+              }else {
+                this.acceptedInvitation.forEach( x => {
+                  if ( x["receivedUser"] != data[index]["receivedUser"] ) {
+                    this.acceptedInvitation.push(data[index]);
+                    /*this._snackBar.open("You have got Invitation!", "", {
+                      duration: 5000,
+                      horizontalPosition: "right",
+                      verticalPosition: "top",
+                      panelClass: ["customSnackBar"]
+                    });*/
+                  }
+                });
+              }
             }
           }
       } }, ( error ) => {
