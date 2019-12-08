@@ -17,8 +17,9 @@ public class MinisterTest {
 	void ministerPlacedOnBoard() throws IllegalPositionException,IllegalMoveException{
 		Minister cR = new Minister(board, BanqiPiece.Color.RED);
 		board.placePiece(cR,"c2");
-		board.move("c2","c7");
-		assertTrue(board.getPiece("c2").legalMoves().containsAll(Arrays.asList("c3","c4","c5","c6","c7")));
+		cR.isFaceDown = false;
+		board.move("c2","c3");
+		assertTrue(board.getPiece("c3").legalMoves().contains("c4"));
 
 	}
 	@Test
