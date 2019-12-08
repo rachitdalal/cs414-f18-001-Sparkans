@@ -223,7 +223,7 @@
           'Content-Type': 'application/json'
         })
       };
-      const userNickName = this.userDetails.userName;
+      const userNickName = this.userDetails.userName || localStorage.getItem('user1');
       localStorage.setItem("user2", inviteeName );
       let params = new HttpParams().set('user', userNickName).set('fromUser', inviteeName);
 
