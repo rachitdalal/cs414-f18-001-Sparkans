@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.sparkans.banqi.game.BanqiBoard;
 import com.sparkans.banqi.game.BanqiPiece;
 import com.sparkans.banqi.game.GameData;
-import com.sparkans.banqi.user.UserBean;
+//import com.sparkans.banqi.user.UserBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
