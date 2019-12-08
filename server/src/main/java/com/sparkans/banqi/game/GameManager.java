@@ -18,17 +18,26 @@ public class GameManager {
     }
 
     public BanqiBoard getGame(String user1, String user2){
+        user1 = user1.toLowerCase();
+        user2 = user2.toLowerCase();
         for(BanqiBoard b : boards){
-            if(b.getUser1().getNickname().equals(user1) && b.getUser2().getNickname().equals(user2)){
+            if(b.getUser1().getNickname().toLowerCase().equals(user1) && b.getUser2().getNickname().toLowerCase().equals(user2)){
                 return b;
             }
         }
-        //if the game is not in memory try to load it from the db
-        BanqiBoard b = SaveLoadGame.loadGame(user1,user2);
-        if(b != null){
+        return null;
+/*
+        try{
+            BanqiBoard b = SaveLoadGame.loadGame(user1,user2);
             boards.add(b);
+            return b;
         }
-        return b;
+        catch (Exception e){
+            return null;
+        }
+
+
+ */
     }
 
     public boolean removeGame(UserBean user1, UserBean user2){

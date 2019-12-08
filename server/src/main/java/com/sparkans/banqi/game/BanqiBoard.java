@@ -42,14 +42,7 @@ public class BanqiBoard implements Serializable {
 		if (this.board == null) {
 			this.board = new BanqiPiece[4][8];
 		}
-		playerTurn = "red";
-		redPlayer = "red";
-		whitePlayer = "white";
-		user1 = new UserBean();
-		user1.setNickName("red");
-		user2 = new UserBean();
-		user2.setNickName("white");
-		winner = "none";
+
 	}
 
 	public BanqiBoard(UserBean user1, UserBean user2) {
@@ -309,6 +302,16 @@ public class BanqiBoard implements Serializable {
 
 	public UserBean getUser2() {
 		return user2;
+	}
+
+	public void setUser1(String nickName){
+		user1 = new UserBean();
+		user1.setNickName(nickName);
+	}
+
+	public void setUser2(String nickName){
+		user2 = new UserBean();
+		user2.setNickName(nickName);
 	}
 
 	public String getRedPlayer() {

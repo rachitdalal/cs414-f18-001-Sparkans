@@ -1,12 +1,16 @@
 package com.sparkans.banqi.user;
 
+import com.google.gson.annotations.Expose;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class UserBean{
 
 	protected String email;
+	@Expose
 	protected String nickName;
+
 	protected String password;
 	protected String isActive_flag;
 	protected Timestamp createdTS;
