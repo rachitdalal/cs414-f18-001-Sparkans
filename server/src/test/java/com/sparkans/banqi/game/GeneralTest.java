@@ -19,10 +19,11 @@ public class GeneralTest {
 	@Test
 
 	void generalIsOnBoard() throws IllegalMoveException, IllegalPositionException{
-		General gW = new General(board, BanqiPiece.Color.WHITE);
+		General gW = new General(board, BanqiPiece.Color.RED);
 		board.placePiece(gW,"b7");
+		gW.isFaceDown = false;
 		board.move("b7","c7");
-		assertTrue(board.getPiece("b7").legalMoves().contains("c7"));
+		assertTrue(board.getPiece("c7").legalMoves().contains("d7"));
 	}
 
 	@Test
