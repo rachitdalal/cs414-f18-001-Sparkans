@@ -17,7 +17,7 @@ public class Soldier extends BanqiPiece {
 
 	@Override
 	public String toString() {
-		return "Horse";
+		return "Soldier";
 	}
 
 	@Override
