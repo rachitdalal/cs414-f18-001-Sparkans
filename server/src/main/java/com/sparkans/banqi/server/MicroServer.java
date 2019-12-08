@@ -395,20 +395,6 @@ public class MicroServer {
 
 	}
 
-
-	/*private String yourMove(Request request, Response response){
-		//user trying to move
-		//boolean : is it there move
-		//gameboard
-		//win or loose
-		response.type("application/json");
-		response.header("Access-Control-Allow-Headers", "*");
-
-		String user = request.queryParams("user");
-	return null;
-
-	}*/
-
 	private String team(Request request, Response response) {
 
 		response.type("text/plain");

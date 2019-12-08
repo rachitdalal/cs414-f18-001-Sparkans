@@ -2,18 +2,26 @@ package com.sparkans.banqi.game;
 
 import com.google.gson.annotations.Expose;
 import com.sparkans.banqi.user.UserBean;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BanqiBoard {
+public class BanqiBoard implements Serializable {
 
 	@Expose
 	private BanqiPiece[][] board;
 
+	@Expose
 	private UserBean user1;
+
+	@Expose
 	private UserBean user2;
 
 	@Expose
@@ -25,6 +33,7 @@ public class BanqiBoard {
 	@Expose
 	public String winner = null;
 
+	@Expose
 	public boolean isFirstMove = true;
 
 	@Expose
@@ -297,4 +306,6 @@ public class BanqiBoard {
 	public void setWhitePlayer(String whitePlayer) {
 		this.whitePlayer = whitePlayer;
 	}
+
+
 }

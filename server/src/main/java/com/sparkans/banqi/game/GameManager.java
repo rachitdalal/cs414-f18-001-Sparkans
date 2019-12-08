@@ -1,5 +1,6 @@
 package com.sparkans.banqi.game;
 
+import com.sparkans.banqi.db.SaveLoadGame;
 import com.sparkans.banqi.user.UserBean;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ public class GameManager {
     public BanqiBoard addGame(UserBean user1, UserBean user2){
         BanqiBoard b = new BanqiBoard(user1,user2);
         boards.add(b);
+        //add the game to the db
+        SaveLoadGame.saveGame(b);
         return b;
     }
 
@@ -20,7 +23,12 @@ public class GameManager {
                 return b;
             }
         }
-        return null;
+        //if the game is not in memory try to load it from the db
+        BanqiBoard b = SaveLoadGame.loadGame(user1,user2);
+        if(b != null){
+            boards.add(b);
+        }
+        return b;
     }
 
     public boolean removeGame(UserBean user1, UserBean user2){
