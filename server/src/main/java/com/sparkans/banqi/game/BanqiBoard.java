@@ -175,7 +175,11 @@ public class BanqiBoard {
 				if (existingPiece.color.equals(piece.color))
 				{
 					if(piece.toString().equals("Cannon"))
+					{
+						piece.setPosition(position);
+						board[column][row] = piece;
 						return true;
+					}
 					else
 						return false;
 				}
