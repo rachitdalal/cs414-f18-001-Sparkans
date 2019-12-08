@@ -134,9 +134,10 @@
             }
             else {
               this.acceptedInvitation.push(data[index]);
-              this.userDetails.userName2 = data[index]["sentUser"];
-              localStorage.setItem("user2", data[index]["sentUser"] );
+              this.userDetails.userName2 = data[index]["receivedUser"];
+              localStorage.setItem("user2", data[index]["receivedUser"] );
               this.gamePlay();
+
             }
           }
       } }, ( error ) => {

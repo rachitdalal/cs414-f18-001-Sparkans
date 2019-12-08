@@ -13,7 +13,9 @@ public class GameManager {
         BanqiBoard b = new BanqiBoard(user1,user2);
         boards.add(b);
         //add the game to the db
-        SaveLoadGame.saveGame(b);
+        SaveLoadGame.removeGame(user1.getNickname(),user2.getNickname());
+
+        SaveLoadGame.saveGame(b,"new");
         return b;
     }
 
@@ -25,23 +27,32 @@ public class GameManager {
         user1 = user1.toLowerCase();
         user2 = user2.toLowerCase();
         for(BanqiBoard b : boards){
-            if(b.getUser1().getNickname().toLowerCase().equals(user1) && b.getUser2().getNickname().toLowerCase().equals(user2)){
+            if(b.getUser1().getNickname().toLowerCase().equals(user1) && b.getUser2().getNickname().toLowerCase().equals(user2) ||
+                    b.getUser1().getNickname().toLowerCase().equals(user2) && b.getUser2().getNickname().toLowerCase().equals(user1)){
                 return b;
             }
         }
-        return null;
-/*
         try{
             BanqiBoard b = SaveLoadGame.loadGame(user1,user2);
-            boards.add(b);
-            return b;
+            if(b != null){
+                boards.add(b);
+                return b;
+            }
         }
         catch (Exception e){
-            return null;
+            System.out.println(e.getMessage());
         }
-
-
- */
+        try{
+            BanqiBoard b = SaveLoadGame.loadGame(user2,user1);
+            if(b != null){
+                boards.add(b);
+                return b;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     public boolean removeGame(UserBean user1, UserBean user2){
@@ -50,6 +61,14 @@ public class GameManager {
     }
 
     public boolean pauseGame(UserBean user1, UserBean user2){
+
+        for(BanqiBoard b:boards){
+            if(b.getUser1().getNickname().toLowerCase().equals(user1) && b.getUser2().getNickname().toLowerCase().equals(user2) ||
+                    b.getUser1().getNickname().toLowerCase().equals(user2) && b.getUser2().getNickname().toLowerCase().equals(user1)){
+                SaveLoadGame.saveGame(b,"paused");
+                return true;
+            }
+        }
 
         return false;
     }
@@ -63,6 +82,9 @@ public class GameManager {
                         return false;
                     }
                     b.move(src, dest);
+                    if(!b.winner.equals("none")){
+                        SaveLoadGame.saveGame(b,"complete");
+                    }
                     return true;
                 } catch (IllegalMoveException e) {
                     return false;

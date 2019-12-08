@@ -77,7 +77,6 @@ public class GameData {
 
 		Connection conn = MySqlCon.getConnection();
 		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 		
 		try {
 			
@@ -90,14 +89,11 @@ public class GameData {
 			statement.setString(3, user1);
 			statement.setString(4, user2);
 
-			resultSet = statement.executeQuery();
-			resultSet.next();
+			statement.executeUpdate();
 
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			if (resultSet != null) 
-				resultSet.close();
 			if (statement != null) 
 				statement.close();
 			if (conn != null) 

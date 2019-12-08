@@ -31,7 +31,7 @@ public class MicroServer {
 	private int    port;
 	private String name;
 	private String path = "/public";
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 
 	private GameManager gameManager = new GameManager();
 	private UserInvite userInvite = new UserInvite();
@@ -270,12 +270,13 @@ public class MicroServer {
 
         try {
             userInvite.updateInvite(user,fromUser,"Accepted");
+            userInvite.updateInvite(fromUser,user,"Accepted");
             UserBean user1 = new UserBean();
             UserBean user2 = new UserBean();
 
             user1.setNickName(user);
             user2.setNickName(fromUser);
-            if(gameManager.getGame(user1.getNickname(),user2.getNickname()) == null){
+
 				if(DEBUG){
 					BanqiBoard b = new BanqiBoard();
 					b.setUser1(user);
@@ -292,7 +293,7 @@ public class MicroServer {
 					gameManager.addGame(user1,user2);
 				}
 
-			}
+
 
             return "[{\"inviteStatus\":\"accepted\"}]";
         } catch (SQLException e) {
@@ -389,30 +390,6 @@ public class MicroServer {
 
 	}
 
-	private String yourMove(Request request, Response response){
-		//user trying to move
-		//boolean : is it there move
-		//gameboard
-		//win or loose
-		response.type("application/json");
-		response.header("Access-Control-Allow-Headers", "*");
-
-		String user = request.queryParams("user");
-
-		String user1 = request.queryParams("user1");
-		String user2 = request.queryParams("user2");
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-
-		BanqiBoard b = gameManager.getGame(user1,user2);
-		if(b == null){
-			b = gameManager.getGame(user2,user1);
-		}
-		boolean yourTurn = b.playerTurn.equals(user);
-
-
-		return gson.toJson(b);
-
-	}
 	private String history(Request request, Response response) {
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");

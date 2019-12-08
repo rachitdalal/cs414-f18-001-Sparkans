@@ -12,19 +12,14 @@ import java.sql.SQLException;
 
 public class SaveLoadGame {
 
-    static GsonBuilder gb = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-    static Gson gson;
+    static GsonBuilder gb = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(BanqiPiece.class, new InterfaceAdapter());
+    static Gson gson = gb.create();
 
-    public void SaveLoadGame() {
-        gb.registerTypeAdapter(BanqiPiece.class, new InterfaceAdapter());
-        gson = gb.create();
-    }
-
-    public static void saveGame(BanqiBoard b) {
+    public static void saveGame(BanqiBoard b, String state) {
 
         String board = gson.toJson(b);
         try {
-            GameData.saveGameData(b.getUser1().getNickname(), b.getUser2().getNickname(), board, "paused");
+            GameData.saveGameData(b.getUser1().getNickname(), b.getUser2().getNickname(), board, state);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -35,7 +30,7 @@ public class SaveLoadGame {
         try {
             return gson.fromJson(GameData.loadGameData(user1, user2), BanqiBoard.class);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
