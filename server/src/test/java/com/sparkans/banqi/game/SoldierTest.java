@@ -17,8 +17,9 @@ public class SoldierTest {
 	void soldierPlacedOnBoard() throws IllegalPositionException,IllegalMoveException{
 		Soldier cR = new Soldier(board, BanqiPiece.Color.RED);
 		board.placePiece(cR,"c2");
+		cR.isFaceDown = false;
 		board.move("c2","c3");
-		assertTrue(board.getPiece("c2").legalMoves().containsAll(Arrays.asList("c3")));
+		assertTrue(board.getPiece("c3").legalMoves().contains("c4"));
 	}
 
 	@Test
@@ -36,7 +37,7 @@ public class SoldierTest {
 		board.placePiece(gR,"d5");
 		Soldier sW = new Soldier(board, BanqiPiece.Color.WHITE);
 		board.placePiece(sW,"d6");
-		assertFalse(board.getPiece("d6").legalMoves().contains("d5"));
+		assertTrue(board.getPiece("d6").legalMoves().contains("d5"));
 	}
 
 	@Test
