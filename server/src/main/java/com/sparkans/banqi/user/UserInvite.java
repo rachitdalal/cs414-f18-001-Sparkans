@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.sparkans.banqi.db.MySqlCon;
-
+import com.sparkans.banqi.db.*;
+import com.sparkans.banqi.*;
 
 //createInvite(user1,user2)
 //getInvites(user) return list of invites for user

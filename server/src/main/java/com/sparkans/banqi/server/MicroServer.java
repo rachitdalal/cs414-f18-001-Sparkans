@@ -1,26 +1,25 @@
 package com.sparkans.banqi.server;
 
-import com.sparkans.banqi.user.History;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sparkans.banqi.*;
 import com.sparkans.banqi.game.BanqiBoard;
 import com.sparkans.banqi.game.GameManager;
+import com.sparkans.banqi.server.CorsFilter;
+import com.sparkans.banqi.server.Greeting;
+import com.sparkans.banqi.server.HTTP;
 import com.sparkans.banqi.user.*;
-
 import spark.Request;
 import spark.Response;
 import spark.Spark;
 
-import com.google.gson.*;
-
-import java.util.ArrayList;
-
-import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.post;
-
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import static spark.Spark.options;
+import static spark.Spark.*;
+
+
 
 /** A simple micro-server for the web.  Just what we need, nothing more.
  *
