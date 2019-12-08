@@ -181,7 +181,7 @@
           'Content-Type': 'application/json'
         })
       };
-      const userNickName = this.userDetails.userName;
+      const userNickName = this.userDetails.userName || localStorage.getItem('user1');
 
       let params = new HttpParams().set('from', userNickName).set('to', inviteUser.value);
       if (userNickName.toLowerCase() !== inviteUser.value.toLowerCase()) {

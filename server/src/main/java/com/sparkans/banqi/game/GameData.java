@@ -10,7 +10,7 @@ import com.sparkans.banqi.db.MySqlCon;
 
 public class GameData {
 
-	public void saveGameData(String user1, String user2, String board, String status) throws SQLException { 
+	public static void saveGameData(String user1, String user2, String board, String status) throws SQLException {
 
 		Connection conn = MySqlCon.getConnection();
 		PreparedStatement statement = null;
@@ -39,7 +39,7 @@ public class GameData {
 		}
 	}
 
-	public String loadGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{   
+	public static String loadGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{
 
 		Connection conn = MySqlCon.getConnection();
 		PreparedStatement statement = null;
@@ -73,7 +73,7 @@ public class GameData {
 		}
 	}
 	
-	public void removeGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{   
+	public static void removeGameData(String user1, String user2) throws SQLException, ClassNotFoundException, IOException{
 
 		Connection conn = MySqlCon.getConnection();
 		PreparedStatement statement = null;
