@@ -22,8 +22,13 @@ public class CannonTest {
 		board.setRedPlayer("red");
 		board.setWhitePlayer("white");
 		board.playerTurn = "red";
-		board.move("c2","c7");
-		assertTrue(board.getPiece("c7").legalMoves().containsAll(Arrays.asList("b7")));
+		Soldier sR = new Soldier(board, BanqiPiece.Color.RED);
+		board.placePiece(sR,"c3");
+		board.playerTurn = "red";
+		board.placePiece(sR,"c5");
+		board.playerTurn = "red";
+		board.move("c2","c4");
+		assertTrue(board.getPiece("c4").legalMoves().contains("c6"));
 
 	}
 	@Test
@@ -44,7 +49,7 @@ public class CannonTest {
 		assertFalse(board.getPiece("a5").legalMoves().contains("a4"));
 	}
 	@Test
-	public void  cannonCannotAttackCannon()throws IllegalMoveException,IllegalPositionException{
+	public void  cannonCanAttackCannon()throws IllegalMoveException,IllegalPositionException{
 		Cannon aR = new Cannon(board, BanqiPiece.Color.RED);
 		board.placePiece(aR,"c1");
 		Cannon aW = new Cannon(board, BanqiPiece.Color.WHITE);
