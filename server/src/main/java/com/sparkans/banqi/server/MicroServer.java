@@ -1,20 +1,23 @@
 package com.sparkans.banqi.server;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sparkans.banqi.*;
+import com.sparkans.banqi.user.History;
 import com.sparkans.banqi.game.BanqiBoard;
 import com.sparkans.banqi.game.GameManager;
-import com.sparkans.banqi.server.CorsFilter;
-import com.sparkans.banqi.server.Greeting;
-import com.sparkans.banqi.server.HTTP;
 import com.sparkans.banqi.user.*;
+
 import spark.Request;
 import spark.Response;
 import spark.Spark;
 
-import java.sql.SQLException;
+import com.google.gson.*;
+
 import java.util.ArrayList;
+
+import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.post;
+
+import java.sql.SQLException;
 import java.util.List;
 
 import static spark.Spark.*;
@@ -395,14 +398,19 @@ public class MicroServer {
 		return gson.toJson(b);
 
 	}
-	private String history(Request request, Response response){
+	private String history(Request request, Response response) {
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");
 
 		String user1 = request.queryParams("user1");
-
-
-		return "";
+		List<ArrayList<String>> gameHistory = new ArrayList<>();
+		Gson gson = new Gson();
+		try {
+			gameHistory = history.getUserHistory(user1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return  gson.toJson(gameHistory);
 
 	}
 
