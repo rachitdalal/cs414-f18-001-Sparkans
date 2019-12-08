@@ -17,10 +17,7 @@ public class Chariot extends BanqiPiece {
 
 	@Override
 	public String toString() {
-		if (this.color.equals(Color.WHITE))
-			return "WCh";
-		else
-			return "RCh";
+		return "Chariot";
 	}
 
 	@Override
@@ -58,11 +55,14 @@ public class Chariot extends BanqiPiece {
 					: parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
+			// Chariot can capture only opponent's piece.
+			if (destinationColor != null && sourceColor.equals(destinationColor))
+				return inValid;
+
 			if(destinationPiece!= null){
 				// cannot capture a General
-				if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG"))
+				if (destinationPiece.toString().equals("General"))
 					return inValid;
-
 			}
 			// Chariot cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
@@ -70,9 +70,7 @@ public class Chariot extends BanqiPiece {
 			// Chariot can move only one square horizontal or vertical.
 			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
 				return inValid;
-			// Chariot can capture only opponent's piece.
-			if (destinationColor != null && sourceColor.equals(destinationColor))
-				return inValid;
+
 
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Invalid Move. Moving to a destination outside the board");

@@ -17,10 +17,7 @@ public class General extends BanqiPiece {
 
 	@Override
 	public String toString() {
-		if (this.color.equals(Color.WHITE))
-			return "WG";
-		else
-			return "RG";
+		return "General";
 	}
 
 	@Override
@@ -57,9 +54,13 @@ public class General extends BanqiPiece {
 			int destColumn = destinationPiece != null ? destinationPiece.column : parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
+			// General can capture only opponent's piece.
+			if (destinationColor != null && sourceColor.equals(destinationColor))
+				return inValid;
+
 			if(destinationPiece != null){
 				// cannot capture a Soldier
-				if (destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS"))
+				if (destinationPiece.toString().equals("Soldier"))
 					return inValid;
 			}
 
@@ -69,9 +70,7 @@ public class General extends BanqiPiece {
 			// General can move only one square horizontal or vertical.
 			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
 				return inValid;
-			// General can capture only opponent's piece.
-			if (destinationColor != null && sourceColor.equals(destinationColor))
-				return inValid;
+
 
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Invalid Move. Moving to a destination outside the board");

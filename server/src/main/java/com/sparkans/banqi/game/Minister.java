@@ -17,10 +17,7 @@ public class Minister extends BanqiPiece {
 
 	@Override
 	public String toString() {
-		if (this.color.equals(Color.WHITE))
-			return "WM";
-		else
-			return "RM";
+		return "Advisor";
 	}
 
 	@Override
@@ -61,10 +58,10 @@ public class Minister extends BanqiPiece {
 			// Minister can capture only opponent's piece.
 			if (destinationColor != null && sourceColor.equals(destinationColor))
 				return inValid;
+
 			if(destinationPiece != null){
-				// can capture only a Soldier and Minister
-				if (!(destinationPiece.toString().equals("WS") || destinationPiece.toString().equals("RS"))||
-						!(destinationPiece.toString().equals("WM") || destinationPiece.toString().equals("RM")))
+				// can capture only a Soldier and opposite Minister
+				if (!(destinationPiece.toString().equals("Soldier") || destinationPiece.toString().equals("Minister")))
 					return inValid;
 			}
 			// Minister cannot move diagonally.

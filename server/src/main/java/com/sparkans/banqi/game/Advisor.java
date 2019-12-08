@@ -17,10 +17,7 @@ public class Advisor extends BanqiPiece {
 
 	@Override
 	public String toString() {
-		if (this.color.equals(Color.WHITE))
-			return "WA";
-		else
-			return "RA";
+		return "Advisor";
 	}
 
 	@Override
@@ -58,12 +55,14 @@ public class Advisor extends BanqiPiece {
 					: parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
-
+			// Advisor can capture only opponent's piece.
+			if (destinationColor != null && sourceColor.equals(destinationColor))
+				return inValid;
+			
 			if(destinationPiece != null){
 				// cannot capture a General or a Chariot or a Horse
-				if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG")
-						|| destinationPiece.toString().equals("WCh") || destinationPiece.toString().equals("RCh")
-						|| destinationPiece.toString().equals("WH") || destinationPiece.toString().equals("RH"))
+				if (destinationPiece.toString().equals("General") || destinationPiece.toString().equals("Chariot")
+						|| destinationPiece.toString().equals("Horse"))
 					return inValid;
 			}
 
@@ -73,9 +72,7 @@ public class Advisor extends BanqiPiece {
 			// Advisor can move only one square horizontal or vertical.
 			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
 				return inValid;
-			// Advisor can capture only opponent's piece.
-			if (destinationColor != null && sourceColor.equals(destinationColor))
-				return inValid;
+
 
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Invalid Move. Moving to a destination outside the board");

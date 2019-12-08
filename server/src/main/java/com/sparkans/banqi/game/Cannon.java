@@ -16,10 +16,7 @@ public class Cannon extends BanqiPiece {
 
 	@Override
 	public String toString() {
-		if (this.color.equals(Color.WHITE))
-			return "WCa";
-		else
-			return "RCa";
+		return "Cannon";
 	}
 
 	@Override
@@ -60,7 +57,7 @@ public class Cannon extends BanqiPiece {
 			// Cannon cannot move adjacent squares.
 			if (Math.abs(destRow - sourceRow) == 1 || Math.abs(destColumn - sourceColumn) == 1)
 				return inValid;
-			// Cannon can leap over only one piece.
+			// Cannon should leap over only one piece.
 			if (leapOver(fromPosition, toPosition) != 1)
 				return inValid;
 

@@ -17,10 +17,7 @@ public class Horse extends BanqiPiece {
 
 	@Override
 	public String toString() {
-		if (this.color.equals(Color.WHITE))
-			return "WH";
-		else
-			return "RH";
+		return "Horse";
 	}
 
 	@Override
@@ -59,13 +56,14 @@ public class Horse extends BanqiPiece {
 					: parsePosition(toPosition).get("column");
 			Color destinationColor = destinationPiece != null ? destinationPiece.color : null;
 
+			// Horse can capture only opponent's piece.
+			if (destinationColor != null && sourceColor.equals(destinationColor))
+				return inValid;
 			// Cannot capture a General or a Chariot
 			if(destinationPiece != null){
-				if (destinationPiece.toString().equals("WG") || destinationPiece.toString().equals("RG")
-						|| destinationPiece.toString().equals("WCh") || destinationPiece.toString().equals("RCh"))
+				if (destinationPiece.toString().equals("General") || destinationPiece.toString().equals("Chariot"))
 					return inValid;
 			}
-
 
 			// Horse cannot move diagonally.
 			if ((sourceRow != destRow) && (sourceColumn != destColumn))
@@ -73,9 +71,7 @@ public class Horse extends BanqiPiece {
 			// Horse can move only one square horizontal or vertical.
 			if (Math.abs(destRow - sourceRow) > 1 || Math.abs(destColumn - sourceColumn) > 1)
 				return inValid;
-			// Horse can capture only opponent's piece.
-			if (destinationColor != null && sourceColor.equals(destinationColor))
-				return inValid;
+
 
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Invalid Move. Moving to a destination outside the board");

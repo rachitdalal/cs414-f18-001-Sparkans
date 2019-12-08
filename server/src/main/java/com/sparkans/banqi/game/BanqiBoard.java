@@ -205,8 +205,7 @@ public class BanqiBoard implements Serializable {
 			if (!faceUp(sourcePiece))
 				throw new IllegalMoveException("No move allowed for a face-down piece");
 
-			if (destinationPiece != null && !faceUp(destinationPiece)
-					&& (!sourcePiece.toString().equals("RCa") || !sourcePiece.toString().equals("WCa")))
+			if (destinationPiece != null && !faceUp(destinationPiece) && (!sourcePiece.toString().equals("Cannon")))
 				throw new IllegalMoveException("Cannot capture a face-down piece");
 			if (sourcePiece.getColor().equals(BanqiPiece.Color.RED) && !playerTurn.equals(redPlayer)){
 				throw new IllegalMoveException("Not your turn");
