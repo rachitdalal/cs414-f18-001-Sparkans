@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
     };
 
     const user1 = this.currentUser;
-    let params = new HttpParams().set( 'user1', user1 );
+    let params = new HttpParams().set( 'user', user1 );
     return this.http.get<any>( this.UNREGISTER, {headers: httpOptions.headers, params: params})
       .subscribe(( result ) => {
         if( result[0] && result[0].unregistered == 'true') {
