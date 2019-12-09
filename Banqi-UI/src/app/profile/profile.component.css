@@ -31,3 +31,11 @@
 .cursor{
   cursor: pointer;
 }
+.unregister{
+  position: absolute;
+  top: 490px;
+  right: 150px;
+  color: white;
+  background-color: black;
+
+}

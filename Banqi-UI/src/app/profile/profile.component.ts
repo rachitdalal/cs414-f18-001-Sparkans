@@ -33,4 +33,8 @@ export class ProfileComponent implements OnInit {
       height: '600px'
     });
   }
+
+  // unreg(){
+  //
+  // }
 }
