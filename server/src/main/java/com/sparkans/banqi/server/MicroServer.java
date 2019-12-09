@@ -421,7 +421,7 @@ public class MicroServer {
 		b.winner = user2;
 
 		if(gameManager.save(user1,user2)){
-			return "[{\"saved\":\"true\"}]";
+			return "[{\"saved\":\"true\"},{\"winner\": \"" + user2 + "\"}]";
 		}
 		else{
 			return "[{\"saved\":\"false\"}]";
