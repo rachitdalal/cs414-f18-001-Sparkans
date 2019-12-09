@@ -60,7 +60,7 @@ public class GameManager {
         return false;
     }
 
-    public boolean pauseGame(UserBean user1, UserBean user2){
+    public boolean save(String user1, String user2){
 
         for(BanqiBoard b:boards){
             if(b.getUser1().getNickname().toLowerCase().equals(user1) && b.getUser2().getNickname().toLowerCase().equals(user2) ||

@@ -23,14 +23,15 @@ public class History {
         try {
             statement = conn.prepareStatement("SELECT * FROM sparkans.Banqi_Game WHERE user1 = ? OR user2 = ?");
             statement.setString(1, user);
+            statement.setString(2,user);
             resultSet = statement.executeQuery();
 
             while ( resultSet.next() ) {
                 ArrayList<String> temp=new ArrayList<>();
                 temp.add(resultSet.getString("user1"));
                 temp.add(resultSet.getString("user2"));
-                temp.add(String.valueOf(resultSet.getObject("board")));
-                temp.add(resultSet.getString("status"));
+                temp.add(resultSet.getString("current_state"));
+                temp.add(resultSet.getString("game_status"));
                 //TODO test it
               /*  System.out.println(temp);*/
                 allTheGames.add(temp);
@@ -39,6 +40,6 @@ public class History {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return allTheGames;
     }
 }

@@ -390,6 +390,43 @@ public class MicroServer {
 
 	}
 
+	private String save(Request request, Response response){
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user1 = request.queryParams("user1");
+		String user2 = request.queryParams("user2");
+
+		if(gameManager.save(user1,user2)){
+			return "[{\"saved\":\"true\"}]";
+		}
+		else{
+			return "[{\"saved\":\"false\"}]";
+		}
+
+	}
+
+	private String quit(Request request, Response response){
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+
+		String user1 = request.queryParams("user1");
+		String user2 = request.queryParams("user2");
+		BanqiBoard b = gameManager.getGame(user1,user2);
+		if(b == null){
+			b = gameManager.getGame(user2,user1);
+		}
+		b.winner = user2;
+
+		if(gameManager.save(user1,user2)){
+			return "[{\"saved\":\"true\"}]";
+		}
+		else{
+			return "[{\"saved\":\"false\"}]";
+		}
+
+	}
+
 	private String history(Request request, Response response) {
 		response.type("application/json");
 		response.header("Access-Control-Allow-Headers", "*");

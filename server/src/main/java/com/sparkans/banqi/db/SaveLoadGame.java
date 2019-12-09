@@ -19,6 +19,7 @@ public class SaveLoadGame {
 
         String board = gson.toJson(b);
         try {
+            removeGame(b.getUser1().getNickname(),b.getUser2().getNickname());
             GameData.saveGameData(b.getUser1().getNickname(), b.getUser2().getNickname(), board, state);
         } catch (SQLException e) {
             e.printStackTrace();
