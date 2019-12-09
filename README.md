@@ -6,5 +6,8 @@ https://github.com/rachitdalal/cs414-f18-001-Sparkans/tree/master/server#buildin
 ## CLIENT README.md
 https://github.com/rachitdalal/cs414-f18-001-Sparkans/tree/master/Banqi-UI#banqiui
 
+## Sprint3 Deliverable
+https://github.com/rachitdalal/cs414-f18-001-Sparkans/tree/master/Doc/P3
+
 ## Sprint2 Deliverable
 https://github.com/rachitdalal/cs414-f18-001-Sparkans/tree/master/Doc/P2
