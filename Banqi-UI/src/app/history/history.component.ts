@@ -55,13 +55,14 @@ export class HistoryComponent implements OnInit, AfterViewInit {
               if( status === 'new' || status === 'paused') {
                 status = 'In Progress';
                 result[0][index] = status;
+              } else {
+                result[0][index] = 'Finished';
               }
             }
             if ( index == 4 ) {
               let status = result[0][index];
               if( result[0][3] === 'In Progress') {
                 status = 'In Progress';
-
               }
             }
             if( index !== 2 ) {
