@@ -19,10 +19,15 @@
 </nav>
 
 
-<button *ngIf="!isLoaded" (click)="loadGame()">Load Game</button>
-<button (click)="latestMove()">Latest Move</button>
-<span  *ngIf="blackPlayer['blackPlayer']">You are {{blackPlayer['blackPlayer']}} !</span>
-<span  *ngIf="redPlayer['redPlayer']">You are {{redPlayer['redPlayer']}} ! </span>
+<button class="marginAll" *ngIf="!isLoaded" (click)="loadGame()">Load Game</button>
+<button class="marginAll" (click)="latestMove()">Latest Move</button>
+
+<button class="marginAll" (click)="onSaveGame()">Save Game</button>
+<button class="marginAll" (click)="onQuit()">Quit Game</button>
+
+<span class="marginAll" *ngIf="blackPlayer['blackPlayer']">You are {{blackPlayer['blackPlayer']}} !</span>
+<span class="marginAll" *ngIf="redPlayer['redPlayer']">You are {{redPlayer['redPlayer']}} ! </span>
+
 <!--<span  *ngIf="showTurn" class="paddingLeft18px"> It's Your Turn!</span>-->
     <div *ngIf="isLoaded">
 

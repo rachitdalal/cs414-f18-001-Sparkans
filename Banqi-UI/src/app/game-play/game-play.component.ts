@@ -14,6 +14,8 @@ import {GameRuleComponent} from "../game-rule/game-rule.component";
   styleUrls: ['./game-play.component.css']
 })
 export class GamePlayComponent implements OnInit {
+  SAVE_GAME = "http://localhost:31406/save";
+  QUIT_GAME = "http://localhost:31406/quit";
   private chessboard: any[][];
   subscriber;
   isLoaded: boolean = false;
@@ -164,24 +166,24 @@ export class GamePlayComponent implements OnInit {
             if( this.winner.toLowerCase() === this.currentUser.toLowerCase() ) {
               const dialogRef = this.dialog.open(FinalComponentComponent, {
                 width: '250px',
-                data: {name: this.currentUser, status: 'Won'}
+                data: {name: this.currentUser, status: 'Won', isConfirmationPopup : false }
               });
             } else {
               if(this.winner !== localStorage.getItem('user1')  ) {
                 const dialogRef = this.dialog.open(FinalComponentComponent, {
                   width: '250px',
-                  data: {name: localStorage.getItem('user1'), status: 'Lost'}
+                  data: {name: localStorage.getItem('user1'), status: 'Lost', isConfirmationPopup : false }
                 });
               }
               else if( this.winner === localStorage.getItem('user1') ) {
                 const dialogRef = this.dialog.open(FinalComponentComponent, {
                   width: '250px',
-                  data: {name: localStorage.getItem('user1'), status: 'Won'}
+                  data: {name: localStorage.getItem('user1'), status: 'Won', isConfirmationPopup : false }
                 });
               } else {
                 const dialogRef = this.dialog.open(FinalComponentComponent, {
                   width: '250px',
-                  data: {name: localStorage.getItem('user1'), status: 'Lost'}
+                  data: {name: localStorage.getItem('user1'), status: 'Lost', isConfirmationPopup : false }
                 });
               }
 
@@ -391,6 +393,65 @@ export class GamePlayComponent implements OnInit {
     const dialogRef = this.dialog.open(GameRuleComponent, {
       width: '900px',
       height: '600px'
+    });
+  }
+
+  onSaveGame() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    const user1 = this.currentUser,
+          user2 = localStorage.getItem("user2");
+    let params = new HttpParams().set('user1', user1).set('user2',  user2);
+
+    return this.http.get<any>( this.SAVE_GAME, {headers: httpOptions.headers, params: params})
+      .subscribe(( result ) => {
+        if( result[0] && result[0].saved && result[0].saved.toLowerCase() === 'true' ) {
+          this._snackBar.open("Game has been saved!", "", {
+            duration: 3000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+
+          });
+        } else {
+          this._snackBar.open("Game has not been saved!", "", {
+            duration: 3000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["customSnackBar"]
+
+          });
+        }
+      })
+  }
+
+  onQuit() {
+
+   const dialogRef = this.dialog.open(FinalComponentComponent, {
+      width: '400px',
+     height: '200px',
+     data : { isConfirmationPopup : true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+
+      const user1 = this.currentUser,
+        user2 = localStorage.getItem("user2");
+      let params = new HttpParams().set('user1', user1).set('user2',  user2);
+      return this.http.get<any>( this.QUIT_GAME, {headers: httpOptions.headers, params: params})
+        .subscribe(( result ) => {
+          if(result[0] && result[0].saved && result[0].saved == 'true' ) {
+            this.winner = result[0].winner;
+          }
+        });
     });
   }
 }

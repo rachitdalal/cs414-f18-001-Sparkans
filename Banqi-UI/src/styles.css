@@ -325,4 +325,6 @@ svg#clouds {
 .active {
   color: white !important;
 }
-
+.marginAll {
+  margin: 8px;
+}

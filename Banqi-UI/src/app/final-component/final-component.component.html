@@ -1,14 +1,29 @@
-<h2 mat-dialog-title>Game Over!</h2>
+<div *ngIf="!data.isConfirmationPopup">
+  <h2 mat-dialog-title>Game Over!</h2>
 
-<mat-dialog-content class="mat-typography">
-  <div>
-    <span>
-      You {{data.name}} {{data.status}}
-    </span>
-  </div>
-  <div>
-    <span><button (click)="onInvite()">Invite Friends</button></span>
-    <span><button (click)="onHome()">Home</button></span>
-  </div>
-</mat-dialog-content>
+  <mat-dialog-content class="mat-typography">
+    <div>
+      <span>
+        You {{data.name}} {{data.status}}
+      </span>
+    </div>
+  </mat-dialog-content>
 
+  <mat-dialog-actions align="end">
+    <button class="marginAll" mat-button mat-dialog-close (click)="onInvite()" >Invite Friends</button>
+    <button class="marginAll" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onHome()">Home</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.isConfirmationPopup">
+  <h2 mat-dialog-title>Are you Sure, you want to Quit ?</h2>
+  <mat-dialog-content class="mat-typography">
+   Quitting the game will make you forfeit!
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button class="marginAll" mat-button mat-dialog-close>No</button>
+    <button class="marginAll" mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+  </mat-dialog-actions>
+
+</div>
