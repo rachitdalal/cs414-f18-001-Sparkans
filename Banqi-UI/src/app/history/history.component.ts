@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {UserDetailsService} from "../Service/user-details.service";
-
+import {GameRuleComponent} from "../game-rule/game-rule.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-history',
@@ -13,7 +14,8 @@ export class HistoryComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   constructor(private route: ActivatedRoute,
-              private userDetails: UserDetailsService,) {
+              private userDetails: UserDetailsService,
+              public dialog: MatDialog) {
 
   }
 
@@ -23,6 +25,13 @@ export class HistoryComponent implements OnInit {
       this.isUserSignedIn = true;
       this.currentUser = localStorage.getItem("user1");
     }
+  }
+
+  onGameRules() {
+    const dialogRef = this.dialog.open(GameRuleComponent, {
+      width: '900px',
+      height: '600px'
+    });
   }
 }
 
