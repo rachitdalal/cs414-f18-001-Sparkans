@@ -42,7 +42,7 @@ export class RegisterUserComponent implements OnInit {
     } else if( type === 'nickName' ) {
       return this.registrationForm.controls['nickName'].hasError('required') ? 'You must enter a nickName' : '';
     } else {
-      return this.registrationForm.controls['nickName'].hasError('required') ? 'You must enter a password' : '';
+      return this.registrationForm.controls['password'].hasError('required') ? 'You must enter a password' : 'Password should have minimum 8 characters';
     }
   }
 

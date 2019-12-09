@@ -35,7 +35,7 @@
     </div>
     <div class="example-container">
       <mat-form-field>
-        <input matInput type="password" placeholder="Enter your password" formControlName="password" required>
+        <input matInput type="password" placeholder="Enter your password" formControlName="password" required minlength="8">
         <mat-error *ngIf="registrationForm.controls['password'].invalid">{{getErrorMessage('password')}}</mat-error>
       </mat-form-field>
     </div>

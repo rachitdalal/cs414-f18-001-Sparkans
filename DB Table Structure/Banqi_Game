@@ -1,7 +1,7 @@
 CREATE TABLE sparkans.Banqi_Game (
     game_id INT NOT NULL  AUTO_INCREMENT,
-    user1 VARCHAR(50) NOT NULL UNIQUE,
-    user2 VARCHAR(50) NOT NULL UNIQUE,
+    user1 VARCHAR(50) NOT NULL,
+    user2 VARCHAR(50) NOT NULL,
     current_state VARCHAR(5000),
     game_status VARCHAR(50),
     PRIMARY KEY (game_id)

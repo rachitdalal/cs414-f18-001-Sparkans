@@ -31,7 +31,7 @@ export class SignInComponentComponent implements OnInit {
         this.signInForm.controls['nickName'].hasError('email') ? 'Not a valid nickName' :
           '';
     } else {
-      return this.signInForm.controls['password'].hasError('required') ? 'You must enter a password' : '';
+      return this.signInForm.controls['password'].hasError('required') ? 'You must enter a password' : 'Password should have minimum 8 characters';
     }
   }
 
