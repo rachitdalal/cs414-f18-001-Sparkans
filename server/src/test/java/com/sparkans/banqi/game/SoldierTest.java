@@ -46,7 +46,7 @@ public class SoldierTest {
 	}
 
 	@Test
-	public void  soldierCannotAttackSoldier()throws IllegalMoveException,IllegalPositionException{
+	public void  soldierCanAttackSoldier()throws IllegalMoveException,IllegalPositionException{
 		Soldier aR = new Soldier(board, BanqiPiece.Color.RED);
 		board.placePiece(aR,"c1");
 		Soldier aW = new Soldier(board, BanqiPiece.Color.WHITE);
