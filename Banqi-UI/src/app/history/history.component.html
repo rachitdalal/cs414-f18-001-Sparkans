@@ -20,8 +20,21 @@
 
 
 <mat-tab-group mat-align-tabs="center" animationDuration="0ms">
-  <mat-tab label="Active Games">Content </mat-tab>
-  <mat-tab label="Played Games">Content </mat-tab>
+  <mat-tab label="All Games">
+    <table>
+      <tr class="adjustHeader">
+        <th class="adjustHeader" *ngFor="let col of displayedColumns">
+          {{col}}
+        </th>
+      </tr>
+      <tr class="adjustHeader">
+        <td class="adjustHeader" *ngFor="let val of historyData; let i = index;" [innerHTML]="val">
+        </td>
+      </tr>
+    </table>
+
+  </mat-tab>
+  <!--<mat-tab label="Played Games">Content </mat-tab>-->
 </mat-tab-group>
 
 <h2 class="userNamePosition">{{currentUser.toUpperCase()}}</h2>

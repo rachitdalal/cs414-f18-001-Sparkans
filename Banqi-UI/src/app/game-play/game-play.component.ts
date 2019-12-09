@@ -46,7 +46,7 @@ export class GamePlayComponent implements OnInit {
 
     /*this.loadGame();*/
     if( this.shouldIPollToServer ) {
-      let timer1 = timer(1000, 2000);
+      let timer1 = timer(0, 1000);
       this.subscriber = timer1.subscribe((data) => {
         console.log("Test");
         /*this.chessboard = this.userDetails.chessBoard;*/
