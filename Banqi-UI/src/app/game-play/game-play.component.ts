@@ -138,9 +138,7 @@ export class GamePlayComponent implements OnInit {
           }
           this.isLoaded = true;
           this.playerTurn = result.playerTurn.toLowerCase();
-          if( this.playerTurn.toLowerCase() === this.currentUser ) {
-            this.showTurn = true;
-          }
+
           if(!this.blackPlayer.hasOwnProperty('blackPlayer')) {
             if( result.whitePlayer === this.currentUser ) {
               this.blackPlayer['blackPlayer'] =  'BLACK';
@@ -148,6 +146,11 @@ export class GamePlayComponent implements OnInit {
             else if ( result.redPlayer === this.currentUser ) {
               this.redPlayer['redPlayer'] =  'RED';
             }
+          }
+          if( this.playerTurn.toLowerCase() === this.currentUser ) {
+            this.showTurn = true;
+          } else {
+            this.showTurn = false;
           }
           this.winner = result.winner;
           /*if( this.winner.toLowerCase() !== 'none') {

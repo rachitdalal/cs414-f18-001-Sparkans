@@ -26,6 +26,7 @@ import {MatCardModule} from '@angular/material/card';
 import { GameRuleComponent } from './game-rule/game-rule.component';
 import { FinalComponentComponent } from './final-component/final-component.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatTableModule} from "@angular/material/table";
 
 /*
 import {HistoryComponent} from  "./history/history.component"*/
@@ -60,7 +61,8 @@ import {HistoryComponent} from  "./history/history.component"*/
     HttpClientModule,
     MatTabsModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule
 
   ],
   entryComponents : [
