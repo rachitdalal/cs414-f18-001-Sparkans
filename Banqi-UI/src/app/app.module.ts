@@ -64,7 +64,8 @@ import {HistoryComponent} from  "./history/history.component"*/
 
   ],
   entryComponents : [
-    FinalComponentComponent
+    FinalComponentComponent,
+    GameRuleComponent
   ],
   providers: [ UserDetailsService ],
   bootstrap: [AppComponent]
