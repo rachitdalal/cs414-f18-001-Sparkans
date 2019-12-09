@@ -10,13 +10,20 @@ public class GameManager {
     private ArrayList<BanqiBoard> boards = new ArrayList<BanqiBoard>();
 
     public BanqiBoard addGame(UserBean user1, UserBean user2){
-        BanqiBoard b = new BanqiBoard(user1,user2);
-        boards.add(b);
+        BanqiBoard bd = new BanqiBoard(user1,user2);
+        //if a game with these users already exists remove the old and start a new game
+        for(BanqiBoard b : boards){
+            if(b.getUser1().getNickname().toLowerCase().equals(user1) && b.getUser2().getNickname().toLowerCase().equals(user2) ||
+                    b.getUser1().getNickname().toLowerCase().equals(user2) && b.getUser2().getNickname().toLowerCase().equals(user1)){
+                boards.remove(b);
+            }
+        }
+        boards.add(bd);
         //add the game to the db
         SaveLoadGame.removeGame(user1.getNickname(),user2.getNickname());
 
-        SaveLoadGame.saveGame(b,"new");
-        return b;
+        SaveLoadGame.saveGame(bd,"new");
+        return bd;
     }
 
     public void addGame(BanqiBoard b){
