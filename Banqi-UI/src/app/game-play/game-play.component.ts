@@ -389,8 +389,8 @@ export class GamePlayComponent implements OnInit {
   }
   onGameRules() {
     const dialogRef = this.dialog.open(GameRuleComponent, {
-      width: '800px',
-      height: '700px'
+      width: '900px',
+      height: '600px'
     });
   }
 }

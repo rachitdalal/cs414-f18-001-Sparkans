@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
 
   onGameRules() {
     const dialogRef = this.dialog.open(GameRuleComponent, {
-      width: '500px',
-      height: '500px'
+      width: '900px',
+      height: '600px'
     });
   }
 }

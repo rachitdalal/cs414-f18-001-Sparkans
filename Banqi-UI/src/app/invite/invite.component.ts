@@ -5,6 +5,8 @@
   import {interval, pipe, timer} from "rxjs";
   import {UserDetailsService} from "../Service/user-details.service";
   import {MatSnackBar} from "@angular/material/snack-bar";
+  import {GameRuleComponent} from "../game-rule/game-rule.component";
+  import {MatDialog} from "@angular/material/dialog";
   //import { AuthService } from '../Service_1/auth.service';
 
   @Component({
@@ -37,7 +39,8 @@
     constructor( private router: Router,
                  private http: HttpClient,
                  private userDetails: UserDetailsService,
-                 private _snackBar: MatSnackBar)
+                 private _snackBar: MatSnackBar,
+                 public dialog: MatDialog)
                  // private auth: AuthService)
     {
 
@@ -309,5 +312,11 @@
       if( this.subscriber ) {
         this.subscriber.unsubscribe();
       }
+    }
+    onGameRules() {
+      const dialogRef = this.dialog.open(GameRuleComponent, {
+        width: '900px',
+        height: '600px'
+      });
     }
   }
