@@ -9,16 +9,15 @@ public class UserUnRegistration {
 	private ResultSet resultSet = null;
 	private Connection conn = null;
 	
-	public boolean unRegister(UserBean user) throws SQLException {
+	public boolean unRegister(String user) throws SQLException {
 		
 		boolean unregister = false;
 		try {
 			conn = MySqlCon.getConnection();
 			PreparedStatement update = conn.prepareStatement("UPDATE sparkans.Banqi_Users SET isActive_flag = ?"
-					+ "WHERE nickname=? OR email_id=?");
+					+ "WHERE nickname=?");
 			update.setString(1, String.valueOf('N'));
-			update.setString(2, user.getNickname());
-			update.setString(3, user.getEmail());
+			update.setString(2, user);
 			update.executeUpdate();
 			
 			System.out.println("Unregistered Successfully!!");

@@ -48,7 +48,7 @@ public class ChariotTest {
 	}
 
 	@Test
-	public void  chariotCannotAttackChariot()throws IllegalMoveException,IllegalPositionException{
+	public void  chariotCanAttackChariot()throws IllegalMoveException,IllegalPositionException{
 		Chariot aR = new Chariot(board, BanqiPiece.Color.RED);
 		board.placePiece(aR,"c1");
 		Chariot aW = new Chariot(board, BanqiPiece.Color.WHITE);

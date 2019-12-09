@@ -50,7 +50,7 @@ public class GeneralTest {
 	}
 
 	@Test
-	public void  generalCannotAttackGeneral()throws IllegalMoveException,IllegalPositionException{
+	public void  generalCanAttackGeneral()throws IllegalMoveException,IllegalPositionException{
 		General aR = new General(board, BanqiPiece.Color.RED);
 		board.placePiece(aR,"c1");
 		General aW = new General(board, BanqiPiece.Color.WHITE);

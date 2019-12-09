@@ -76,6 +76,7 @@ public class MicroServer {
 		get("/checkValidMove", this::checkValidMove);
 		get("/flip", this::flip);
 		get("/history", this::history);
+		get("/unregister",this::unregister);
 		get("/save",this::save);
 		get("quit",this::quit);
 
@@ -390,6 +391,25 @@ public class MicroServer {
 			return "[{\"flipped\":\"false\"}]";
 		}
 
+	}
+	
+	private String unregister(Request request, Response response) throws SQLException {
+
+		response.type("application/json");
+		response.header("Access-Control-Allow-Headers", "*");
+		
+		String user = request.queryParams("user");
+		
+		UserUnRegistration unRegister = new UserUnRegistration();
+		
+		boolean unregister = unRegister.unRegister(user);
+		
+		if(unregister){
+			return "[{\"unregistered\":\"true\"}]";
+		}
+		else{
+			return "[{\"unregistered\":\"false\"}]";
+		}
 	}
 
 	private String save(Request request, Response response){

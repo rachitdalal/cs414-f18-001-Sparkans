@@ -48,7 +48,7 @@ public class AdvisorTest {
 	}
 
 	@Test
-	public void  advisorCannotAttackAdvisor()throws IllegalMoveException,IllegalPositionException{
+	public void  advisorCanAttackAdvisor()throws IllegalMoveException,IllegalPositionException{
 		Advisor aR = new Advisor(board, BanqiPiece.Color.RED);
 		board.placePiece(aR,"c1");
 		Advisor aW = new Advisor(board, BanqiPiece.Color.WHITE);

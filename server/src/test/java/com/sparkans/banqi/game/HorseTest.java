@@ -13,6 +13,20 @@ public class HorseTest {
 	void init() {
 		board = new BanqiBoard();
 	}
+
+	@Test
+	void horseIsonBoard() throws IllegalMoveException,IllegalPositionException{
+		Horse hR = new Horse(board, BanqiPiece.Color.RED);
+		board.placePiece(hR,"c1");
+		hR.isFaceDown = false;
+		board.setUser2("red");
+		board.setUser1("white");
+		board.setRedPlayer("red");
+		board.setWhitePlayer("white");
+		board.playerTurn = "red";
+		board.move("c1","c2");
+		assertTrue(board.getPiece("c2").legalMoves().contains("c3"));
+	}
 	@Test
 	void horseKills() throws IllegalPositionException,IllegalMoveException{
 		Cannon cW = new Cannon(board, BanqiPiece.Color.WHITE);
@@ -46,7 +60,7 @@ public class HorseTest {
 	}
 
 	@Test
-	public void  horseCannotAttackHorse()throws IllegalMoveException,IllegalPositionException{
+	public void  horseCanAttackHorse()throws IllegalMoveException,IllegalPositionException{
 		Horse aR = new Horse(board, BanqiPiece.Color.RED);
 		board.placePiece(aR,"c1");
 		Horse aW = new Horse(board, BanqiPiece.Color.WHITE);
