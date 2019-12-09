@@ -245,8 +245,6 @@ public class BanqiBoard {
 		} catch (IllegalPositionException e) {
 			throw new IllegalMoveException("Illegal Move due to invalid position. " + e.getMessage());
 		}
-
-		//	checkForWin();
 	}
 
 	public void flip(String position) throws IllegalPositionException {
@@ -259,14 +257,21 @@ public class BanqiBoard {
 		}
 		getPiece(position).isFaceDown = false;
 	}
-	/*
-	private void checkForWin(){
-		boolean isWhite = false;
-		boolean isRed = false;
 
-		for(int i=0;i < 4; i++){
-			for (int j=0;j<8;j++){
-				if(g)
+	private void checkForWin(){
+
+		//check if a player has no pieces or moves left and assign the other player as the winner
+		ArrayList<BanqiPiece> redPieces = new ArrayList<>();
+		ArrayList<BanqiPiece> whitePieces = new ArrayList<>();
+		for(int i=0;i<4;i++){
+			for(int j=0;j<8;j++){
+				if(board[i][j] != null && board[i][j].getColor().equals(BanqiPiece.Color.RED)){
+					redPieces.add(board[i][j]);
+				}
+				if(board[i][j] != null && board[i][j].getColor().equals(BanqiPiece.Color.WHITE)){
+
+					whitePieces.add(board[i][j]);
+				}
 			}
 		}
 		if(whitePieces.isEmpty()){
@@ -298,8 +303,6 @@ public class BanqiBoard {
 		}
 
 	}
-
-	 */
 
 	private boolean faceUp(BanqiPiece piece) {
 		return !piece.isFaceDown;
