@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {GameRuleComponent} from "../game-rule/game-rule.component";
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +12,8 @@ export class ProfileComponent implements OnInit {
   currentUser;
   subject;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              public dialog: MatDialog ) {
 
   }
 
@@ -23,5 +26,11 @@ export class ProfileComponent implements OnInit {
       });
 
     this.currentUser = localStorage.getItem("user1");
+  }
+  onGameRules() {
+    const dialogRef = this.dialog.open(GameRuleComponent, {
+      width: '900px',
+      height: '600px'
+    });
   }
 }

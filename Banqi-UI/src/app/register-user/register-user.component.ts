@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {GameRuleComponent} from "../game-rule/game-rule.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-register-user',
@@ -25,7 +27,8 @@ export class RegisterUserComponent implements OnInit {
   * */
   constructor( private http: HttpClient,
                private router: Router,
-               private _snackBar: MatSnackBar ) { }
+               private _snackBar: MatSnackBar,
+               public dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -91,6 +94,12 @@ export class RegisterUserComponent implements OnInit {
           });
       });
 
+  }
+  onGameRules() {
+    const dialogRef = this.dialog.open(GameRuleComponent, {
+      width: '900px',
+      height: '600px'
+    });
   }
 
 }
