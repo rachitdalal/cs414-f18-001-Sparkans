@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {interval, pipe, timer} from "rxjs";
 import {FinalComponentComponent} from "../final-component/final-component.component";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {GameRuleComponent} from "../game-rule/game-rule.component";
 
 @Component({
   selector: 'app-game-play',
@@ -385,5 +386,11 @@ export class GamePlayComponent implements OnInit {
       return;
     }
 
+  }
+  onGameRules() {
+    const dialogRef = this.dialog.open(GameRuleComponent, {
+      width: '800px',
+      height: '700px'
+    });
   }
 }

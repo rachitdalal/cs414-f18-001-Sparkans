@@ -6,7 +6,7 @@
 
     <ul class="nav navbar-nav navbar-right">
       <li><a routerLink ="/home" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span>Home</a></li>
-      <li><a><span class="glyphicon glyphicon-pawn"></span>Game Rules</a></li>
+      <li><a (click)="onGameRules()" class ="cursor"><span class="glyphicon glyphicon-pawn"></span>Game Rules</a></li>
       <li><a routerLink ="/invite" routerLinkActive="active"><span class="glyphicon glyphicon-bullhorn"></span>Invite Friends</a></li>
       <li><a routerLink ="/gamePlay" routerLinkActive="active"><span class="glyphicon glyphicon-record"></span>Game</a></li>
       <li><a routerLink ="/history" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span>History</a></li>
@@ -44,7 +44,7 @@
             <button *ngIf="column" draggable="true" class="border buttonAlignment" id="{{ getRaw(i) }}{{j+1}}"
                     (dragstart)="dragStart($event, i, j)" (click)="toggleFaceDownPiece( $event, i, j )">
               <div [ngClass]="{ 'red' : column.color === 'RED', 'white' : column.color === 'WHITE'    }" *ngIf="!column.isFaceDown; else elseBlock" >
-                {{column.piece}}
+                	{{column.piece}}
               </div>
               <ng-template #elseBlock>
                 <!--<div (click)="toggleFaceDownPiece( $event, i, j )">-->
