@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class Cannon extends BanqiPiece {
 
-	ArrayList<String> legalMoves;
+	ArrayList<String> legalMoves = new ArrayList<>();
 	@Expose
 	private final String piece = "Cannon";
 
 	public Cannon(BanqiBoard board, Color color) {
 		super(board, color);
-		legalMoves = new ArrayList<>();
+
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class Cannon extends BanqiPiece {
 
 	@Override
 	public ArrayList<String> legalMoves() {
-		legalMoves.clear();
+		legalMoves = new ArrayList<>();
 		String fromPosition = this.getPosition();
 		String toPosition = null;
 

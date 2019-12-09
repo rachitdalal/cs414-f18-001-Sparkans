@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 public class General extends BanqiPiece {
 
-	ArrayList<String> legalMoves;
+	ArrayList<String> legalMoves = new ArrayList<>();
 
 	@Expose
 	private final String piece = "General";
 
 	public General(BanqiBoard board, Color color) {
 		super(board, color);
-		legalMoves = new ArrayList<>();
+
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class General extends BanqiPiece {
 
 	@Override
 	public ArrayList<String> legalMoves() {
-		legalMoves.clear();
+		legalMoves = new ArrayList<>();
 		String fromPosition = this.getPosition();
 		String toPosition;
 

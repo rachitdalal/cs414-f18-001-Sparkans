@@ -20,6 +20,7 @@ public class SaveLoadGame {
         String board = gson.toJson(b);
         try {
             removeGame(b.getUser1().getNickname(),b.getUser2().getNickname());
+            removeGame(b.getUser2().getNickname(),b.getUser1().getNickname());
             GameData.saveGameData(b.getUser1().getNickname(), b.getUser2().getNickname(), board, state);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,7 +30,9 @@ public class SaveLoadGame {
     public static BanqiBoard loadGame(String user1, String user2) {
 
         try {
-            return gson.fromJson(GameData.loadGameData(user1, user2), BanqiBoard.class);
+            BanqiBoard b = gson.fromJson(GameData.loadGameData(user1, user2), BanqiBoard.class);
+            b.reassignPieces();
+            return b;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {

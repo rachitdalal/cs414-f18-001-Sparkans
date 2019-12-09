@@ -21,6 +21,7 @@ public class GameManager {
         boards.add(bd);
         //add the game to the db
         SaveLoadGame.removeGame(user1.getNickname(),user2.getNickname());
+        SaveLoadGame.removeGame(user2.getNickname(),user1.getNickname());
 
         SaveLoadGame.saveGame(bd,"new");
         return bd;

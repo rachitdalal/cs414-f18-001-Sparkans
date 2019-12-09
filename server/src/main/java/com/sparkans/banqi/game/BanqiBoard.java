@@ -61,6 +61,14 @@ public class BanqiBoard {
 		return board;
 	}
 
+	public void reassignPieces(){
+		for(int i=0;i<4;i++){
+			for(int j=0;j<8;j++){
+				if(board[i][j] != null)board[i][j].board = this;
+			}
+		}
+	}
+
 	/*
 	 * initialize the board to standard Banqi opening state. all pieces face down in
 	 * random order.
