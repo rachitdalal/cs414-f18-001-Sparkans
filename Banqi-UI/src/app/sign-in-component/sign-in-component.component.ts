@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {UserDetailsService} from "../Service/user-details.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
+import {GameRuleComponent} from "../game-rule/game-rule.component";
 
 @Component({
   selector: 'app-sign-in-component',
@@ -20,7 +22,8 @@ export class SignInComponentComponent implements OnInit {
   constructor( private http: HttpClient,
                private router: Router,
                private userDetails: UserDetailsService,
-               private _snackBar: MatSnackBar ) { }
+               private _snackBar: MatSnackBar,
+               public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -79,4 +82,11 @@ export class SignInComponentComponent implements OnInit {
       });
 
   }
+  onGameRules() {
+    const dialogRef = this.dialog.open(GameRuleComponent, {
+      width: '900px',
+      height: '600px'
+    });
+  }
+
 }
