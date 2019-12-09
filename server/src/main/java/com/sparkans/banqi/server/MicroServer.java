@@ -76,6 +76,8 @@ public class MicroServer {
 		get("/checkValidMove", this::checkValidMove);
 		get("/flip", this::flip);
 		get("/history", this::history);
+		get("/save",this::save);
+		get("quit",this::quit);
 
 		options("/*", (request,response)->{
 			String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
