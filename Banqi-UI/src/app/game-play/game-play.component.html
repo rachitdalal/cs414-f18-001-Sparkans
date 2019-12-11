@@ -50,6 +50,7 @@
                     (dragstart)="dragStart($event, i, j)" (click)="toggleFaceDownPiece( $event, i, j )">
               <div [ngClass]="{ 'red' : column.color === 'RED', 'white' : column.color === 'WHITE'    }" *ngIf="!column.isFaceDown; else elseBlock" >
                 	{{column.piece}}
+                <img src='../assets/Pieces_image/{{column.piece}}_{{column.color}}.png' />
               </div>
               <ng-template #elseBlock>
                 <!--<div (click)="toggleFaceDownPiece( $event, i, j )">-->

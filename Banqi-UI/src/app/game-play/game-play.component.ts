@@ -228,9 +228,9 @@ export class GamePlayComponent implements OnInit {
   testButton(raw: number, column: number ) {
     console.log("test", raw, column )
   }
-
-  dragStart(event, row, column) {
-    /*event.dataTransfer.setData("text", event.target.id);*/
+  /* Old Code commented to for drag to Start*/
+  /*dragStart(event, row, column) {
+    /!*event.dataTransfer.setData("text", event.target.id);*!/
     if(this.playerTurn && this.playerTurn.toLowerCase() === this.currentUser ) {
       event.dataTransfer.setData("text", event.target.parentNode.getAttribute("id").split("_")[1]);
     } else {
@@ -245,11 +245,41 @@ export class GamePlayComponent implements OnInit {
       return;
     }
 
-  }
+  }*/
 
-  allowDrop( event ) {
-    event.preventDefault();
-  }
+    dragStart(event, row, column) {
+      /*event.dataTransfer.setData("text", event.target.id);*/
+      let id;
+      if(this.playerTurn && this.playerTurn.toLowerCase() === this.currentUser ) {
+        console.log("test", event.target.parentNode.parentNode);
+
+        if( event.target && event.target.parentNode.nodeName.toLowerCase() === 'td'  ) {
+          id = event.target.parentNode.getAttribute("id").split("_")[1];
+        } else if ( event.target.parentNode  && event.target.parentNode.parentNode.nodeName.toLowerCase() === 'td' ) {
+          id = event.target.parentNode.parentNode.getAttribute("id").split("_")[1];
+        } else if( event.target.parentNode.parentNode  && event.target.parentNode.parentNode.parentNode.nodeName.toLowerCase() === 'td' ) {
+          id = event.target.parentNode.parentNode.parentNode.getAttribute("id").split("_")[1];
+        } else {
+          return;
+        }
+        event.dataTransfer.setData("text", id);
+      } else {
+        this._snackBar.open("It's not your turn", "", {
+          duration: 2000,
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          panelClass: ["customSnackBar"]
+
+        });
+        event.preventDefault();
+        return;
+      }
+
+    }
+
+    allowDrop( event ) {
+      event.preventDefault();
+    }
 
  /* if( event.target.nodeName.toLowerCase() !== 'button'&&
   event.currentTarget.nodeName.toLowerCase() === 'td' ) {

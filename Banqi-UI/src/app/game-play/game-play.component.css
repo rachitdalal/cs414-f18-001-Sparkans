@@ -1,7 +1,7 @@
 
 .pieceSetup {
-  width: 100px;
-  height: 100px;
+  width: 116px;
+  height: 126px;
   background: aliceblue;
   border: 1px solid black;
   padding: 1px;
@@ -17,8 +17,10 @@
 
 
 .buttonAlignment {
-  width: 100%;
-  height: 100%;
+  /*width: 100%;
+  height: 100%;*/
+  width: 116px;
+  height: 126px;
 }
 .cursor{
   cursor: pointer;
