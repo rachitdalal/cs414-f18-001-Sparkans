@@ -2,9 +2,10 @@
 .pieceSetup {
   width: 140px;
   height: 126px;
-  background: aliceblue;
+  background: cornsilk;
   border: 1px solid black;
   padding: 1px;
+  min-width: 140px;
 }
 
 .red {
@@ -26,25 +27,19 @@
   cursor: pointer;
 }
 
+button{
+  background: transparent;
+}
+
 /*
 tbody{
-  color: lightgray;
-  background-image: url("../../assets/images/512x512.png");
-  background-repeat: no-repeat;
   margin: 200px 800px;
   float: left;
   border: 1px solid black;;
 }
+*/
 
 tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
-  background: white;
+  background: wheat;
 }
-body{
 
-   background-image: url("../../assets/images/512x512.png");
-   background-repeat: no-repeat;
-   background-position: center;
-
-   background-size: cover
- }
-*/

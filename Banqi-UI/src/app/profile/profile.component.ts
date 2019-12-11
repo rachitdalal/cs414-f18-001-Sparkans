@@ -13,7 +13,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class ProfileComponent implements OnInit {
   currentUser;
   subject;
-  UNREGISTER = 'http://localhost:31406/unregister';
+  UNREGISTER = 'http://129.82.44.128:31406/unregister';
 
   constructor(private route: ActivatedRoute,
               public dialog: MatDialog,

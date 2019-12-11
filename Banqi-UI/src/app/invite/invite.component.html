@@ -65,6 +65,7 @@
       </span>
       </div>
     </div>
+    <hr/>
   </div>
 
   <div>
@@ -80,31 +81,41 @@
         </span>
       </div>
     </div>
+    <hr/>
   </div>
-
-  <!--<div *ngIf="!isInvitationSentByThisUser">-->
-  <div *ngFor="let invitationUser of receivedUser; let i = index">
-    <span>
-      Waiting for the {{invitationUser["receivedUser"]}} user to Accept!
-    </span>
-    <div>
+  <!--<div *ngIf="acceptedInvitation.length == 0">-->
+    <div *ngFor="let invitationUser of receivedUser; let i = index">
       <span>
-        <button (click)="navigateToAlreadyExistingGmae( invitationUser['receivedUser'], 'already Created')"> Start the Game  </button>
+        Waiting for the {{invitationUser["receivedUser"]}} user to Accept!
       </span>
+      <div>
+        <span>
+          <button (click)="navigateToAlreadyExistingGmae( invitationUser['receivedUser'], 'already Created')"> Start the Game  </button>
+        </span>
+      </div>
     </div>
-  </div>
+    <hr/>
+  <!--</div>-->
+
 
   <div *ngFor="let accepted of acceptedInvitation; let i = index">
-    <span>
+    <span *ngIf="accepted['receivedUser']">
       Invitation has been accepted by {{accepted["receivedUser"]}} ! Please press button to start game !
     </span>
+    <span *ngIf="accepted['sentUser']">
+      Invitation has been accepted by {{accepted["sentUser"]}} ! Please press button to start game !
+    </span>
     <div>
-      <span>
+      <span *ngIf="accepted['receivedUser']">
         <button (click)="navigateToAlreadyExistingGmae( accepted['receivedUser'], 'already Created')"> Start the Game  </button>
+      </span>
+      <span *ngIf="accepted['sentUser']">
+        <button (click)="navigateToAlreadyExistingGmae( accepted['sentUser'], 'already Created')"> Start the Game  </button>
       </span>
     </div>
   </div>
   <!--</div>-->
+  <hr/>
 </div>
 
 <h2 *ngIf="isUserSignedIn" class="userNamePosition">{{currentUser.toUpperCase()}}

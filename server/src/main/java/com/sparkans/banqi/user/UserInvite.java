@@ -58,8 +58,8 @@ public class UserInvite {
 		boolean invited = false;
 		try {
 			conn = MySqlCon.getConnection();
-			if (checkInvitedUser(user2, conn)) 
-			{
+			//if (checkInvitedUser(user2, conn))
+			//{
 				String sql = "INSERT INTO sparkans.Banqi_Invitation(sent_user, received_user, status) VALUES(?, ?, ?)";
 
 				statement = conn.prepareStatement(sql);
@@ -70,7 +70,7 @@ public class UserInvite {
 				statement.executeUpdate();
 				System.out.println("Invitation sent!!");
 				invited = true;
-			}
+			//}
 
 		} catch (Exception e) {
 			System.out.println("Something went wrong in createInvite()!! \n" + e.getMessage());
@@ -92,6 +92,7 @@ public class UserInvite {
 
 		InviteObject invObj = new InviteObject();
 		List<InviteObject> sentInviteList = new ArrayList<>();
+		resultSet = null;
 		try {
 			conn = MySqlCon.getConnection();
 			statement = conn.prepareStatement("SELECT received_user,status FROM sparkans.Banqi_Invitation WHERE sent_user =?");
@@ -101,11 +102,15 @@ public class UserInvite {
 			{
 				invObj.setReceivedUser(resultSet.getString("received_user"));
 				invObj.setStatus(resultSet.getString("status"));
-				sentInviteList.add(invObj);
+				if(!sentInviteList.contains(invObj)){
+					sentInviteList.add(invObj);
+				}
+
 			}
 
 		} catch (Exception e) {
 			System.out.println("Something went wrong in getSentInvites()!!");
+			e.printStackTrace();
 		} finally {
 			if (resultSet != null) {
 				resultSet.close();
@@ -124,6 +129,7 @@ public class UserInvite {
 
 		InviteObject invObj = new InviteObject();
 		List<InviteObject> recInviteList = new ArrayList<>();
+		resultSet = null;
 		try {
 			conn = MySqlCon.getConnection();
 			statement = conn.prepareStatement("SELECT sent_user,status FROM sparkans.Banqi_Invitation WHERE received_user =?");
@@ -133,11 +139,14 @@ public class UserInvite {
 			{
 				invObj.setSentUser(resultSet.getString("sent_user"));
 				invObj.setStatus(resultSet.getString("status"));
-				recInviteList.add(invObj);
+				if(!recInviteList.contains(invObj)){
+					recInviteList.add(invObj);
+				}
 			}
 
 		} catch (Exception e) {
 			System.out.println("Something went wrong in getReceivedInvites()!!");
+			e.printStackTrace();
 		} finally {
 			if (resultSet != null) {
 				resultSet.close();

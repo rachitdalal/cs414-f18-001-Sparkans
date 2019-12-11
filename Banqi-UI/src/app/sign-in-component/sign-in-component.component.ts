@@ -13,7 +13,7 @@ import {GameRuleComponent} from "../game-rule/game-rule.component";
   styleUrls: ['./sign-in-component.component.css']
 })
 export class SignInComponentComponent implements OnInit {
-  SIGN_IN_URL = "http://localhost:31406/signin";
+  SIGN_IN_URL = "http://129.82.44.128:31406/signin";
   signInForm = new FormGroup({
     nickName : new FormControl('', [Validators.required]),
     password : new FormControl('', [Validators.required])
@@ -47,6 +47,7 @@ export class SignInComponentComponent implements OnInit {
         'Content-Type': 'application/json'
       })
     };
+    /*const userDetails = { nickName: value['nickName'].toLowerCase(), password: value['password'] };;*/
     const userDetails = value;
     localStorage.clear();
 

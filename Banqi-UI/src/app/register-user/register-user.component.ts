@@ -13,7 +13,7 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./register-user.component.css']
 })
 export class RegisterUserComponent implements OnInit {
-  REGISTER_USER_URL = "http://localhost:31406/register";
+  REGISTER_USER_URL = "http://129.82.44.128:31406/register";
   registrationForm = new FormGroup({
 
     email : new FormControl('', [Validators.required, Validators.email]),
@@ -58,6 +58,7 @@ export class RegisterUserComponent implements OnInit {
         'Content-Type': 'application/json'
       })
     };
+    /*let userDetails = { email: value['email'].toLowerCase(),  nickName: value['nickName'].toLowerCase(), password: value['password'] };*/
     const userDetails = value;
 
     return this.http.post<any>( this.REGISTER_USER_URL, userDetails, httpOptions)

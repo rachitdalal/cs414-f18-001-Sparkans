@@ -15,10 +15,10 @@
     styleUrls: ['./invite.component.css']
   })
   export class InviteComponent implements OnInit, OnDestroy {
-    SEND_INVITE = "http://localhost:31406/sendInvite";
-    WAITING_INVITE = "http://localhost:31406/waitingInvite";
-    ACCEPT_INVITATION = "http://localhost:31406/acceptInvite";
-    REJECT_INVITATION = "http://localhost:31406/rejectInvite";
+    SEND_INVITE = "http://129.82.44.128:31406/sendInvite";
+    WAITING_INVITE = "http://129.82.44.128:31406/waitingInvite";
+    ACCEPT_INVITATION = "http://129.82.44.128:31406/acceptInvite";
+    REJECT_INVITATION = "http://129.82.44.128:31406/rejectInvite";
     obs;
     subscriber;
     isUserSignedIn: boolean = false;
@@ -146,24 +146,48 @@
               }
             }
             else {
-              if (this.acceptedInvitation.length == 0) {
-                this.acceptedInvitation.push(data[index]);
-                this.userDetails.userName2 = data[index]["receivedUser"];
-                localStorage.setItem("user2", data[index]["receivedUser"] );
-                /*this.gamePlay(); */
-              }else {
-                this.acceptedInvitation.forEach( x => {
-                  if ( !this.isUserExist( this.acceptedInvitation, data[index]["receivedUser"], 'receivedUser' ) ) {
-                    this.acceptedInvitation.push(data[index]);
-                    /*this._snackBar.open("You have got Invitation!", "", {
-                      duration: 5000,
-                      horizontalPosition: "right",
-                      verticalPosition: "top",
-                      panelClass: ["customSnackBar"]
-                    });*/
+              if( data[index].hasOwnProperty('receivedUser')) {
+                if (this.acceptedInvitation.length == 0) {
+                  this.acceptedInvitation.push(data[index]);
+                  this.userDetails.userName2 = data[index]["receivedUser"];
+                  localStorage.setItem("user2", data[index]["receivedUser"] );
+                  /*this.gamePlay(); */
+                }else {
+                  this.acceptedInvitation.forEach( x => {
+                    if ( !this.isUserExist( this.acceptedInvitation, data[index]["receivedUser"], 'receivedUser' ) ) {
+                      this.acceptedInvitation.push(data[index]);
+                      /*this._snackBar.open("You have got Invitation!", "", {
+                        duration: 5000,
+                        horizontalPosition: "right",
+                        verticalPosition: "top",
+                        panelClass: ["customSnackBar"]
+                      });*/
+                    }
+                  });
+                }
+              } else if( data[index].hasOwnProperty('sentUser') ) {
+                if (this.acceptedInvitation.length == 0) {
+                  this.acceptedInvitation.push(data[index]);
+                  this.userDetails.userName2 = data[index]["sentUser"];
+                  if( !localStorage.getItem('user2') || ( localStorage.getItem('user2') && localStorage.getItem('user2').toLowerCase() !== data[index]["sentUser"] ) ) {
+                    localStorage.setItem("user2", data[index]["sentUser"] );
                   }
-                });
+                  /*this.gamePlay(); */
+                }else {
+                  this.acceptedInvitation.forEach( x => {
+                    if ( !this.isUserExist( this.acceptedInvitation, data[index]["sentUser"], 'sentUser' ) ) {
+                      this.acceptedInvitation.push(data[index]);
+                      /*this._snackBar.open("You have got Invitation!", "", {
+                        duration: 5000,
+                        horizontalPosition: "right",
+                        verticalPosition: "top",
+                        panelClass: ["customSnackBar"]
+                      });*/
+                    }
+                  });
+                }
               }
+
             }
           }
       } }, ( error ) => {
@@ -194,7 +218,7 @@
 
     isUserExist( totalUser, currentRetrievedValueUser , label ) {
       for( let index = 0; index < totalUser.length ; index += 1 ) {
-        if( currentRetrievedValueUser.toLowerCase() === totalUser[index][label].toLowerCase()) {
+        if( currentRetrievedValueUser &&  currentRetrievedValueUser.toLowerCase() === totalUser[index][label].toLowerCase()) {
           return true;
         }
       }

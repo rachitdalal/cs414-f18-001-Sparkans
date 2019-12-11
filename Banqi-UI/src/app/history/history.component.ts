@@ -12,7 +12,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit, AfterViewInit {
-  HISTORY = 'http://localhost:31406/history';
+  HISTORY = 'http://129.82.44.128:31406/history';
   currentUser: string;
   isUserSignedIn: boolean = false;
   historyData:any;
