@@ -97,7 +97,7 @@
                 });
               } else {
                 this.newInvitations.forEach( x => {
-                  if ( x["sentUser"] != data[index]["sentUser"] ) {
+                  if ( !this.isUserExist( this.newInvitations, data[index]["sentUser"], 'sentUser' )   ) {
                     this.newInvitations.push(data[index]);
                     this._snackBar.open("You have got Invitation!", "", {
                       duration: 5000,
@@ -121,7 +121,7 @@
                 });*/
               } else {
                 this.receivedUser.forEach( x => {
-                  if ( x["receivedUser"] != data[index]["receivedUser"] ) {
+                  if ( !this.isUserExist( this.receivedUser, data[index]["receivedUser"], 'receivedUser' )  ) {
                     this.receivedUser.push(data[index]);
                     /*this._snackBar.open("You have got Invitation!", "", {
                       duration: 5000,
@@ -139,7 +139,7 @@
                 this.rejectedInvitations.push(data[index]);
               } else {
                 this.rejectedInvitations.forEach( x => {
-                  if ( x["receivedUser"] != data[index]["receivedUser"] ) {
+                  if ( !this.isUserExist( this.rejectedInvitations, data[index]["receivedUser"], 'receivedUser' )   ) {
                     this.rejectedInvitations.push(data[index]);
                   }
                 });
@@ -153,7 +153,7 @@
                 /*this.gamePlay(); */
               }else {
                 this.acceptedInvitation.forEach( x => {
-                  if ( x["receivedUser"] != data[index]["receivedUser"] ) {
+                  if ( !this.isUserExist( this.acceptedInvitation, data[index]["receivedUser"], 'receivedUser' ) ) {
                     this.acceptedInvitation.push(data[index]);
                     /*this._snackBar.open("You have got Invitation!", "", {
                       duration: 5000,
@@ -177,6 +177,9 @@
       })
 
     }
+
+
+
     ngOnInit() {
       this.userDetails.invitationSubject.subscribe( ( value ) => {
         this.invitationFromUserName = value.invitaionSentFrom ;
@@ -187,6 +190,15 @@
         this.isUserSignedIn = true;
         this.currentUser = localStorage.getItem("user1");
       }
+    }
+
+    isUserExist( totalUser, currentRetrievedValueUser , label ) {
+      for( let index = 0; index < totalUser.length ; index += 1 ) {
+        if( currentRetrievedValueUser.toLowerCase() === totalUser[index][label].toLowerCase()) {
+          return true;
+        }
+      }
+      return false;
     }
 
     getWaitingUser() {
