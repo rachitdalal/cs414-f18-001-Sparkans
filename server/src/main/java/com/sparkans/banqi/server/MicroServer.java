@@ -36,7 +36,7 @@ public class MicroServer {
 	private GameManager gameManager = new GameManager();
 	private UserInvite userInvite = new UserInvite();
 	private History history = new History();
-
+    private ArrayList<InviteObject> invites = new ArrayList<>();
 
 	/** Creates a micro-server to load static files and provide REST APIs.
 	 *
@@ -214,8 +214,21 @@ public class MicroServer {
 		String fromUser = request.queryParams("from");
 
 		try {
-			userInvite.createInvite(fromUser,user);
-		} catch (SQLException ex) {
+			//userInvite.createInvite(fromUser,user);
+            InviteObject inv = new InviteObject(fromUser,user,"waiting");
+			boolean exists = false;
+            for(InviteObject i : invites){
+                if(i.getSentUser().equals(inv.getSentUser()) && i.getReceivedUser().equals(inv.getReceivedUser())){
+                    i.setStatus("waiting");
+                    exists = true;
+                }
+            }
+            if(!exists){
+                invites.add(new InviteObject(fromUser,user,"waiting"));
+            }
+
+		} catch (Exception ex) {
+
 			ex.printStackTrace();
 		}
 
@@ -232,10 +245,19 @@ public class MicroServer {
         Gson gson = new Gson();
 
         try {
-            List<InviteObject> invites = userInvite.getReceivedInvites(user);
-            invites.addAll(userInvite.getSentInvites(user));
-            return gson.toJson(invites);
-        } catch (SQLException e) {
+            List<InviteObject> inv = new ArrayList<>();//userInvite.getReceivedInvites(user);
+           // invites.addAll(userInvite.getSentInvites(user));
+            for(InviteObject i : invites){
+                if(i.getSentUser().equals(user)){
+                    inv.add(new InviteObject(null,i.getReceivedUser(),i.getStatus()));
+                }
+                if(i.getReceivedUser().equals(user)){
+                    inv.add(new InviteObject(i.getSentUser(),null,i.getStatus()));
+                }
+            }
+
+            return gson.toJson(inv);
+        } catch (Exception e) {
             e.printStackTrace();
             return gson.toJson(null);
         }
@@ -272,6 +294,11 @@ public class MicroServer {
         UserObject userObj = new UserObject();
 
         try {
+            for(InviteObject i:invites){
+                if(i.getReceivedUser().equals(user) && i.getSentUser().equals(fromUser)){
+                    i.setStatus("Accepted");
+                }
+            }
             userInvite.updateInvite(user,fromUser,"Accepted");
             userInvite.updateInvite(fromUser,user,"Accepted");
             UserBean user1 = new UserBean();
@@ -331,6 +358,11 @@ public class MicroServer {
 
 		//query DB for invite and set status to rejected
         try {
+            for(InviteObject i : invites){
+                if(i.getReceivedUser().equals(user) && i.getSentUser().equals(fromUser)){
+                    i.setStatus("rejected");
+                }
+            }
             userInvite.updateInvite(fromUser,user,"rejected");
             return "[{\"inviteStatus\":\"rejected\"}]";
         } catch (SQLException e) {

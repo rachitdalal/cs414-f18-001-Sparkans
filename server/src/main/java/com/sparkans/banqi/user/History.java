@@ -25,7 +25,7 @@ public class History {
             statement.setString(1, user);
             statement.setString(2,user);
             resultSet = statement.executeQuery();
-
+            allTheGames.clear();
             while ( resultSet.next() ) {
                 ArrayList<String> temp=new ArrayList<>();
                 temp.add(resultSet.getString("user1"));

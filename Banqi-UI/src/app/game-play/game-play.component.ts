@@ -14,17 +14,17 @@ import {GameRuleComponent} from "../game-rule/game-rule.component";
   styleUrls: ['./game-play.component.css']
 })
 export class GamePlayComponent implements OnInit {
-  SAVE_GAME = "http://localhost:31406/save";
-  QUIT_GAME = "http://localhost:31406/quit";
+  SAVE_GAME = "http://129.82.44.128:31406/save";
+  QUIT_GAME = "http://129.82.44.128:31406/quit";
   private chessboard: any[][];
   subscriber;
   isLoaded: boolean = false;
   boardPosition;
   subject;
-  GET_GAME = "http://localhost:31406/getGame";
+  GET_GAME = "http://129.82.44.128:31406/getGame";
   GAME_NOT_LOADED = "There is no game to load! Please invite your friend and start the game again!";
-  FLIP_PIECE = "http://localhost:31406/flip";
-  CHECK_LEGAL_MOVE = "http://localhost:31406/checkValidMove";
+  FLIP_PIECE = "http://129.82.44.128:31406/flip";
+  CHECK_LEGAL_MOVE = "http://129.82.44.128:31406/checkValidMove";
   currentUser: string;
   playerTurn: string;
   blackPlayer: object = {};
@@ -251,7 +251,7 @@ export class GamePlayComponent implements OnInit {
       /*event.dataTransfer.setData("text", event.target.id);*/
       let id;
       if(this.playerTurn && this.playerTurn.toLowerCase() === this.currentUser ) {
-        console.log("test", event.target.parentNode.parentNode);
+        // console.log("test", event.target.parentNode.parentNode);
 
         if( event.target && event.target.parentNode.nodeName.toLowerCase() === 'td'  ) {
           id = event.target.parentNode.getAttribute("id").split("_")[1];
